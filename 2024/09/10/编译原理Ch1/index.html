@@ -19,19 +19,19 @@
   <meta name="author" content="yrg">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.1可变目标编译程序交叉编译程序1.2 编译程序的组成 1.2.1（第二重要）词法的：lexical 将你输入的代码转化成一个个单词（当你写完代码后，你的程序代码相当于一个大长字符串）  1.2.2（最重要）语法分析器：按照语法分析程序结构，结构决定功能※程序包括: 返回类型：int 标识符：main 参数表：( 参数序列：) 函数体：{语句;}  1.2.3 语义分析：不重要，知道就行1.2.">
+    <meta name="description" content="第一章 引论1.1 编译程序（Compiler）可变目标编译程序交叉编译程序1.2 编译程序的组成 1.2.1（第二重要）词法的：lexical 将你输入的代码转化成一个个单词（当你写完代码后，你的程序代码相当于一个大长字符串）  1.2.2（最重要）语法分析器：按照语法分析程序结构，结构决定功能※程序包括: 返回类型：int 标识符：main 参数表：( 参数序列：) 函数体：{语句;}  1.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="编译原理Ch1">
 <meta property="og:url" content="https://sdueryrg.github.io/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/index.html">
 <meta property="og:site_name" content="yrg的博客">
-<meta property="og:description" content="1.1可变目标编译程序交叉编译程序1.2 编译程序的组成 1.2.1（第二重要）词法的：lexical 将你输入的代码转化成一个个单词（当你写完代码后，你的程序代码相当于一个大长字符串）  1.2.2（最重要）语法分析器：按照语法分析程序结构，结构决定功能※程序包括: 返回类型：int 标识符：main 参数表：( 参数序列：) 函数体：{语句;}  1.2.3 语义分析：不重要，知道就行1.2.">
+<meta property="og:description" content="第一章 引论1.1 编译程序（Compiler）可变目标编译程序交叉编译程序1.2 编译程序的组成 1.2.1（第二重要）词法的：lexical 将你输入的代码转化成一个个单词（当你写完代码后，你的程序代码相当于一个大长字符串）  1.2.2（最重要）语法分析器：按照语法分析程序结构，结构决定功能※程序包括: 返回类型：int 标识符：main 参数表：( 参数序列：) 函数体：{语句;}  1.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%84%E6%88%90.jpg">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E8%AF%AD%E6%B3%95.jpg">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E5%AD%97%E6%AF%8D%E8%A1%A8%E5%92%8C%E7%AC%A6%E5%8F%B7%E4%B8%B2.jpg">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E7%AC%A6%E5%8F%B7%E4%B8%B2%E4%B9%98%E7%A7%AF.jpg">
 <meta property="article:published_time" content="2024-09-10T07:20:49.000Z">
-<meta property="article:modified_time" content="2024-09-10T10:59:56.891Z">
+<meta property="article:modified_time" content="2024-09-10T12:26:34.644Z">
 <meta property="article:author" content="yrg">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          589 字
+          600 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          5 分钟
+          6 分钟
         
       </span>
     
@@ -281,7 +281,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="1-1"><a href="#1-1" class="headerlink" title="1.1"></a>1.1</h2><h3 id="可变目标编译程序"><a href="#可变目标编译程序" class="headerlink" title="可变目标编译程序"></a>可变目标编译程序</h3><h3 id="交叉编译程序"><a href="#交叉编译程序" class="headerlink" title="交叉编译程序"></a>交叉编译程序</h3><h2 id="1-2-编译程序的组成"><a href="#1-2-编译程序的组成" class="headerlink" title="1.2 编译程序的组成"></a>1.2 编译程序的组成</h2><p><img src="/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%84%E6%88%90.jpg" srcset="/img/loading.gif" lazyload alt="编译程序的组成"></p>
+                <h1 id="第一章-引论"><a href="#第一章-引论" class="headerlink" title="第一章 引论"></a><center>第一章 引论</center></h1><h2 id="1-1-编译程序（Compiler）"><a href="#1-1-编译程序（Compiler）" class="headerlink" title="1.1 编译程序（Compiler）"></a>1.1 编译程序（Compiler）</h2><h3 id="可变目标编译程序"><a href="#可变目标编译程序" class="headerlink" title="可变目标编译程序"></a>可变目标编译程序</h3><h3 id="交叉编译程序"><a href="#交叉编译程序" class="headerlink" title="交叉编译程序"></a>交叉编译程序</h3><h2 id="1-2-编译程序的组成"><a href="#1-2-编译程序的组成" class="headerlink" title="1.2 编译程序的组成"></a>1.2 编译程序的组成</h2><p><img src="/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%84%E6%88%90.jpg" srcset="/img/loading.gif" lazyload alt="编译程序的组成"></p>
 <h3 id="1-2-1（第二重要）词法的：lexical"><a href="#1-2-1（第二重要）词法的：lexical" class="headerlink" title="1.2.1（第二重要）词法的：lexical"></a>1.2.1（第二重要）词法的：lexical</h3><ul>
 <li>将你输入的代码转化成一个个单词（当你写完代码后，你的程序代码相当于一个大长字符串）</li>
 </ul>
@@ -297,8 +297,8 @@
 <p>编译器只是给什么就干什么，不知道整体程序要干什么，程序是由这个过程的线性序列组成的</p>
 </blockquote>
 <h3 id="1-2-7-三个概念"><a href="#1-2-7-三个概念" class="headerlink" title="1.2.7 三个概念"></a>1.2.7 三个概念</h3><ul>
-<li><h4 id="前端：前三个"><a href="#前端：前三个" class="headerlink" title="前端：前三个"></a>前端：前三个</h4></li>
-<li><h4 id="后端：后三个"><a href="#后端：后三个" class="headerlink" title="后端：后三个"></a>后端：后三个</h4></li>
+<li><h4 id="前端：前四个"><a href="#前端：前四个" class="headerlink" title="前端：前四个"></a>前端：前四个</h4></li>
+<li><h4 id="后端：后二个"><a href="#后端：后二个" class="headerlink" title="后端：后二个"></a>后端：后二个</h4></li>
 <li><h4 id="遍：编译器一遍扫描，完成自己的工作"><a href="#遍：编译器一遍扫描，完成自己的工作" class="headerlink" title="遍：编译器一遍扫描，完成自己的工作"></a>遍：编译器一遍扫描，完成自己的工作</h4></li>
 </ul>
 <h2 id="1-3-高级语言及其语法特征"><a href="#1-3-高级语言及其语法特征" class="headerlink" title="1.3 高级语言及其语法特征"></a>1.3 高级语言及其语法特征</h2><h3 id="1-3-1-程序语言的语法和语义"><a href="#1-3-1-程序语言的语法和语义" class="headerlink" title="1.3.1 程序语言的语法和语义"></a>1.3.1 程序语言的语法和语义</h3><h4 id="语言："><a href="#语言：" class="headerlink" title="语言："></a>语言：</h4><ul>
