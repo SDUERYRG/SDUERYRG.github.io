@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://sdueryrg.github.io/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/image.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E7%9B%B4%E6%8E%A5%E6%8E%A8%E5%AF%BC.png">
 <meta property="article:published_time" content="2024-09-10T07:20:49.000Z">
-<meta property="article:modified_time" content="2024-09-13T07:14:32.909Z">
+<meta property="article:modified_time" content="2024-09-13T07:49:21.200Z">
 <meta property="article:author" content="yrg">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          734 字
+          1k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          7 分钟
+          9 分钟
         
       </span>
     
@@ -350,7 +350,23 @@
 </ul>
 </blockquote>
 <p>人话：终结符是不可拆分的，非终结符可以被拆分为终结符或非终结符，产生式就是非终结符拆分的规则&#x2F;过程，开始符号是最开始那个产生式的左部</p>
-<h4 id="推导与规约"><a href="#推导与规约" class="headerlink" title="推导与规约"></a>推导与规约</h4><p><img src="/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E7%9B%B4%E6%8E%A5%E6%8E%A8%E5%AF%BC.png" srcset="/img/loading.gif" lazyload alt="直接推导.png"></p>
+<h4 id="推导与规约"><a href="#推导与规约" class="headerlink" title="推导与规约"></a>推导与规约</h4><ul>
+<li>直接推导：<br><img src="/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch1/%E7%9B%B4%E6%8E%A5%E6%8E%A8%E5%AF%BC.png" srcset="/img/loading.gif" lazyload alt="直接推导.png"><blockquote>
+<p>换句话说，x和y是符号串，若使用一次产生式可以从x变换出y，则称x直接推导出y（或者说y是x的直接推导），记为$x⇒y$</p>
+</blockquote>
+</li>
+<li>+推导：x和y是符号串，若使用若干次（大于0）产生式可以从x变换出y，则称x推导出y（或者说y是x的推导），记为$A \overset{+}{\Rightarrow} B$</li>
+<li>*推导：x和y是符号串，若使用0次或若干次产生式可以从x变换出y，则称x*推导出y（或者说y是x的*推导），记为$A \overset{*}{\Rightarrow} B$</li>
+<li>最右推导：若符号串α中有两个以上的非终结符时，对推导的每一步坚持把α中的最右非终结符进行替换，称为最右推导。</li>
+<li>最左推导：若符号串α中有两个以上的非终结符时，对推导的每一步坚持把α中的最左非终结符进行替换，称为最左推导。</li>
+<li>规约：推导的逆过程</li>
+</ul>
+<h4 id="语言的形式定义"><a href="#语言的形式定义" class="headerlink" title="语言的形式定义"></a>语言的形式定义</h4><p>对于文法G[Z]:</p>
+<ul>
+<li><strong>句型</strong>：x是句型 $ \Leftrightarrow $ $\space Z \overset{<em>}{\Rightarrow} x$，且$x∈V^</em>$;</li>
+<li><strong>句子</strong>：x是句子 $ \Leftrightarrow $ $\space Z \overset{+}{\Rightarrow} x$，且$x∈{V^*_T}$;</li>
+<li><strong>语言</strong>：$L(G[N])&#x3D;{x|\space Z \overset{+}{\Rightarrow} x，x∈{V^*_T}}$</li>
+</ul>
 
                 
               </div>
