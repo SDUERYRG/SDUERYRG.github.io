@@ -19,22 +19,22 @@
   <meta name="author" content="yrg">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第二章">
+    <meta name="description" content="NoSql实验记录写在前面：  我写这个是为了记录我实验的过程，并不是一个教程。而且就算是记录我也写的足够详细了，我遇到的问题踩到的坑也都写上了，要是按照我的步骤你失败了说明是你的问题，自行上网查找解决方法，别来烦我。  实验一、MongoDB的下载及环境配置没啥好说的，配环境而已，有时间就写，没时间就这样了。 实验二、熟悉环境、建立&#x2F;删除表、插入数据1.打开Mongo Shell命令行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="软件工程Ch1">
-<meta property="og:url" content="https://sdueryrg.github.io/2024/09/13/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8BCh1/index.html">
+<meta property="og:title" content="NoSql实验">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/10/19/NoSql%E5%AE%9E%E9%AA%8C/index.html">
 <meta property="og:site_name" content="yrg的博客">
-<meta property="og:description" content="第二章">
+<meta property="og:description" content="NoSql实验记录写在前面：  我写这个是为了记录我实验的过程，并不是一个教程。而且就算是记录我也写的足够详细了，我遇到的问题踩到的坑也都写上了，要是按照我的步骤你失败了说明是你的问题，自行上网查找解决方法，别来烦我。  实验一、MongoDB的下载及环境配置没啥好说的，配环境而已，有时间就写，没时间就这样了。 实验二、熟悉环境、建立&#x2F;删除表、插入数据1.打开Mongo Shell命令行">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-13T06:01:04.000Z">
-<meta property="article:modified_time" content="2024-09-13T07:21:01.630Z">
+<meta property="article:published_time" content="2024-10-19T08:02:02.000Z">
+<meta property="article:modified_time" content="2024-10-19T08:23:25.172Z">
 <meta property="article:author" content="yrg">
-<meta property="article:tag" content="软件工程">
+<meta property="article:tag" content="Nosql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>软件工程Ch1 - yrg的博客</title>
+  <title>NoSql实验 - yrg的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="软件工程Ch1"></span>
+            <span id="subtitle" data-typed-text="NoSql实验"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-13 14:01" pubdate>
-          2024年9月13日 下午
+        <time datetime="2024-10-19 16:02" pubdate>
+          2024年10月19日 下午
         </time>
       </span>
     
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3 字
+          571 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          1 分钟
+          5 分钟
         
       </span>
     
@@ -271,12 +271,27 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">软件工程Ch1</h1>
+            <h1 id="seo-header">NoSql实验</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a><center>第二章</center></h1>
+                <h1 id="NoSql实验记录"><a href="#NoSql实验记录" class="headerlink" title="NoSql实验记录"></a><center>NoSql实验记录</center></h1><p>写在前面：</p>
+<blockquote>
+<p>我写这个是为了记录我实验的过程，并不是一个教程。而且就算是记录我也写的足够详细了，我遇到的问题踩到的坑也都写上了，要是按照我的步骤你失败了说明是你的问题，自行上网查找解决方法，别来烦我。</p>
+</blockquote>
+<h2 id="实验一、MongoDB的下载及环境配置"><a href="#实验一、MongoDB的下载及环境配置" class="headerlink" title="实验一、MongoDB的下载及环境配置"></a>实验一、MongoDB的下载及环境配置</h2><p>没啥好说的，配环境而已，有时间就写，没时间就这样了。</p>
+<h2 id="实验二、熟悉环境、建立-删除表、插入数据"><a href="#实验二、熟悉环境、建立-删除表、插入数据" class="headerlink" title="实验二、熟悉环境、建立&#x2F;删除表、插入数据"></a>实验二、熟悉环境、建立&#x2F;删除表、插入数据</h2><h3 id="1-打开Mongo-Shell命令行工具"><a href="#1-打开Mongo-Shell命令行工具" class="headerlink" title="1.打开Mongo Shell命令行工具"></a>1.打开Mongo Shell命令行工具</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Shell">mongosh<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注：需在第一步完成Mongo Shell的环境变量配置，并确保你的数据库服务已经启动。不想配环境变量的话需要在Mongo Shell安装目录打这条指令，或者直接在终端中打出mongosh.exe的完整路径。  </p>
+</blockquote>
+<p>这一步完成后会显示连接到数据库，并默认连接到test数据库。使用<code>use dbname</code>即可切换到你想要的数据库，若没有这个数据库则会自动创建。</p>
+<h3 id="2-编写程序，将给出的示例数据导入到MongoDB中"><a href="#2-编写程序，将给出的示例数据导入到MongoDB中" class="headerlink" title="2.编写程序，将给出的示例数据导入到MongoDB中"></a>2.编写程序，将给出的示例数据导入到MongoDB中</h3><p>这一步我没啥太好的解决办法，无脑编程序写吧，我使用js编写了一个小脚本，使用了xlsx和mongodb库。需要注意的是，示例数据给出的birthday属性需要处理一下，xlsx库读日期单元格时会把日期转换成文本，导致原始数据和你读到的数据不匹配。例如，我在读的时候，原始数据为1988&#x2F;10&#x2F;18，读出来变成了32434。我不懂为啥会变成这个数，但是在excel中把单元格格式改成文本，就会出现这个数了。另外，注意数据导入数据库后你的数据类型，可以使用以下方法查询数据类型（以AGE字段为例）：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">db.student.<span class="hljs-built_in">find</span>().<span class="hljs-keyword">forEach</span>(function(doc) &#123;<br>    <span class="hljs-built_in">print</span>(typeof doc.AGE);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>更改数据类型：</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ceylon">db.student.find().forEach(<span class="hljs-keyword">function</span>(<span class="hljs-meta">doc</span>) &#123;<br>    <span class="hljs-meta">doc</span>.AGE = parseInt(<span class="hljs-meta">doc</span>.AGE);<br>    db.student.save(<span class="hljs-meta">doc</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>有关我导入数据的脚本，抱歉，无可奉告，我只能说有手就行，我这小垃圾都能写，你不会是你的事。</p>
+<h2 id="实验三、使用Java做简单查询"><a href="#实验三、使用Java做简单查询" class="headerlink" title="实验三、使用Java做简单查询"></a>实验三、使用Java做简单查询</h2>
                 
               </div>
             
@@ -294,7 +309,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="category-chain-item">软件工程</a>
+  <a href="/categories/Nosql/" class="category-chain-item">Nosql</a>
   
   
 
@@ -309,7 +324,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="print-no-link">#软件工程</a>
+        <a href="/tags/Nosql/" class="print-no-link">#Nosql</a>
       
     </div>
   
@@ -321,8 +336,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>软件工程Ch1</div>
-      <div>https://sdueryrg.github.io/2024/09/13/软件工程Ch1/</div>
+      <div>NoSql实验</div>
+      <div>https://sdueryrg.github.io/2024/10/19/NoSql实验/</div>
     </div>
     <div class="license-meta">
       
@@ -334,7 +349,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年9月13日</div>
+          <div>2024年10月19日</div>
         </div>
       
       
@@ -366,18 +381,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/" title="计算机网络Ch2">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">计算机网络Ch2</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/12/NOSQLCh1/" title="NOSQLCh1">
-                        <span class="hidden-mobile">NOSQLCh1</span>
+                      <a href="/2024/10/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/" title="编译原理Ch5">
+                        <span class="hidden-mobile">编译原理Ch5</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
