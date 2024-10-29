@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/LR%E5%88%86%E6%9E%90%E5%99%A8%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E6%9E%84%E5%BB%BALR(0)%E8%87%AA%E5%8A%A8%E6%9C%BA.png">
 <meta property="article:published_time" content="2024-10-29T08:12:26.000Z">
-<meta property="article:modified_time" content="2024-10-29T15:27:30.685Z">
+<meta property="article:modified_time" content="2024-10-29T15:39:47.704Z">
 <meta property="article:author" content="yrg">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -289,9 +289,9 @@
 <h4 id="4-规范规约"><a href="#4-规范规约" class="headerlink" title="(4)规范规约"></a>(4)规范规约</h4><p>从句子到开始符号的归约序列，如果每一步都是把句柄替换为相应产生式的左部符号而得到的，则称为规范归约。规范归约是最右推导（规范推导）的逆过程。<br><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E8%AF%AD%E6%B3%95%E6%A0%91.png" srcset="/img/loading.gif" lazyload alt="语法树"></p>
 <h3 id="3-自下而上的分析过程"><a href="#3-自下而上的分析过程" class="headerlink" title="3.自下而上的分析过程"></a>3.自下而上的分析过程</h3><p>考虑文法<br>$$<br>G(E)：E→E+T|T\<br>T→T*F | F\<br>F→i| (E)\<br>并假定输入串为(i+i)*i，考察自下而上的分析过程<br>$$<br>答案：<br><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B%E7%AD%94%E6%A1%88.png" srcset="/img/loading.gif" lazyload alt="分析过程答案"></p>
 <h2 id="二、LR分析法"><a href="#二、LR分析法" class="headerlink" title="二、LR分析法"></a>二、LR分析法</h2><h3 id="1-LR分析表工作过程"><a href="#1-LR分析表工作过程" class="headerlink" title="1.LR分析表工作过程"></a>1.LR分析表工作过程</h3><h4 id="1-初始化"><a href="#1-初始化" class="headerlink" title="(1)初始化"></a>(1)初始化</h4><p>状态栈：$S_0$<br>符号栈：#<br>输入串：$a_1a_2a_3…a_n$</p>
-<h4 id="2-一般情况下"><a href="#2-一般情况下" class="headerlink" title="(2)一般情况下"></a>(2)一般情况下</h4><p>状态栈：$S_0S_1…S_m$<br>符号栈：$#X_1X_2…X_m$<br>输入串：$a_ia_{i+1}…a_n#$</p>
-<h4 id="3-ACTION-S-m-a-i-S-x-移入动作"><a href="#3-ACTION-S-m-a-i-S-x-移入动作" class="headerlink" title="(3)$ACTION[S_m,a_i]&#x3D;S_x$移入动作"></a>(3)$ACTION[S_m,a_i]&#x3D;S_x$移入动作</h4><p>表示当前状态栈顶是状态$m$，输入串头为$a_i$，此时让$x$入状态栈，让$a_i$入符号栈，变为：<br>状态栈：$S_0S_1…S_mx$<br>符号栈：$#X_1X_2…X_ma_i$<br>输入串：$a_{i+1}…a_n#$</p>
-<h4 id="4-ACTION-S-m-a-i-R-x-归约动作"><a href="#4-ACTION-S-m-a-i-R-x-归约动作" class="headerlink" title="(4)$ACTION[S_m,a_i]&#x3D;R_x$归约动作"></a>(4)$ACTION[S_m,a_i]&#x3D;R_x$归约动作</h4><p>表示当前状态栈顶是状态$m$，输入串头为$a_i$，此时，状态栈和符号栈顶k个元素出栈，并用产生式$x(A→X_{m-(k-1)}…X_m)$对符号栈出栈元素进行规约。（k表示被规约了k个字母）变为：<br>状态栈：$S_0S_1…S_{m-k}$<br>符号栈：$#X_1X_2…X_{m-k}A$<br>输入串：$a_ia_{i+1}…a_n#$<br>并且此时，若<br>$$<br>GOTO[S_{m-k},A]&#x3D;y,<br>$$<br>则跳转到状态y，y入状态栈顶，格局变为：<br>状态栈：$S_0S_1…S_{m-k}y$<br>符号栈：$#X_1X_2…X_{m-k}A$<br>输入串：$a_ia_{i+1}…a_n#$  </p>
+<h4 id="2-一般情况下"><a href="#2-一般情况下" class="headerlink" title="(2)一般情况下"></a>(2)一般情况下</h4><p>状态栈：$S_0S_1…S_m$<br>符号栈：#$X_1X_2…X_m$<br>输入串：$a_ia_{i+1}…a_n$#</p>
+<h4 id="3-ACTION-S-m-a-i-S-x-移入动作"><a href="#3-ACTION-S-m-a-i-S-x-移入动作" class="headerlink" title="(3)$ACTION[S_m,a_i]&#x3D;S_x$移入动作"></a>(3)$ACTION[S_m,a_i]&#x3D;S_x$移入动作</h4><p>表示当前状态栈顶是状态$m$，输入串头为$a_i$，此时让$x$入状态栈，让$a_i$入符号栈，变为：<br>状态栈：$S_0S_1…S_mx$<br>符号栈：#$X_1X_2…X_ma_i$<br>输入串：$a_{i+1}…a_n$#</p>
+<h4 id="4-ACTION-S-m-a-i-R-x-归约动作"><a href="#4-ACTION-S-m-a-i-R-x-归约动作" class="headerlink" title="(4)$ACTION[S_m,a_i]&#x3D;R_x$归约动作"></a>(4)$ACTION[S_m,a_i]&#x3D;R_x$归约动作</h4><p>表示当前状态栈顶是状态$m$，输入串头为$a_i$，此时，状态栈和符号栈顶k个元素出栈，并用产生式$x(A→X_{m-(k-1)}…X_m)$对符号栈出栈元素进行规约。（k表示被规约了k个字母）变为：<br>状态栈：$S_0S_1…S_{m-k}$<br>符号栈：#$X_1X_2…X_{m-k}A$<br>输入串：$a_ia_{i+1}…a_n$#<br>并且此时，若<br>$$<br>GOTO[S_{m-k},A]&#x3D;y,<br>$$<br>则跳转到状态y，y入状态栈顶，格局变为：<br>状态栈：$S_0S_1…S_{m-k}y$<br>符号栈：#$X_1X_2…X_{m-k}A$<br>输入串：$a_ia_{i+1}…a_n$#  </p>
 <h4 id="5-ACTION-S-m-a-i-acc"><a href="#5-ACTION-S-m-a-i-acc" class="headerlink" title="(5)$ACTION[S_m,a_i]&#x3D;acc$"></a>(5)$ACTION[S_m,a_i]&#x3D;acc$</h4><p>分析成功</p>
 <h4 id="6-ACTION-S-m-a-i-空白"><a href="#6-ACTION-S-m-a-i-空白" class="headerlink" title="(6)$ACTION[S_m,a_i]&#x3D;空白$"></a>(6)$ACTION[S_m,a_i]&#x3D;空白$</h4><p>出现语法错误</p>
 <h3 id="2-LR分析算法"><a href="#2-LR分析算法" class="headerlink" title="2.LR分析算法"></a>2.LR分析算法</h3><ul>
