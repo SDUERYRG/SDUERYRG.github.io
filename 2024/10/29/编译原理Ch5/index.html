@@ -31,8 +31,12 @@
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/LR%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/LR%E5%88%86%E6%9E%90%E5%99%A8%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E6%9E%84%E5%BB%BALR(0)%E8%87%AA%E5%8A%A8%E6%9C%BA.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E6%9E%84%E9%80%A0LR(0)%E5%88%86%E6%9E%90%E8%A1%A8.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E7%A7%BB%E8%BF%9B%E8%A7%84%E7%BA%A6%E5%86%B2%E7%AA%81.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E7%A7%BB%E8%BF%9B%E8%A7%84%E7%BA%A6%E5%86%B2%E7%AA%81%E7%9A%84LR(0)%E5%88%86%E6%9E%90%E8%A1%A8.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E8%A7%84%E7%BA%A6%E8%A7%84%E7%BA%A6%E5%86%B2%E7%AA%81.png">
 <meta property="article:published_time" content="2024-10-29T08:12:26.000Z">
-<meta property="article:modified_time" content="2024-11-01T02:21:21.835Z">
+<meta property="article:modified_time" content="2024-11-01T07:04:51.199Z">
 <meta property="article:author" content="yrg">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.5k 字
         
       </span>
     
@@ -240,7 +244,7 @@
         
         
         
-          10 分钟
+          13 分钟
         
       </span>
     
@@ -326,6 +330,26 @@
 <li>此时，$closure(I)$中的所有项目互相称为等价项目，$closure(I)$集合视为一个状态。</li>
 </ul>
 <h3 id="4-构建LR-0-自动机"><a href="#4-构建LR-0-自动机" class="headerlink" title="4.构建LR(0)自动机"></a>4.构建LR(0)自动机</h3><p><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E6%9E%84%E5%BB%BALR(0)%E8%87%AA%E5%8A%A8%E6%9C%BA.png" srcset="/img/loading.gif" lazyload alt="构建LR(0)自动机"></p>
+<h3 id="5-构造LR-0-分析表"><a href="#5-构造LR-0-分析表" class="headerlink" title="5.构造LR(0)分析表"></a>5.构造LR(0)分析表</h3><ul>
+<li>行标为状态编号</li>
+<li>ACTION表列标为终结符+#，GOTO函数列标为规约时使用过的非终结符</li>
+<li>ACTION表中，若LR(0)自动机中的项目为移进项目，则ACTION&#x3D;sn，n为下一个状态的编号</li>
+<li>ACTION表中，若LR(0)自动机中的项目为规约项目，则ACTION&#x3D;rn，n为使用产生式规约的编号</li>
+<li>GOTO表中，若LR(0)自动机中的项目为待约项目，则GOTO&#x3D;n，n为下一个状态的编号</li>
+<li>例：<br><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E6%9E%84%E9%80%A0LR(0)%E5%88%86%E6%9E%90%E8%A1%A8.png" srcset="/img/loading.gif" lazyload alt="构造LR(0)分析表"></li>
+</ul>
+<h3 id="6-LR-0-分析过程的冲突"><a href="#6-LR-0-分析过程的冲突" class="headerlink" title="6.LR(0)分析过程的冲突"></a>6.LR(0)分析过程的冲突</h3><h4 id="1-移进-规约冲突"><a href="#1-移进-规约冲突" class="headerlink" title="(1)移进&#x2F;规约冲突"></a>(1)移进&#x2F;规约冲突</h4><p><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E7%A7%BB%E8%BF%9B%E8%A7%84%E7%BA%A6%E5%86%B2%E7%AA%81.png" srcset="/img/loading.gif" lazyload alt="移进/规约冲突"></p>
+<ul>
+<li>$I_2$的第一条表示，无论后边是什么字符，都要采取规约动作，但$I_2$的第二条表示，如果下一个读入字符是*，则采取移进操作。</li>
+<li>此时，自动机不知道到底是用移进还是规约动作。</li>
+<li>同理$I_9$也有同样的问题。<br><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E7%A7%BB%E8%BF%9B%E8%A7%84%E7%BA%A6%E5%86%B2%E7%AA%81%E7%9A%84LR(0)%E5%88%86%E6%9E%90%E8%A1%A8.png" srcset="/img/loading.gif" lazyload alt="移进/规约冲突的LR(0)分析表"></li>
+<li>如果LR(0)分析表中没有语法分析动作冲突，那么给定的文法就称为LR(0)文法</li>
+<li>不是所有CFG【上下文无关文法】都能用LR(0)方法进行分析，也就是说，CFG不总是LR(0)文法</li>
+</ul>
+<h4 id="2-规约-规约冲突"><a href="#2-规约-规约冲突" class="headerlink" title="(2)规约&#x2F;规约冲突"></a>(2)规约&#x2F;规约冲突</h4><p><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E8%A7%84%E7%BA%A6%E8%A7%84%E7%BA%A6%E5%86%B2%E7%AA%81.png" srcset="/img/loading.gif" lazyload alt="规约/规约冲突"></p>
+<ul>
+<li>对于某一个状态，接受某个终极符后既可执行规约动作1，也可执行规约动作2，如图中的B和T，同时图中也有移进规约冲突。</li>
+</ul>
 
                 
               </div>
