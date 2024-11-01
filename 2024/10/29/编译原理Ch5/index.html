@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/LR%E5%88%86%E6%9E%90%E5%99%A8%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E6%9E%84%E5%BB%BALR(0)%E8%87%AA%E5%8A%A8%E6%9C%BA.png">
 <meta property="article:published_time" content="2024-10-29T08:12:26.000Z">
-<meta property="article:modified_time" content="2024-11-01T02:15:25.005Z">
+<meta property="article:modified_time" content="2024-11-01T02:21:21.835Z">
 <meta property="article:author" content="yrg">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -287,7 +287,9 @@
 <h4 id="2-直接短语"><a href="#2-直接短语" class="headerlink" title="(2)直接短语"></a>(2)直接短语</h4><p>若$ A {\Rightarrow} β $，则β是非终结符A的直接短语。<br>使用语法树来表示：<br>针对某一非终结符，以其为根节点的，高度等于2的树的叶子结点，是该非终结符的直接短语。</p>
 <h4 id="3-句柄"><a href="#3-句柄" class="headerlink" title="(3)句柄"></a>(3)句柄</h4><p>最左直接短语。<br>使用语法树来表示：<br>一棵语法树的最左边的高度为2的子树的叶子节点。</p>
 <h4 id="4-规范规约"><a href="#4-规范规约" class="headerlink" title="(4)规范规约"></a>(4)规范规约</h4><p>从句子到开始符号的归约序列，如果每一步都是把句柄替换为相应产生式的左部符号而得到的，则称为规范归约。规范归约是最右推导（规范推导）的逆过程。<br><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E8%AF%AD%E6%B3%95%E6%A0%91.png" srcset="/img/loading.gif" lazyload alt="语法树"></p>
-<h3 id="3-自下而上的分析过程"><a href="#3-自下而上的分析过程" class="headerlink" title="3.自下而上的分析过程"></a>3.自下而上的分析过程</h3><p>考虑文法<br>$$<br>G(E)：E→E+T|T\<br>T→T*F | F\<br>F→i| (E)\<br>并假定输入串为(i+i)*i，考察自下而上的分析过程<br>$$<br>答案：<br><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B%E7%AD%94%E6%A1%88.png" srcset="/img/loading.gif" lazyload alt="分析过程答案"></p>
+<h3 id="3-自下而上的分析过程"><a href="#3-自下而上的分析过程" class="headerlink" title="3.自下而上的分析过程"></a>3.自下而上的分析过程</h3><p>考虑文法  </p>
+<p>$G(E)：E→E+T|T$<br>$T→T*F | F$<br>$F→i| (E)$<br>$并假定输入串为(i+i)*i，考察自下而上的分析过程$</p>
+<p>答案：<br><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B%E7%AD%94%E6%A1%88.png" srcset="/img/loading.gif" lazyload alt="分析过程答案"></p>
 <h2 id="二、LR分析法"><a href="#二、LR分析法" class="headerlink" title="二、LR分析法"></a>二、LR分析法</h2><h3 id="1-LR分析表工作过程"><a href="#1-LR分析表工作过程" class="headerlink" title="1.LR分析表工作过程"></a>1.LR分析表工作过程</h3><h4 id="1-初始化"><a href="#1-初始化" class="headerlink" title="(1)初始化"></a>(1)初始化</h4><p>状态栈：$S_0$<br>符号栈：#<br>输入串：$a_1a_2a_3…a_n$</p>
 <h4 id="2-一般情况下"><a href="#2-一般情况下" class="headerlink" title="(2)一般情况下"></a>(2)一般情况下</h4><p>状态栈：$S_0S_1…S_m$<br>符号栈：#$X_1X_2…X_m$<br>输入串：$a_ia_{i+1}…a_n$#</p>
 <h4 id="3-ACTION-S-m-a-i-S-x-移入动作"><a href="#3-ACTION-S-m-a-i-S-x-移入动作" class="headerlink" title="(3)$ACTION[S_m,a_i]&#x3D;S_x$移入动作"></a>(3)$ACTION[S_m,a_i]&#x3D;S_x$移入动作</h4><p>表示当前状态栈顶是状态$m$，输入串头为$a_i$，此时让$x$入状态栈，让$a_i$入符号栈，变为：<br>状态栈：$S_0S_1…S_mx$<br>符号栈：#$X_1X_2…X_ma_i$<br>输入串：$a_{i+1}…a_n$#</p>
@@ -301,7 +303,10 @@
 </ul>
 <h3 id="3-LR分析器的逻辑结构"><a href="#3-LR分析器的逻辑结构" class="headerlink" title="3.LR分析器的逻辑结构"></a>3.LR分析器的逻辑结构</h3><p><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/LR%E5%88%86%E6%9E%90%E5%99%A8%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="LR分析器的逻辑结构"></p>
 <h2 id="三、LR-0-分析"><a href="#三、LR-0-分析" class="headerlink" title="三、LR(0)分析"></a>三、LR(0)分析</h2><h3 id="1-LR-0-项目"><a href="#1-LR-0-项目" class="headerlink" title="1.LR(0)项目"></a>1.LR(0)项目</h3><ul>
-<li>把右部某位置有圆点的产生式称为相应文法的一个LR(0)项目，简称项目。<br>$$<br>A→a_1·a_2<br>$$<br>例如，<br>$$<br>S→·bBB(1)\<br>S→b·BB(2)\<br>S→bB·B(3)\<br>S→bBB·(4)<br>$$</li>
+<li>把右部某位置有圆点的产生式称为相应文法的一个LR(0)项目，简称项目。<br>$$<br>A→a_1·a_2<br>$$<br>例如，</li>
+</ul>
+<p>$S→·bBB(1)$<br>$S→b·BB(2)$<br>$S→bB·B(3)$<br>$S→bBB·(4)$</p>
+<ul>
 <li>项目描述了句柄识别的状态</li>
 <li>产生式1是移进项目，·后跟着终结符</li>
 <li>产生式2&#x2F;3是待约项目，·后跟着非终结符</li>
