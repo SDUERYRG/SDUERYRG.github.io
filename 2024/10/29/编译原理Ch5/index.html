@@ -39,8 +39,9 @@
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/SLR%E7%AE%97%E6%B3%95.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/SLR%E5%88%86%E6%9E%90.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/SLR%E5%88%86%E6%9E%90%E6%B3%95%E7%9A%84%E5%86%B2%E7%AA%81.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/LR(1)%E8%87%AA%E5%8A%A8%E6%9C%BA%E4%BE%8B%E5%AD%90.png">
 <meta property="article:published_time" content="2024-10-29T08:12:26.000Z">
-<meta property="article:modified_time" content="2024-11-01T07:35:28.476Z">
+<meta property="article:modified_time" content="2024-11-01T14:23:25.204Z">
 <meta property="article:author" content="yrg">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          2k 字
         
       </span>
     
@@ -248,7 +249,7 @@
         
         
         
-          15 分钟
+          17 分钟
         
       </span>
     
@@ -368,6 +369,22 @@
 <ul>
 <li>此例中，等号在R的FOLLOW集中，发生了冲突。</li>
 </ul>
+<h2 id="四、LR-1-分析法"><a href="#四、LR-1-分析法" class="headerlink" title="四、LR(1)分析法"></a>四、LR(1)分析法</h2><h3 id="1-LR-1-项目"><a href="#1-LR-1-项目" class="headerlink" title="1.LR(1)项目"></a>1.LR(1)项目</h3><ul>
+<li>将一般形式为$[A→αβ,a]$的项称为$LR(1)$项，其中$A→αβ$是一个产生式</li>
+<li>a是一个终结符（包括#），他的含义是，在当前状态下，A后面要求紧跟的终结符，称为该项的展望符(lookahead)</li>
+<li>也就是说，只有在A后面是a时，才使用这个项目。</li>
+<li>LR(1)中的1指二元组第二个项。</li>
+<li>在形如$[A→α·β,a]$且$ β≠ \varepsilon $的项中，展望符a没有任何作用。</li>
+<li>但是一个形如$[A→α,a]$的项在只有在下一个输入符号是a时才可以按照A→α进行规约。<ul>
+<li>这样的a的集合总是FOLLOW(A)的子集，而且它通常是一个真子集。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-LR-1-等价项目"><a href="#2-LR-1-等价项目" class="headerlink" title="2.LR(1)等价项目"></a>2.LR(1)等价项目</h3><ul>
+<li>对于待约项目$[A→α·Bβ,a]$，若$B→γ$，则等价项目是$[B→·γ,b]$</li>
+<li>$b∈FIRST(βa)$</li>
+</ul>
+<h3 id="3-构建LR-1-自动机"><a href="#3-构建LR-1-自动机" class="headerlink" title="3.构建LR(1)自动机"></a>3.构建LR(1)自动机</h3><p><img src="/2024/10/29/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch5/LR(1)%E8%87%AA%E5%8A%A8%E6%9C%BA%E4%BE%8B%E5%AD%90.png" srcset="/img/loading.gif" lazyload alt="LR(1)自动机例子"></p>
 
                 
               </div>
