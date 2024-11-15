@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>编译原理Ch6</title>
+    <link href="/2024/11/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch6/"/>
+    <url>/2024/11/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch6/</url>
+    
+    <content type="html"><![CDATA[<h1 id="第六章-语法制导的翻译"><a href="#第六章-语法制导的翻译" class="headerlink" title="第六章 语法制导的翻译"></a><center>第六章 语法制导的翻译</center></h1><h2 id="一、属性文法"><a href="#一、属性文法" class="headerlink" title="一、属性文法"></a>一、属性文法</h2><h3 id="1-属性文法定义的形式"><a href="#1-属性文法定义的形式" class="headerlink" title="1.属性文法定义的形式"></a>1.属性文法定义的形式</h3><ul><li>基础文法</li><li>每个文法符号都有一个属性</li><li>每个文法产生式$A → α$有一组形式为$b :&#x3D;f(c_1, c_2, …, c_k )$的语义规则，其中$f$是函数，$b,c_1, c_2, …, c_k$ 是该产生式文法符号的属性</li></ul><h3 id="2-综合属性"><a href="#2-综合属性" class="headerlink" title="2.综合属性"></a>2.综合属性</h3><ul><li>b是A的属性，$c_1, c_2, …, c_k$是产生式右部文法符号的属性或A的其他属性</li></ul><h4 id="1-S属性定义"><a href="#1-S属性定义" class="headerlink" title="(1)S属性定义"></a>(1)S属性定义</h4><ul><li>仅仅使用综合属性的语法制导定义</li></ul><p><img src="/2024/11/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch6/S%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95.png" alt="S属性文法"></p><h4 id="2-注释分析树"><a href="#2-注释分析树" class="headerlink" title="(2)注释分析树"></a>(2)注释分析树</h4><ul><li>在语法树的基础上，将文法符号的属性标明</li></ul><h3 id="3-继承属性"><a href="#3-继承属性" class="headerlink" title="3.继承属性"></a>3.继承属性</h3><ul><li>b是产生式右部某个文法符号X的属性</li></ul><p><img src="/2024/11/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch6/%E7%BB%A7%E6%89%BF%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95.png" alt="继承属性文法"></p><h4 id="1-万能钥匙法"><a href="#1-万能钥匙法" class="headerlink" title="(1)万能钥匙法"></a>(1)万能钥匙法</h4><p><img src="/2024/11/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch6/%E4%B8%87%E8%83%BD%E9%92%A5%E5%8C%99%E6%B3%95.png" alt="万能钥匙法"></p><ul><li>违反了“遍”的原则</li><li>在注释分析树的基础上，遍历每一个属性规则，若有属性之间的依赖，则引一条从决定方到被决定方的有向边</li><li>形成的有向图的拓扑排序为万能钥匙</li><li>addType函数：addtype (id.entry,L.in)的意义是在符号表中找到id，将其entry属性设置为L.in</li><li>虚综合属性：类似addtype (id.entry,L.in)的语义规则我们会虚拟构造一个L.s&#x3D;addtype，此时s就是虚综合属性</li></ul><h2 id="二、基于属性文法的处理方法"><a href="#二、基于属性文法的处理方法" class="headerlink" title="二、基于属性文法的处理方法"></a>二、基于属性文法的处理方法</h2><h3 id="1-构造语法分析树"><a href="#1-构造语法分析树" class="headerlink" title="1.构造语法分析树"></a>1.构造语法分析树</h3><h3 id="2-构造依赖树"><a href="#2-构造依赖树" class="headerlink" title="2.构造依赖树"></a>2.构造依赖树</h3><ul><li>在语法分析树的节点旁边再构造一个节点，表示其属性</li><li>虚综合属性也要构造</li><li>遍历每一个属性规则，若有属性之间的依赖，则引一条从决定方到被决定方的有向边</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>编译原理</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>编译原理</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>集成显卡笔记本配置Pytorch教程</title>
     <link href="/2024/11/07/%E9%9B%86%E6%88%90%E6%98%BE%E5%8D%A1%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%85%8D%E7%BD%AEPytorch%E6%95%99%E7%A8%8B/"/>
     <url>/2024/11/07/%E9%9B%86%E6%88%90%E6%98%BE%E5%8D%A1%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%85%8D%E7%BD%AEPytorch%E6%95%99%E7%A8%8B/</url>
