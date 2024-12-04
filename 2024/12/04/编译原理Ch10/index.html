@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第十章 优化一、优化1.概念 对程序进行各种等价变换，使得从变换后的程序出发能够生成更有效得目标代码  2.优化的级别 局部优化、循环优化、全局优化  3.优化组成 对程序控制流分析 数据流分析 代码变换  4.目的 产生更高效的代码  5.遵循的原则(1)等价原则 优化不应改变程序运行的结果  (2)有效原则 使优化后所产生的目标代码运行时间较短，占用的存储空间较小  (3)合算原则 应尽可能以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理Ch10">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="第十章 优化一、优化1.概念 对程序进行各种等价变换，使得从变换后的程序出发能够生成更有效得目标代码  2.优化的级别 局部优化、循环优化、全局优化  3.优化组成 对程序控制流分析 数据流分析 代码变换  4.目的 产生更高效的代码  5.遵循的原则(1)等价原则 优化不应改变程序运行的结果  (2)有效原则 使优化后所产生的目标代码运行时间较短，占用的存储空间较小  (3)合算原则 应尽可能以">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%BC%98%E5%8C%96%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E6%BA%90%E7%A8%8B%E5%BA%8F.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD3.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD4.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD5.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD6.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD7.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD8.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD9.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E8%B5%8B%E5%80%BC1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E8%B5%8B%E5%80%BC2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E5%89%8A%E5%BC%B11.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E5%89%8A%E5%BC%B12.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F2.png">
+<meta property="article:published_time" content="2024-12-04T08:38:16.000Z">
+<meta property="article:modified_time" content="2024-12-04T12:08:54.002Z">
+<meta property="article:author" content="yrg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%BC%98%E5%8C%96%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87.png">
+  
+  
+  
+  <title>编译原理Ch10 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚靖澄的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="编译原理Ch10"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-04 16:38" pubdate>
+          2024年12月4日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          326 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">编译原理Ch10</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第十章-优化"><a href="#第十章-优化" class="headerlink" title="第十章 优化"></a><center>第十章 优化</center></h1><h2 id="一、优化"><a href="#一、优化" class="headerlink" title="一、优化"></a>一、优化</h2><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><ul>
+<li>对程序进行各种等价变换，使得从变换后的程序出发能够生成更有效得目标代码</li>
+</ul>
+<h3 id="2-优化的级别"><a href="#2-优化的级别" class="headerlink" title="2.优化的级别"></a>2.优化的级别</h3><ul>
+<li><strong>局部优化、循环优化</strong>、全局优化</li>
+</ul>
+<h3 id="3-优化组成"><a href="#3-优化组成" class="headerlink" title="3.优化组成"></a>3.优化组成</h3><ul>
+<li>对程序控制流分析</li>
+<li>数据流分析</li>
+<li>代码变换<br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%BC%98%E5%8C%96%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87.png" srcset="/img/loading.gif" lazyload alt="优化编译器的组织"></li>
+</ul>
+<h3 id="4-目的"><a href="#4-目的" class="headerlink" title="4.目的"></a>4.目的</h3><ul>
+<li>产生更高效的代码</li>
+</ul>
+<h3 id="5-遵循的原则"><a href="#5-遵循的原则" class="headerlink" title="5.遵循的原则"></a>5.遵循的原则</h3><h4 id="1-等价原则"><a href="#1-等价原则" class="headerlink" title="(1)等价原则"></a>(1)等价原则</h4><ul>
+<li>优化不应改变程序运行的结果</li>
+</ul>
+<h4 id="2-有效原则"><a href="#2-有效原则" class="headerlink" title="(2)有效原则"></a>(2)有效原则</h4><ul>
+<li>使优化后所产生的目标代码运行时间较短，占用的存储空间较小</li>
+</ul>
+<h4 id="3-合算原则"><a href="#3-合算原则" class="headerlink" title="(3)合算原则"></a>(3)合算原则</h4><ul>
+<li>应尽可能以较低的代价取得较好的优化效果</li>
+</ul>
+<h3 id="6-优化的种类"><a href="#6-优化的种类" class="headerlink" title="6.优化的种类"></a>6.优化的种类</h3><ul>
+<li>删除多余运算（删除公用子表达式）</li>
+<li>合并已知量</li>
+<li>复写传播</li>
+<li>删除无用赋值</li>
+<li>代码外提</li>
+<li>强度消弱</li>
+<li>变换循环控制条件</li>
+</ul>
+<h3 id="6-优化示例"><a href="#6-优化示例" class="headerlink" title="6.优化示例"></a>6.优化示例</h3><h4 id="1-源程序"><a href="#1-源程序" class="headerlink" title="(1)源程序"></a>(1)源程序</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E6%BA%90%E7%A8%8B%E5%BA%8F.png" srcset="/img/loading.gif" lazyload alt="源程序"></p>
+<h4 id="2-中间代码"><a href="#2-中间代码" class="headerlink" title="(2)中间代码"></a>(2)中间代码</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81.png" srcset="/img/loading.gif" lazyload alt="中间代码"></p>
+<h4 id="3-复写传播"><a href="#3-复写传播" class="headerlink" title="(3)复写传播"></a>(3)复写传播</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD1.png" srcset="/img/loading.gif" lazyload alt="复写传播1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD2.png" srcset="/img/loading.gif" lazyload alt="复写传播2"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD3.png" srcset="/img/loading.gif" lazyload alt="复写传播3"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD4.png" srcset="/img/loading.gif" lazyload alt="复写传播4"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD5.png" srcset="/img/loading.gif" lazyload alt="复写传播5"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD6.png" srcset="/img/loading.gif" lazyload alt="复写传播6"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD7.png" srcset="/img/loading.gif" lazyload alt="复写传播7"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD8.png" srcset="/img/loading.gif" lazyload alt="复写传播8"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD9.png" srcset="/img/loading.gif" lazyload alt="复写传播9"></p>
+<h4 id="4-删除无用赋值"><a href="#4-删除无用赋值" class="headerlink" title="(4)删除无用赋值"></a>(4)删除无用赋值</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E8%B5%8B%E5%80%BC1.png" srcset="/img/loading.gif" lazyload alt="删除无用赋值1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E8%B5%8B%E5%80%BC2.png" srcset="/img/loading.gif" lazyload alt="删除无用赋值2"></p>
+<h4 id="5-强度削弱"><a href="#5-强度削弱" class="headerlink" title="(5)强度削弱"></a>(5)强度削弱</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E5%89%8A%E5%BC%B11.png" srcset="/img/loading.gif" lazyload alt="强度削弱1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E5%89%8A%E5%BC%B12.png" srcset="/img/loading.gif" lazyload alt="强度削弱2"></p>
+<h4 id="6-删除归纳变量"><a href="#6-删除归纳变量" class="headerlink" title="(6)删除归纳变量"></a>(6)删除归纳变量</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F1.png" srcset="/img/loading.gif" lazyload alt="删除归纳变量1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F2.png" srcset="/img/loading.gif" lazyload alt="删除归纳变量2"></p>
+<h2 id="二、局部优化"><a href="#二、局部优化" class="headerlink" title="二、局部优化"></a>二、局部优化</h2><h3 id="1-基本快"><a href="#1-基本快" class="headerlink" title="1.基本快"></a>1.基本快</h3><ul>
+<li>连续的语句序列，控制流从它的开始进入，并从它的末尾离开</li>
+<li>再用有向边表示基本块之间的控制流信息，就能得到程序的流图</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>编译原理Ch10</div>
+      <div>https://sdueryrg.github.io/2024/12/04/编译原理Ch10/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch9/" title="编译原理Ch9">
+                        <span class="hidden-mobile">编译原理Ch9</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
