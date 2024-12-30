@@ -19,25 +19,22 @@
   <meta name="author" content="yrg">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第一章 大数据概述大数据定义 大数据是指无法在一定时间内用常规软件工具对其内容进行抓取、管理和处理的数据集合  大数据特点 数据量大 数据种类多样 高实时性 数据价值巨大但价值密度低  数据科学基本流程 数据的不同处理模式 批处理 数据先保存起来，然后分析(全量数据) 响应时间分钟&#x2F;小时计   流式处理 数据及时处理，处理过后一般不保存 响应时间毫秒计   交互式处理 数据先保存起来，然">
+    <meta name="description" content="我还没考完试，等我考完公开。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据科学导论复习">
-<meta property="og:url" content="https://sdueryrg.github.io/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:title" content="NoSQL复习">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/index.html">
 <meta property="og:site_name" content="yrg的博客">
-<meta property="og:description" content="第一章 大数据概述大数据定义 大数据是指无法在一定时间内用常规软件工具对其内容进行抓取、管理和处理的数据集合  大数据特点 数据量大 数据种类多样 高实时性 数据价值巨大但价值密度低  数据科学基本流程 数据的不同处理模式 批处理 数据先保存起来，然后分析(全量数据) 响应时间分钟&#x2F;小时计   流式处理 数据及时处理，处理过后一般不保存 响应时间毫秒计   交互式处理 数据先保存起来，然">
+<meta property="og:description" content="我还没考完试，等我考完公开。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sdueryrg.github.io/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B.png">
-<meta property="og:image" content="https://sdueryrg.github.io/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/MapReduce.png">
-<meta property="og:image" content="https://sdueryrg.github.io/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/MapReduce%E7%A4%BA%E4%BE%8B.png">
-<meta property="article:published_time" content="2024-12-26T10:13:50.000Z">
-<meta property="article:modified_time" content="2024-12-27T10:52:02.722Z">
+<meta property="article:published_time" content="2024-12-30T07:50:16.000Z">
+<meta property="article:modified_time" content="2024-12-30T08:34:20.654Z">
 <meta property="article:author" content="yrg">
+<meta property="article:tag" content="Nosql">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sdueryrg.github.io/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B.png">
   
   
   
-  <title>数据科学导论复习 - yrg的博客</title>
+  <title>NoSQL复习 - yrg的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="数据科学导论复习"></span>
+            <span id="subtitle" data-typed-text="NoSQL复习"></span>
           
         </div>
 
@@ -214,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-26 18:13" pubdate>
-          2024年12月26日 晚上
+        <time datetime="2024-12-30 15:50" pubdate>
+          2024年12月30日 下午
         </time>
       </span>
     
@@ -226,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          995 字
         
       </span>
     
@@ -237,7 +234,7 @@
         
         
         
-          13 分钟
+          9 分钟
         
       </span>
     
@@ -274,207 +271,63 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">数据科学导论复习</h1>
+            <h1 id="seo-header">NoSQL复习</h1>
             
             
-              <div class="markdown-body">
-                
-                <h2 id="第一章-大数据概述"><a href="#第一章-大数据概述" class="headerlink" title="第一章 大数据概述"></a>第一章 大数据概述</h2><h3 id="大数据定义"><a href="#大数据定义" class="headerlink" title="大数据定义"></a>大数据定义</h3><ul>
-<li>大数据是指无法在一定时间内用常规软件工具对其内容进行抓取、管理和处理的数据集合</li>
-</ul>
-<h3 id="大数据特点"><a href="#大数据特点" class="headerlink" title="大数据特点"></a>大数据特点</h3><ul>
-<li>数据量大</li>
-<li>数据种类多样</li>
-<li>高实时性</li>
-<li>数据价值巨大但价值密度低</li>
-</ul>
-<h3 id="数据科学基本流程"><a href="#数据科学基本流程" class="headerlink" title="数据科学基本流程"></a>数据科学基本流程</h3><p><img src="/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="数据科学基本流程"></p>
-<h3 id="数据的不同处理模式"><a href="#数据的不同处理模式" class="headerlink" title="数据的不同处理模式"></a>数据的不同处理模式</h3><ul>
-<li>批处理<ul>
-<li>数据先保存起来，然后分析(全量数据)</li>
-<li>响应时间分钟&#x2F;小时计</li>
-</ul>
-</li>
-<li>流式处理<ul>
-<li>数据及时处理，处理过后一般不保存</li>
-<li>响应时间毫秒计</li>
-</ul>
-</li>
-<li>交互式处理<ul>
-<li>数据先保存起来，然后查询(部分数据)</li>
-<li>响应时间秒级</li>
-</ul>
-</li>
-</ul>
-<h3 id="大数据应用"><a href="#大数据应用" class="headerlink" title="大数据应用"></a>大数据应用</h3><ul>
-<li>社会网络大数据</li>
-<li>交通大数据</li>
-<li>文本大数据</li>
-<li>时空数据</li>
-</ul>
-<h2 id="第二章-数据存储"><a href="#第二章-数据存储" class="headerlink" title="第二章 数据存储"></a>第二章 数据存储</h2><h3 id="数据的分类"><a href="#数据的分类" class="headerlink" title="数据的分类"></a>数据的分类</h3><ul>
-<li>结构化数据<ul>
-<li>可以使用关系型数据库表示和存储的数据，拥有固定结构</li>
-</ul>
-</li>
-<li>半结构化数据<ul>
-<li>弱结构化，虽然不符合关系数据模型的要求，但是含有相关标记（自描述结构），分割实体及期属性。如XML，JSON等</li>
-</ul>
-</li>
-<li>非结构化数据<ul>
-<li>没有固定数据结构，或很难发现统一数据结构的数据</li>
-<li>文档、文本、图片、视频、音频等</li>
-</ul>
-</li>
-</ul>
-<h3 id="关系型数据库和NoSQL"><a href="#关系型数据库和NoSQL" class="headerlink" title="关系型数据库和NoSQL"></a>关系型数据库和NoSQL</h3><h3 id="SQL语言的类型"><a href="#SQL语言的类型" class="headerlink" title="SQL语言的类型"></a>SQL语言的类型</h3><ul>
-<li>类别一：Data Definition Language (DDL) 数据定义语言</li>
-<li>类别二：Data Manipulation Language (DML) 数据操作语言（增删改查）</li>
-<li>类别三： Data Control Language（DCL）：数据控制语言，用来定义访问权限和安全级别</li>
-<li>类别四：Data Query Language（DQL）：数据查询语言，用来查询记录（数据）。这些语言通过DBMS来操作DB，DBMS是一个系统</li>
-</ul>
-<h2 id="第三章-大数据计算"><a href="#第三章-大数据计算" class="headerlink" title="第三章 大数据计算"></a>第三章 大数据计算</h2><h3 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h3><ul>
-<li>Hadoop Distributed File System(HDFS),这是在由普通服务器组成的集群上运行的分布式文件系统，支持大数据的存储；通过多个节点的并行IO，提供极高的吞吐能力<ul>
-<li>一个HDFS集群，一般由一个NameNode和若干DataNode组成，分别负责元信息的管理和数据块的管理</li>
-<li>HDFS支持TB级甚至PB级大小文件的存储，它把文件划分成数据块(Block),分布到多台机器上进行存储</li>
-<li>为了保证系统的可靠性，HDFS把数据块在多个节点上进行复制(Replicate)</li>
-</ul>
-</li>
-</ul>
-<h3 id="Hadoop-MapReduce"><a href="#Hadoop-MapReduce" class="headerlink" title="Hadoop MapReduce"></a>Hadoop MapReduce</h3><ul>
-<li>一种支持大数据处理的编程模型</li>
-<li>MapReduce并行编程模型把计算过程分解为两个主要阶段，即Map 阶段和Reduce阶段。</li>
-<li>Map函数处理&lt;Key,Value&gt;对，产生一系列的中间&lt;Key,Value&gt;对</li>
-<li>Reduce函数合并所有具有相同Key值的中间键值对，计算最终结果</li>
-<li>MapReduce计算模型，可以形式化地表达成Map:&lt;k1,v1&gt;-&gt; list&lt;k2,v2&gt;, Reduce:&lt;k2,list(v2)&gt;-&gt;list&lt;k3,v3&gt;<br><img src="/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/MapReduce.png" srcset="/img/loading.gif" lazyload alt="MapReduce"><br><img src="/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/MapReduce%E7%A4%BA%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="MapReduce示例"></li>
-<li>缺点<ul>
-<li>仅支持MapReduce计算模型</li>
-<li>MapReduce通过磁盘数据交换，效率低下</li>
-</ul>
-</li>
-</ul>
-<h3 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h3><h3 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h3><h2 id="第四章-数据采集与整理"><a href="#第四章-数据采集与整理" class="headerlink" title="第四章 数据采集与整理"></a>第四章 数据采集与整理</h2><h3 id="检测冗余属性"><a href="#检测冗余属性" class="headerlink" title="检测冗余属性"></a>检测冗余属性</h3><ul>
-<li>Pearson积距相关系数</li>
-<li>卡方检验</li>
-</ul>
-<h3 id="数据的距离"><a href="#数据的距离" class="headerlink" title="数据的距离"></a>数据的距离</h3><ul>
-<li>欧几里得距离</li>
-<li>汉明距离</li>
-<li>明氏距离</li>
-<li>马氏距离</li>
-</ul>
-<h3 id="数据的相似度"><a href="#数据的相似度" class="headerlink" title="数据的相似度"></a>数据的相似度</h3><ul>
-<li>Jaccard相关系数</li>
-<li>余弦相似度</li>
-</ul>
-<h3 id="数据的相关性"><a href="#数据的相关性" class="headerlink" title="数据的相关性"></a>数据的相关性</h3><ul>
-<li>Pearson相关系数</li>
-</ul>
-<h3 id="有序数据和无序数据"><a href="#有序数据和无序数据" class="headerlink" title="有序数据和无序数据"></a>有序数据和无序数据</h3><ul>
-<li>无序数据：每个数据样本的不同维度没有顺序关系</li>
-<li>有序数据：有</li>
-</ul>
-<h3 id="有序数据的距离测量"><a href="#有序数据的距离测量" class="headerlink" title="有序数据的距离测量"></a>有序数据的距离测量</h3><ul>
-<li>Spearman Rank（斯皮尔曼等级）相关系数</li>
-</ul>
-<h2 id="第八章-数据分析方法"><a href="#第八章-数据分析方法" class="headerlink" title="第八章 数据分析方法"></a>第八章 数据分析方法</h2><h3 id="机器学习基本流程"><a href="#机器学习基本流程" class="headerlink" title="机器学习基本流程"></a>机器学习基本流程</h3><ul>
-<li>业务场景分析</li>
-<li>数据处理</li>
-<li>训练机器模型和评价</li>
-<li>使用机器学习模型</li>
-</ul>
-<h3 id="机器学习分类"><a href="#机器学习分类" class="headerlink" title="机器学习分类"></a>机器学习分类</h3><ul>
-<li>有监督学习<ul>
-<li>对于样本有输入X和预期输出Y</li>
-</ul>
-</li>
-<li>无监督学习<ul>
-<li>样本数据无需人工标注，无目标值</li>
-</ul>
-</li>
-<li>半监督学习<ul>
-<li>一小部分标注数据，大部分无标注数据</li>
-</ul>
-</li>
-<li>强化学习<ul>
-<li>对系统和环境建模，通过与外界不断交互，获得反馈，修正机器学习模型</li>
-</ul>
-</li>
-</ul>
-<h2 id="第十章-数据可视化"><a href="#第十章-数据可视化" class="headerlink" title="第十章 数据可视化"></a>第十章 数据可视化</h2><h3 id="数据可视化工具"><a href="#数据可视化工具" class="headerlink" title="数据可视化工具"></a>数据可视化工具</h3><ul>
-<li>Google Refine</li>
-<li>Echarts</li>
-<li>Tableau</li>
-<li>Processing</li>
-<li>D3(JS)</li>
-<li>ColorBrewer</li>
-</ul>
-<h2 id="第十一章-文本分析"><a href="#第十一章-文本分析" class="headerlink" title="第十一章 文本分析"></a>第十一章 文本分析</h2><h3 id="抓取控制"><a href="#抓取控制" class="headerlink" title="抓取控制"></a>抓取控制</h3><ul>
-<li><p>meta robots</p>
-<ul>
-<li><p><code>&lt;meta name=&quot;robots&quot; content=&quot;...&quot;&gt;</code>中的content有多种取值</p>
-</li>
-<li><p>index：允许搜索引擎索引该页面。</p>
-</li>
-<li><p>noindex：禁止搜索引擎索引该页面。</p>
-</li>
-<li><p>follow：允许搜索引擎跟踪该页面上的链接。</p>
-</li>
-<li><p>nofollow：禁止搜索引擎跟踪该页面上的链接。</p>
-</li>
-<li><p>all：等同于index, follow，允许索引页面并跟踪链接。</p>
-</li>
-<li><p>none：等同于noindex, nofollow，禁止索引页面并跟踪链接。</p>
-</li>
-<li><p>noarchive：禁止搜索引擎缓存该页面的快照。</p>
-</li>
-<li><p>nosnippet：禁止搜索引擎在搜索结果中显示页面的摘要。</p>
-</li>
-<li><p>max-snippet:[number]：限制搜索引擎在搜索结果中显示的页面摘要的最大字符数。</p>
-</li>
-<li><p>noodp：禁止搜索引擎使用开放目录项目（ODP）中的描述作为页面的摘要。</p>
-</li>
-<li><p>notranslate：禁止搜索引擎提供该页面的翻译版本。</p>
-</li>
-</ul>
-</li>
-<li><p>robots.txt</p>
-  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs HTML">User-agent: Googlebot   // 不允许谁抓取，不允许所有为*<br>Disallow: /             // 不允许抓取的页面路径<br></code></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="纵容恶意爬虫的危害"><a href="#纵容恶意爬虫的危害" class="headerlink" title="纵容恶意爬虫的危害"></a>纵容恶意爬虫的危害</h3><ul>
-<li>额外带宽负担</li>
-<li>核心文本被爬取</li>
-<li>注册用户被扫描</li>
-<li>点击欺诈</li>
-</ul>
-<h3 id="独热编码"><a href="#独热编码" class="headerlink" title="独热编码"></a>独热编码</h3><ul>
-<li><p>词的独热表示是一种最简单最直接的词的向量化表示方式。主要步骤包含两步：</p>
-<ul>
-<li>对需要用到的文本中所有词进行编码（假设共用N个词），每个词有唯一的下标（0~N）。</li>
-<li>根据词下标 i 生成一个长度为N的向量，除了第i位为1外，其他位都为0。</li>
-</ul>
-</li>
-</ul>
-<h3 id="绝对词频"><a href="#绝对词频" class="headerlink" title="绝对词频"></a>绝对词频</h3><ul>
-<li>每个文档表示为一个n维向量，每一维对应一个单词，值为单词出现的次数</li>
-</ul>
-<h3 id="相对词频TF"><a href="#相对词频TF" class="headerlink" title="相对词频TF"></a>相对词频TF</h3><ul>
-<li>该词出现的次数&#x2F;总词数</li>
-</ul>
-<h3 id="逆文档频率IDF"><a href="#逆文档频率IDF" class="headerlink" title="逆文档频率IDF"></a>逆文档频率IDF</h3><ul>
-<li>lg(文档总数&#x2F;含有该词的文档数)</li>
-</ul>
-<h3 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h3><ul>
-<li>相对词频*逆文档频率</li>
-</ul>
+              
+              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="2fa1f4c6738208ec478116ce1a3f3392652aa0179207d59d3450c7172698a148">2302ac114eabe737ec73b18116c9a03271c95ceb0f39e0467dfaf4c88b663afe7461f79a1b5a241c389d6a80211bae3a760e96a89e732ea08908f4c50123a110346dd6f847380c00d57ed1aa12826fd41f2065cc2499d5e97c016fae7065baf19b5d00b4e141490a3ee14d8cc15d42081da8f91242dd5b9837b54e2663b133e09f176c039f91eccb7a76811a15b775aac81530845bbb962ef4100a022721e3f2fb53cf8da0557991f9563dba59f75781e2a0a45e9c997a4eceeaf9560ad278f9d5796c7cdfda69e2a350245e407bfc92c30b4d9791cf035a45204a665865166cb0bfc69adc459241bcd2397c8475ec9f17fa0ae9dd50a5fa334615af9998d1b7b3cfb8e586774ddec29dc1ef85f254d86e1b21d6c690c1c586b6efe6c84cc960c48ff580c2939554fb9b6ae1dca3cae2b6e6d093d8da77bdfa7ae5a2b67dae89b005ddcdd53c8c79951167afbde7614c06d7e0b83b8996d4da6d849391719ab56a4fcfc9e7c01407573df8ac9e3e1b6e5f502a0b9409ebccb034f95d209e9ca5b8729ded90df3c4833f5f2434ddb5aca5ac8c357f229d06df7ee36a2f002b30d36688dccbaa8989bb766af29857dd1f87d9cf0a85c9e475218cbc2739b234b0a88005844cffb150157e3b73d171ac43df02df914218d7d6e5cc94b6d062551afc290bd5b138f1ce3e1cfe6db470cc117ac3e9fcaa203db77e84bb3faa38e677b2c0a3114a2d277b205688614badb6bcb62040d410cf0653e39c3207d07923e8951eb1e1597d47a3b0a9f3bcb690a9e6d2bde423536c29ad8ae34124cdf745ef0245efda491b3882ad649111d1299e5c0d3e9dbf257b12ff09d4a7dbfc674330b61e0c1af936212f51de3512c138d4a6e8d46eda9f44efa110e3be1aa79cc878757462d5d2d5dc176d6d4c4e50268af5dea1a45a8d796f8b99d1e4840659b2dce7f5bfdc8a46f8d9afcc330ee961ccc4c8e32997809b61250b100ba7bbb16027eb31f5b221ce1a33799800bea1e74f2efbde01fc36fd2e27db7751c0c7bd486c7a3575f4e3d7721f9bee8644c9bcb200aa7efff9e095f408c492ddc8bdfa221dabbd54108ebcba32eed1afd29e3cbfabc7da644d3fbd3ae04ab4fd9bea9e58ac510f799da8e7b4978d4f523af06630b418d2729be854336ac2eddef2c8bca011023f9914f499aaf6524139dd26e3a504d3096fb7628ee8f969eb5f1bfce6471cdc65aeb021dc77395de010276cade3862662e43490240b769aebf192ee9b02a9df07de116933438542e1691423b3fdbc1307e3c58d09817d2b11cd8028849c2ef2510efcda6a898c771f1287fe1cab360af5aa6a0754c27346206d377df6bc7f89151b3caf94e61260f9c5eeb88fb4eee09060d94dbe00c68eaf492171b99d0c0f4fb63d8cd21b95dce40408cac0c260b925446fa89a24b5928472eeaa25f771c6dd4960ba82a4bc9567f222daba08b2287dcab900e4bb42b76e69e4783c9f3a0e8770d652a5edf421b0314a14137e7fdcf899cac0f96e26b19338341943a97f835e0f7e5830b67466b9b7ce2b2beb1d7d76020a5a046e18e9349c81a37651d84bfeb19ad6cf9b575c675fa285c0257b7321cd7df3f05889a8de031358a7e56f9885afe9245baf393ffb3633212877182a26ef05382d57fe1837d224481ae378e2b5ddd9d5ff50d365d9ceec67cbab775e5b9f6d68f87a5588afd9928a012cd8499a23d2c5dea5699783bcb15398ab3ca667bb79806864672fa67b8d0dad1963570ee47185d2440a3ed4a45cb2a66b93a81ba20c00907fdd1171378c04d6c9b6956a008decd93ff3e449fafe1c56ec857f2b7b16b0b423f59ff5d53a164ad81c9880652ed1489d361277607953f50ec454b7b7891d2eaf7a2b8cc2689e18fbb38336e5f8ce71c5a5930007fab58c19f8dcadb685127169e3bbd42ef55c7ad0e8cd01f8a2dc8a489ef4714bb5cbfd7f0263c195603508473f5adc3aa667935941f6e3e74170cf7131486b44c6b8a69e3ef94012305280a8c9e0f8bde406c54985f9304292c3d29e91e6382bb41a582837f2837e923b562e7dd043de90b24f7803ca35016f4b65b8ea47a002ad702d0e063a47218209133586b7fe6afba57314cd408c49a8338fad24bc81634cb709eb533472e011c4fce9884a590c64f3ff0627b50fe39271cf127ed12bf43b840515af455174d53dd206cc2c208eb0e892d8e792749d57de657e71a1d3d0e0ff67af3e75ccb6c521c1e7a8ce04bcc2e07ff1a0219fe4a80e88451167ef7815be4f426474249dcf282b0c04dc28604437d10563b68c77cbc0c8e36fe65798cbf5e78b7c93a28381e6dd6bff793822c5810fcee79186c2fe0550e47a5e01dec7718aaa6dbc7d88a7aa158ca47d6f8dd6cfa39a70b86943caa3ba0ee8cf7a68df91523619e8b3cd1965e71b2716706792dba256095de48948eabb2465e09bcc7f38bc6ebd5d93ac4350aefa7fcbd9534511b9c40c93bec9dfec7e85173cdb340f228f3dd990081821005a6be9484bcb06badeab2c7a09e337afd15e01fe1de43dcd2854bcde107c7ff32cdccb203d08b90a50a1660875c21f951af2157aedbd9a02b6eb96bdcea65a5859e566925b3749c991897f06c980ac8aed16ca56c70e69bb87b8de67203107654a0322ea25d88cb78e6c5a253ea70fcd34ba46d61cde3204c6c4e57c67e2536386ed78cb364b763361f626fa6add3222b239116d9d731b11a9a17c7b91510dd7a10d078d796abd13c567d958e12256715072ba598dc3213d0e39673be9310c0b013e712a40c2747e861007c8f2fc524d5bfc71f298cdd69cae598b3c21619ee318100df2334b50daea8f4b94483de5cb9d541764f2f64ddcd97b94fdd272e905b8565df81c05677bfd52408f4b7ee222ddf242fe36524f131b88781af14a5077492756c3098cd1ecf60d06a93416f7acd3bf4adfaba51edb79ff630adb460d1d2abc30847a7c40dd9e1ac7c03111a3ad9c361eda7dd8bf63b7afe63af9e03816e0f0a6487ccd6471550d367bb64e4dcf21e7087ba88379b72b2a28db41a4e412591612b78b4e750cacee77674d1e6bd3e373edaa29ea2dc8dd1c8824a15b8b61aec17603935e4e05920ccfe7366c71c58a928c882986b1e18831402d018facdd3d2679b56c156ad039e15accc4ce53726bb17d0227b7534b95026b7675e2baddf4fc3dfd1a13bad18c29c582c867ed19a30a635ec7be08ec201ef5908e6ab28e49c93f4b885566640f43db0314ffb2a1fd4d3755e470b72646f58be9f4671297c85b4bda3a2906cbd4299de9e866520047879ddf2cfb104b1ed63469aac68db7f82b5e0d561351477d2ff4bac59a16683b0bee37b6cd3ea5bec2accb9fabebf040b5dc123de1c9969020b06bf5246aa7e9bb24541e3b3428455ebcc49ab83d4fb6d7205f3ebf51a33ff8572fce87e433c4dabf0d790353993238e0df1f15303e4165e0d24deee8e5224a303561a4c551d6998118112eb9364acc225f72a3e41a4646802a3195847c223a71705309cc753e076c160c94f94e44d30f16e9aaa75417ed8bec700db52255228be695cee5dddf692056e8b547fa9ea413a7469731b77966b642ca833adb6d75d6986d981f111f75616dd91f4be654d9f8b3ac973bca408dfbc574e384dd6bb5e2be9dee4291072fffea17505fba50b5c468b5f6b65dc6dd883886105654937bb152b19ffd0d489e9b3ff79dbd1910fee078dbb89fd5f3e4c0dc63b9ffc7e432718a3f99aee04217c9eddf5daa1f178d249d4176a44f8423447a5530630eaf91dbe3cab1b3d3d269f43807bcf1a888b5f5f8fcb0b03b78b644bdb76a377752e19dccee5b1809d5f58faca1d8f468c08ed061d1c7a9729a452c35b71ebd8f1fbeb9cd53bb8b6c481b790a4e52bc2ba821217df1e3fb842c96a356eba1255604946860267bfbed08704dac97947bcc49c03625ea3b0f7c09242de1b8bd739c2a18113dcec9f930f81f97fde16276b3d2b8e45b3919f781de0b933598df5ab95322eb9d3b7581b8bbddd2aecd46f171ac2f22aaf4a680af23d8e6338744e5aafae2c569d6be65b1665f94ded2521356fcb8a95eee34d1012cb9eeff7f03dd181809f843250dfa04101225dc68abb53971a4561032de0aa47eb20a2771685e63033609e8b22de6ab062500f51dded89f11300bdbddd806a6cfdd710f4f970fc1a679d7e35634f505790fa734ccaa1e32b33f7df1ed5dcc722c6d9f2fa3ee289aa7df0b996129c500e3d21c769b2a3cc3f3feefc2ade3411f0e4f3a1840fb88d0023da382bff055809a599d959adfc9a4b8123b88fbf9ae344048158eca7f0e750759d5e7db8636ccccf2762a593cfeacf0d1c771b73ef7ed0b85b2d5dc9b34cf7d19aa5c59379d36d84b52b4f88d07823d62568efb57f63e49b7f0d14f819fdcb1877f5647f5837818d1c3404341a1f3993001dad0dbe320004d3d61364652c9badc7177fbedea16d2cdd5085d1d538d9dbc67eeab4aaef282b5029851522adfb251072722b866cecf1a96b9b1d2f504897375d6bed38dca56bf484605fd262e0c8c8bcfb843aae5a71adfb7e3acebd4aa4b5a1734e8bf0810ce52e292a971d4c36c8059c896338f8e1ec69120630e5f7a68a2034905abef657601177093b3799e24fbe8ee277c7490ea04989b77b20c9c13ac411658f336f84d2efd57899c8a4765136ff0a86075415073225189f136351da818b502a8c72a2b057f3b1080c46adfd809e9c51f4233b0033b3c5d2732490ec6b38b2a3e748339a5b3f7582c711db22953e964f5a11127a3cc7aafd703d7dd2d02b54760aaca91fdb0cc53bb963899d9dd0cbf7fda116e7326fc7a2c93250b95e013130c9408bd714cfc3e51bce6b1b670e6d546659361a785e75063a72cf769a9ab6080f91dea2da617481dcd6611915bb675bde59423a71b81422ba8e1f1c7c101a914fe9f38e6be80017010ed85b080b4ee923224b6bf5eb6b8baf27989fbaf37b8f1f32092e46a5e3d7150e72fc37c63d9e9d9fe55ea4395363ec52bec1d8a7cb706c49b6afc8bea9bd0391b43f738d87e4f4a1c0b7085c6072d58bf2237814819949f5fb3a75ff09d0450280ecd04aa16f039d46d5581e910a0a66809ed1d55ca912d2d16133cf429c54a79c90cd4782e7cecad3bfd8320e22dd69c1caca6678cd0c12ef5531cb90e11f89b215804d5054b0e63f1f6072e0ba3399b5647d4e4db2c03f779adea26f301d129206b4ea0d638f79b9712e12bbb15a8e182a91aa10464351c9ebfcc367d63314772b55b5775f7a57bb43bc7486b9b440e803b6059f340c0263bb19530dd3182a57cb994a8db257611991c049eeafb10ee54e092e02edef1e8e220c8dbaf6d4b1127f93fc770903c793538ded564a18f46af70aaecb54f1fd7b1dbe0ceeb998707fc48b70709819807be26bc8d331359a6a78c4b452019e180437b1378ca470c519eb71468d02e2456736890cd89fd50b9d620b98f4e7fa74c54c7e74c4de8f7c1d79a9a66eabbcb2c3687b2e22105322143077039d62324ed34438193fe121dbf9f0296ab38faad167acae4e60df707cf5414628b91c18ca7eeab9b100571af63c4078151ca5ee2bb6c367190389c32aeac2c4e560546212fed39b4bb96c69cef811b742414c5714fc7ccff71a5a0f99f6ce644a3c77caebdddd65640bb04076eaf1368646dbd0eb046b1f3fa7149bf284ffc59b16c4ce7647821b010be7623334a9dd0e02d76c6b1bde0877656030b4893f927aa836e7efdd3a12f5aff078e702546b254b42644aabe7d38b09238155f4f616987863dd8c462683e235f358b94ab5b987a2aff57c889d7863dd48c491422f166e430f32f084edddc14100c358f1afbab03e20057bfa151945a2307c2e7256119f06be894c3152738f6e5fd56aa0d7b9644ca73bd03271648a31db64e6ddb27050b99938ce60d1027c42f11c20a30783dc562537527b2045f1ddac72ba1e8a5c9d4783c5e35bbd1c3fb4eac749ff132752afbb83ab33942ee1bcdc03fe9481e0e16138b7afe2a62b5a266a07ce73a4be3746524c0d12fab994ea0d8f014a389e2b2e14c9f4b172eb2efa0cc5bcb96962f2483eb5b3bcbdbd107f6439dd79f871b2d7a56b0e2e143926c3c09ff7c24bd20e8cf4522dd7ce875eca276ab185c4e7ddbd396b2e24a64b25c1a97dd2894a4763493eaf84ad3deb88a33cb3cc4eddb0c38209bc89cdb9932f3092c902ad0c36f9c7247705762abcd17670405875fc3e8c501fe4ca43b10c4a81ffba5e8505e12af6fb8a5d203832372a4d4381ea009d1398134fc02d0433c585aadc7c486209356c7800abb675b62a53f0a2d7c312a690b8d61d3744751cbcf46eccd853fb64b0b680dd089a94b95d0d06e7e03c7d1936b73a85f17fcc4e550d134a0d9207d3f9332db69d19ca470aae7af78019215745dbd5129b062a869fddf5d0b9898d1546ab072480bc563847cbfbc3ff23fb91d192fc485597aa0227ca7493c676eecc8f404f1909d07b832046b137058549ebf89cec3fe74723a0555af5d38c0bdd723fc95b57e50206beaa62628544a37f0932edd621340e2e5eddc02fc8445d7a5c94a89f9b9074dd9a7411b5de409bbb4654ecbdfda6d0d22abae1730f05344d01950acff55204bcc683d7e3536fd0cbf001561ce9714b7c7a16ec5b8cdf9c5a79c8dbc7f4d445ee2e9fc36f3b704a285e04e752d2a7f0f6a97ff21a5020495dfb5413dcbb8a58f61bee7191280802ee37f72f9a7471f8af890eac97c5523898d3362e4b468742e85ac50aa100f29f695238b8d09d2bfefd701333833b2656fcb6615a6c424cfbfe2f84cfb17aad87a78616e017606edc0f444976b8d113f57c5b77677897a2a435ac5bc1223a2054832d3cb6ea864be3a63b94cecae98ed25c3bd92f104a09f20e69b2d189919f40709e588ea3f25c57eea9f1d5d21b8e2f769de0418639326311c87585c80c4e04c3ebf56d5d8974c13e41d845df6c3bba44f022eb81e1e5c72168013ac16cac1163ef1bbc6d75348105b9b912289318087f05fff9f30ba6dedc78b09f2737040480ffab74c76d403efb2db186940ebac0ddbce1fa035251c2d88b6d875cabcdf4dd3520a92f1a2f97aa9dd71bb812fb7314c2f554667a179d9ad7c36fc669ffe5a1d4e7716f79ce4afb5d4e9c71a5ff47b065</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-xray">
+      <input class="hbe hbe-input-field hbe-input-field-xray" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-xray" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-xray">Hey, password is required here.</span>
+        <button id="submitPassBtn">提交密码</button>
+      </label>
+      <svg class="hbe hbe-graphic hbe-graphic-xray" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+        <path d="M0,2.5c0,0,298.666,0,399.333,0C448.336,2.5,513.994,13,597,13c77.327,0,135-10.5,200.999-10.5c95.996,0,402.001,0,402.001,0"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+              
 
-                
-              </div>
+              
             
             <hr/>
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Nosql/" class="category-chain-item">Nosql</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Nosql/" class="print-no-link">#Nosql</a>
+      
+    </div>
   
 </div>
 
@@ -484,8 +337,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>数据科学导论复习</div>
-      <div>https://sdueryrg.github.io/2024/12/26/数据科学导论复习/</div>
+      <div>NoSQL复习</div>
+      <div>https://sdueryrg.github.io/2024/12/30/NoSQL复习/</div>
     </div>
     <div class="license-meta">
       
@@ -497,7 +350,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月26日</div>
+          <div>2024年12月30日</div>
         </div>
       
       
@@ -529,18 +382,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/" title="NoSQL复习">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">NoSQL复习</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/24/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%A4%8D%E4%B9%A0/" title="编译原理复习">
-                        <span class="hidden-mobile">编译原理复习</span>
+                      <a href="/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/" title="数据科学导论复习">
+                        <span class="hidden-mobile">数据科学导论复习</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -726,6 +573,23 @@
   
 
 
+
+
+  
+  <script defer>
+    if (document.getElementById('hbePass') || document.querySelector('hbe-prefix')) {
+      Fluid.utils.waitElementLoaded('hbe-prefix', function() {
+        var hbePrefix = document.querySelector('hbe-prefix');
+        hbePrefix.parentElement.classList.add('markdown-body');
+        Fluid.utils.retry(function() {
+          if (Fluid.boot && Fluid.boot.refresh) {
+            Fluid.boot.refresh();
+            return true;
+          }
+        }, 100, 10);
+      })
+    }
+  </script>
 
 
   
