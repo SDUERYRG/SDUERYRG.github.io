@@ -19,15 +19,15 @@
   <meta name="author" content="yrg">
   <meta name="keywords" content="">
   
-    <meta name="description" content="我还没考完试，等我考完公开。">
+    <meta name="description" content="第九章 运行时存储空间的组织一、存储分配策略1.静态分配策略 在编译时能确定数据空间的大小，并为每个数据项目确定出在运行时刻的存储空间位置  2.动态分配策略 在编译时不能确定运行时数据空间的大小，允许递归过程和动态申请释放内存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="编译原理Ch9">
 <meta property="og:url" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch9/index.html">
 <meta property="og:site_name" content="yrg的博客">
-<meta property="og:description" content="我还没考完试，等我考完公开。">
+<meta property="og:description" content="第九章 运行时存储空间的组织一、存储分配策略1.静态分配策略 在编译时能确定数据空间的大小，并为每个数据项目确定出在运行时刻的存储空间位置  2.动态分配策略 在编译时不能确定运行时数据空间的大小，允许递归过程和动态申请释放内存">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-12-04T08:28:32.000Z">
-<meta property="article:modified_time" content="2025-03-03T02:58:38.100Z">
+<meta property="article:modified_time" content="2025-03-03T02:59:27.961Z">
 <meta property="article:author" content="yrg">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -274,27 +274,17 @@
             <h1 id="seo-header">编译原理Ch9</h1>
             
             
-              
-              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="b8b5d35dcc9674a194777d5dc111565feb54ca152070664cfd8153d559b11125">843c319bbffd590b79d8db7444b17f935b7ebd85c8adea1d95ffb74a9374d13667e26b798677f48c523d811b90c5d87de6b70f5860bd3cc1f230958d7bd6ea5ab22765d604f60da244d8caf63209b53693a6ce827948a75fd11696817f03eef622fc4e7f0a1454243bca25efe0ce835168845ddb231173d78fdf7453f5b0c0c5c5c46b93994a07a9580ad4fb33333f857fb01e3b1eefaa4ea3b126aa7ee89825e514202fd1de3e91e017e5b6fd2f7e7fb2d08c174371189acec031881f49ab160a15ef27562f723f9f1f9eb6759b27f2dba9878822d51e888ef0eaa2e92535f8863a0b99c240333a7e399ec13dc460080596185a692be31372fa3f1fe88d2417440bda7649b22429177fae46eae5eb05e394d56dae44fd30d32b8a9a1881ffdef1b62c728c47338eab63f24ff1b9895038ed4ff0472cc783ca01dd79b7c91b515fa4780634c806acf6684390db283343013baf425ea4f2ec7b7444c1b0c58a5318ef890667f83012c509963f3a241529fc2aab1b54abb75ffd0797ee55cbc3a903037d80bf10fa668fd7cd3a009e4f25807bf6200dc87b5e15ad0365355e4f83610a80ca568415f27c0de421b7a5c0a6070e06791da64ed54ceedd51f07460f5e83c0fed45352f19c24b9364674caa9d214cc3e4e30c45bce2125ffa6df060ceec6aa13982577a5c25b8489c34bca289f642bee0ba92825f7d03277f730a5f84c73fa1217c3fdcb46fac6f33606dc65f4fac782d6233cc5ef6d0a28e20afb7d5e3df7a2f09338aed158d416f6911e5d62acfeec20df8b0de13d13f03bf4e59c51ea3f6eaf347050d5ab5efa16f3d90d952c40f93d0d77fe468156f5887eb3d1b675719e53f7c57e9028371705929ec6d1245391640138dcac33c2e560b78c28415ec53e4023be40ecef514370880ea917b8b957dbff1c012632029af07dc406180f00a1a7aeb5b7b8cf6f18eefbb376bc28aa4d3884bc0ee11e74bb331763c482c6686c7a4b41e88a3eca215f64acf8ed1ba58a9bc601a76195f61e45e331395d8b992e471a4723bf98717db6753f03087fa1fbe4d86a97d1b8b551bfa85e7649f75d6ed1b9f42624ef86e7f7129b7c0aae70fd62a2ca0e0033d8f1583bcd7572d4d3b7559dd0af4317b07fb07d8d2411f18e5256f2a0bf854f2f7eb3037b013a4d44c74d61ac961c34633718e08c76e373b85052f67fb0e6c2d4625c8f9dc57be31c95e1a40762f4b09d7c1dbe525283c1d96c0339a0ec329f5477fb49f8840d11e0c64a51315bed358a7f911a8ffd74e2cbbd2137b58cb6f55223848edd499918cd6ae24d4478e49824c8de065e2d6b97520b8a8ec1020867769b8da5abf7e</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-xray">
-      <input class="hbe hbe-input-field hbe-input-field-xray" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-xray" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-xray">Hey, password is required here.</span>
-        <button id="submitPassBtn">提交密码</button>
-      </label>
-      <svg class="hbe hbe-graphic hbe-graphic-xray" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
-        <path d="M0,2.5c0,0,298.666,0,399.333,0C448.336,2.5,513.994,13,597,13c77.327,0,135-10.5,200.999-10.5c95.996,0,402.001,0,402.001,0"></path>
-      </svg>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
-              
+              <div class="markdown-body">
+                
+                <h1 id="第九章-运行时存储空间的组织"><a href="#第九章-运行时存储空间的组织" class="headerlink" title="第九章 运行时存储空间的组织"></a><center>第九章 运行时存储空间的组织</center></h1><h2 id="一、存储分配策略"><a href="#一、存储分配策略" class="headerlink" title="一、存储分配策略"></a>一、存储分配策略</h2><h3 id="1-静态分配策略"><a href="#1-静态分配策略" class="headerlink" title="1.静态分配策略"></a>1.静态分配策略</h3><ul>
+<li>在编译时能确定数据空间的大小，并为每个数据项目确定出在运行时刻的存储空间位置</li>
+</ul>
+<h3 id="2-动态分配策略"><a href="#2-动态分配策略" class="headerlink" title="2.动态分配策略"></a>2.动态分配策略</h3><ul>
+<li>在编译时不能确定运行时数据空间的大小，允许递归过程和动态申请释放内存</li>
+</ul>
 
-              
+                
+              </div>
             
             <hr/>
             <div>
@@ -585,23 +575,6 @@
   
 
 
-
-
-  
-  <script defer>
-    if (document.getElementById('hbePass') || document.querySelector('hbe-prefix')) {
-      Fluid.utils.waitElementLoaded('hbe-prefix', function() {
-        var hbePrefix = document.querySelector('hbe-prefix');
-        hbePrefix.parentElement.classList.add('markdown-body');
-        Fluid.utils.retry(function() {
-          if (Fluid.boot && Fluid.boot.refresh) {
-            Fluid.boot.refresh();
-            return true;
-          }
-        }, 100, 10);
-      })
-    }
-  </script>
 
 
   
