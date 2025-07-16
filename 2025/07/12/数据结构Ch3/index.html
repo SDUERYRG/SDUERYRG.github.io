@@ -27,8 +27,10 @@
 <meta property="og:description" content="第三章 栈、队列和数组栈栈的基本概念栈的定义 栈是只允许在一段进行插入或删除操作的线性表。 栈顶：线性表允许进行插入和删除操作的那一端 栈底：固定的，不允许进行插入和删除的另一端 空栈：不含任何元素的空表  栈的基本操作 InitStack(&amp;S)：初始化一个空栈S StackEmpty(S)：判断一个栈是否为空 Push(&amp;S,x)：入栈，若栈S未满，则将x加入使之成为新的栈顶">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sdueryrg.github.io/2025/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Ch3/%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Ch3/%E4%B8%89%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5%E6%B1%82ij.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Ch3/%E5%8D%81%E5%AD%97%E9%93%BE%E8%A1%A8%E6%B3%95.png">
 <meta property="article:published_time" content="2025-07-12T13:17:13.000Z">
-<meta property="article:modified_time" content="2025-07-14T12:35:55.965Z">
+<meta property="article:modified_time" content="2025-07-16T13:37:04.371Z">
 <meta property="article:author" content="yrg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://sdueryrg.github.io/2025/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Ch3/%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98%E6%B5%81%E7%A8%8B.png">
@@ -224,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          2.5k 字
         
       </span>
     
@@ -235,7 +237,7 @@
         
         
         
-          19 分钟
+          21 分钟
         
       </span>
     
@@ -413,6 +415,32 @@
 <li>需要存储1+2+…+n个元素</li>
 <li>将矩阵下表映射为一维数组下标<code>a[i][j]-&gt;B[k]（i&gt;j）</code>：<br>$$<br>k &#x3D; \frac{i(i-1)}{2} + j-1<br>$$</li>
 <li>当<code>i&lt;j</code>时，访问<code>a[j][i]</code><br>$$<br>k &#x3D; \frac{j(j-1)}{2} + i-1<br>$$7</li>
+</ul>
+<h4 id="三角矩阵的压缩存储（下三角）"><a href="#三角矩阵的压缩存储（下三角）" class="headerlink" title="三角矩阵的压缩存储（下三角）"></a>三角矩阵的压缩存储（下三角）</h4><ul>
+<li>按行优先原则将三角部分元素存入一维数组中。并在最后一个位置存储常量c</li>
+<li>当i≥j时<br>$$<br>k &#x3D; \frac{i(i-1)}{2} + j-1<br>$$</li>
+<li>当<code>i&lt;j</code>时<br>$$<br>k&#x3D; \frac{n(n-1)}{2}<br>$$</li>
+<li>上三角同理</li>
+</ul>
+<h4 id="三对角矩阵的压缩存储（带状矩阵）"><a href="#三对角矩阵的压缩存储（带状矩阵）" class="headerlink" title="三对角矩阵的压缩存储（带状矩阵）"></a>三对角矩阵的压缩存储（带状矩阵）</h4><ul>
+<li>当|i-j|&gt;1时， $a_{ij}&#x3D;0$</li>
+<li>压缩存储策略：按行优先（列优先）原则，只存储带状部分</li>
+<li>前面的$i-1$行有$3(i-1)-1$个元素</li>
+<li>$a_{ij}$是第$i$行第$j-i+2$个元素</li>
+<li>因此$a_{ij}$是第$2i+j-2$个元素</li>
+<li>已知k如何求i，j<br><img src="/2025/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Ch3/%E4%B8%89%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5%E6%B1%82ij.png" srcset="/img/loading.gif" lazyload alt="三对角矩阵求ij"></li>
+<li>法一：这个元素是k+1个元素，因此右边取等</li>
+<li>法二：这个元素前边有k个元素，左边取等</li>
+</ul>
+<h4 id="稀疏矩阵"><a href="#稀疏矩阵" class="headerlink" title="稀疏矩阵"></a>稀疏矩阵</h4><ul>
+<li>压缩存储策略;<ul>
+<li>顺序存储：三元组&lt;行，列，值&gt;<ul>
+<li>失去随机存取特性</li>
+</ul>
+</li>
+<li>十字链表法<br>  <img src="/2025/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Ch3/%E5%8D%81%E5%AD%97%E9%93%BE%E8%A1%A8%E6%B3%95.png" srcset="/img/loading.gif" lazyload alt="十字链表法"></li>
+</ul>
+</li>
 </ul>
 
                 
