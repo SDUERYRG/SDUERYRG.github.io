@@ -27,8 +27,9 @@
 <meta property="og:description" content="数据库相关知识SQL基础NOSQL和SQL的区别ACID和BASE ACID 即原子性，一致性，隔离性和持续性。 BASE 即基本可用，软状态和最终一致性。 从实用的角度出发，我们需要考虑对于面对的应用场景，ACID 是否是必须的。比如银行应用就必须保证 ACID，否则一笔钱可能被使用两次；又比如社交软件不必保证 ACID，因为一条状态的更新对于所有用户读取先后时间有数秒不同并不影响使用。  扩展">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%8C%89%E6%95%B0%E6%8D%AE%E6%9C%BA%E6%9E%84%E5%88%86%E7%B1%BB.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png">
 <meta property="article:published_time" content="2025-08-23T11:29:18.000Z">
-<meta property="article:modified_time" content="2025-08-25T09:43:17.513Z">
+<meta property="article:modified_time" content="2025-08-25T10:02:31.057Z">
 <meta property="article:author" content="yrg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%8C%89%E6%95%B0%E6%8D%AE%E6%9C%BA%E6%9E%84%E5%88%86%E7%B1%BB.png">
@@ -828,6 +829,7 @@
 <li>最重要的是redolog具备故障恢复的能力，Redo Log 记录的是物理级别的修改，包括页的修改，如插入、更新、删除操作在磁盘上的物理位置和修改内容。例如，当执行一个更新操作时，Redo Log 会记录修改的数据页的地址和更新后的数据，而不是 SQL 语句本身。</li>
 <li>在数据页实际更新之前，先将修改操作写入 Redo Log。当数据库重启时，会进行恢复操作。首先，根据 Redo Log 检查哪些事务已经提交但数据页尚未完全写入磁盘。然后，使用 Redo Log 中的记录对这些事务进行重做（Redo）操作，将未完成的数据页修改完成，确保事务的修改生效。</li>
 </ul>
+<h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="Redis有哪些数据结构"><a href="#Redis有哪些数据结构" class="headerlink" title="Redis有哪些数据结构"></a>Redis有哪些数据结构</h3><p><img src="/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="Redis数据结构"></p>
 
                 
               </div>
