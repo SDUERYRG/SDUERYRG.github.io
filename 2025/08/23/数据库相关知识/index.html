@@ -29,8 +29,9 @@
 <meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%8C%89%E6%95%B0%E6%8D%AE%E6%9C%BA%E6%9E%84%E5%88%86%E7%B1%BB.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E5%93%88%E5%B8%8C%E8%A1%A8%E6%89%A9%E5%AE%B9.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.png">
 <meta property="article:published_time" content="2025-08-23T11:29:18.000Z">
-<meta property="article:modified_time" content="2025-08-27T09:27:36.594Z">
+<meta property="article:modified_time" content="2025-08-27T13:24:07.967Z">
 <meta property="article:author" content="yrg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%8C%89%E6%95%B0%E6%8D%AE%E6%9C%BA%E6%9E%84%E5%88%86%E7%B1%BB.png">
@@ -226,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          21k 字
+          26k 字
         
       </span>
     
@@ -237,7 +238,7 @@
         
         
         
-          178 分钟
+          219 分钟
         
       </span>
     
@@ -1310,6 +1311,193 @@
 <td>跨服务共享数据、大规模缓存、消息队列、分布式锁等</td>
 </tr>
 </tbody></table>
+<h3 id="Redis除了缓存，还有哪些应用"><a href="#Redis除了缓存，还有哪些应用" class="headerlink" title="Redis除了缓存，还有哪些应用?"></a>Redis除了缓存，还有哪些应用?</h3><h4 id="Redis实现消息队列"><a href="#Redis实现消息队列" class="headerlink" title="Redis实现消息队列"></a>Redis实现消息队列</h4><ul>
+<li><strong>使用Pub&#x2F;Sub模式：</strong>Redis的Pub&#x2F;Sub是一种基于发布&#x2F;订阅的消息模式，任何客户端都可以订阅一个或多个频道，发布者可以向特定频道发送消息，所有订阅该频道的客户端都会收到此消息。该方式实现起来比较简单，发布者和订阅者完全解耦，支持模式匹配订阅。但是这种方式不支持消息持久化，消息发布后若无订阅者在线则会被丢弃；不保证消息的顺序和可靠性传输。</li>
+<li>使用List结构：使用List的方式通常是使用LPUSH命令将消息推入一个列表，消费者使用BLPOP或BRPOP阻塞地从列表中取出消息（先进先出FIFO）。这种方式可以实现简单的任务队列。这种方式可以结合Redis的过期时间特性实现消息的TTL；通过Redis事务可以保证操作的原子性。但是需要客户端自己实现消息确认、重试等机制，相比专门的消息队列系统功能较弱。</li>
+</ul>
+<h4 id="Redis实现分布式锁"><a href="#Redis实现分布式锁" class="headerlink" title="Redis实现分布式锁"></a>Redis实现分布式锁</h4><ul>
+<li>set nx方式：Redis提供了几种方式来实现分布式锁，最常用的是基于SET命令的争抢锁机制。客户端可以使用SET resource_name lock_value NX PX milliseconds命令设置锁，其中NX表示只有当键不存在时才设置，PX指定锁的有效时间（毫秒）。如果设置成功，则认为客户端获得锁。客户端完成操作后，解锁的还需要先判断锁是不是自己，再进行删除，这里涉及到 2 个操作，为了保证这两个操作的原子性，可以用 lua 脚本来实现。</li>
+<li><strong>RedLock算法：</strong>为了提高分布式锁的可靠性，Redis作者Antirez提出了RedLock算法，它基于多个独立的Redis实例来实现一个更安全的分布式锁。它的基本原理是客户端尝试在多数（大于半数）Redis实例上同时加锁，只有当在大多数实例上加锁成功时才认为获取锁成功。锁的超时时间应该远小于单个实例的超时时间，以避免死锁。该方式可以通过跨多个节点减少单点故障的影响，提高了锁的可用性和安全性。</li>
+</ul>
+<h3 id="Redis分布式锁的实现原理？什么场景下用到分布式锁？"><a href="#Redis分布式锁的实现原理？什么场景下用到分布式锁？" class="headerlink" title="Redis分布式锁的实现原理？什么场景下用到分布式锁？"></a>Redis分布式锁的实现原理？什么场景下用到分布式锁？</h3><ul>
+<li>分布式锁是用于分布式环境下并发控制的一种机制，用于控制某个资源在同一时刻只能被一个应用所使用。如下图所示：<br><img src="/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.png" srcset="/img/loading.gif" lazyload alt="Redis分布式锁"></li>
+</ul>
+<h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><ul>
+<li><p>Redis 本身可以被多个客户端共享访问，正好就是一个共享存储系统，可以用来保存分布式锁，而且 Redis 的读写性能高，可以应对高并发的锁操作场景。Redis 的 SET 命令有个 NX 参数可以实现「key不存在才插入」，所以可以用它来实现分布式锁：</p>
+<ul>
+<li>如果 key 不存在，则显示插入成功，可以用来表示加锁成功；</li>
+<li>如果 key 存在，则会显示插入失败，可以用来表示加锁失败。</li>
+<li>基于 Redis 节点实现分布式锁时，对于加锁操作，我们需要满足三个条件。</li>
+</ul>
+</li>
+<li><p>加锁包括了读取锁变量、检查锁变量值和设置锁变量值三个操作，但需要以原子操作的方式完成，所以，我们使用 SET 命令带上 NX 选项来实现加锁；</p>
+</li>
+<li><p>锁变量需要设置过期时间，以免客户端拿到锁后发生异常，导致锁一直无法释放，所以，我们在 SET 命令执行时加上 EX&#x2F;PX 选项，设置其过期时间；</p>
+</li>
+<li><p>锁变量的值需要能区分来自不同客户端的加锁操作，以免在释放锁时，出现误释放操作，所以，我们使用 SET 命令设置锁变量值时，每个客户端设置的值是一个唯一值，用于标识客户端；</p>
+</li>
+<li><p>满足这三个条件的分布式命令如下：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">SET</span> lock_key <span class="hljs-comment">unique_value NX PX 10000</span><br></code></pre></td></tr></table></figure></li>
+<li><p>lock_key 就是 key 键；</p>
+</li>
+<li><p>unique_value 是客户端生成的唯一的标识，区分来自不同客户端的锁操作；</p>
+</li>
+<li><p>NX 代表只在 lock_key 不存在时，才对 lock_key 进行设置操作；</p>
+</li>
+<li><p>PX 10000 表示设置 lock_key 的过期时间为 10s，这是为了避免客户端发生异常而无法释放锁。</p>
+</li>
+</ul>
+<h4 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h4><ul>
+<li><p>解锁的过程就是将 lock_key 键删除（del lock_key），但不能乱删，要保证执行操作的客户端就是加锁的客户端。所以，解锁的时候，我们要先判断锁的 unique_value 是否为加锁客户端，是的话，才将 lock_key 键删除。</p>
+</li>
+<li><p>可以看到，解锁是有两个操作，这时就需要 Lua 脚本来保证解锁的原子性，因为 Redis 在执行 Lua 脚本时，可以以原子性的方式执行，保证了锁释放操作的原子性。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs lua">// 释放锁时，先比较 unique_value 是否相等，避免锁的误释放<br><span class="hljs-keyword">if</span> redis.call(<span class="hljs-string">&quot;get&quot;</span>,KEYS[<span class="hljs-number">1</span>]) == ARGV[<span class="hljs-number">1</span>] <span class="hljs-keyword">then</span><br>  <span class="hljs-keyword">return</span> redis.call(<span class="hljs-string">&quot;del&quot;</span>,KEYS[<span class="hljs-number">1</span>])<br><span class="hljs-keyword">else</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
+<li><p>这样一来，就通过使用 SET 命令和 Lua 脚本在 Redis 单节点上完成了分布式锁的加锁和解锁。</p>
+</li>
+</ul>
+<h3 id="大Key问题的缺点？"><a href="#大Key问题的缺点？" class="headerlink" title="大Key问题的缺点？"></a>大Key问题的缺点？</h3><ul>
+<li>内存占用过高。大Key占用过多的内存空间，可能导致可用内存不足，从而触发内存淘汰策略。在极端情况下，可能导致内存耗尽，Redis实例崩溃，影响系统的稳定性。</li>
+<li>性能下降。大Key会占用大量内存空间，导致内存碎片增加，进而影响Redis的性能。对于大Key的操作，如读取、写入、删除等，都会消耗更多的CPU时间和内存资源，进一步降低系统性能。</li>
+<li>阻塞其他操作。某些对大Key的操作可能会导致Redis实例阻塞。例如，使用DEL命令删除一个大Key时，可能会导致Redis实例在一段时间内无法响应其他客户端请求，从而影响系统的响应时间和吞吐量。</li>
+<li>网络拥塞。每次获取大key产生的网络流量较大，可能造成机器或局域网的带宽被打满，同时波及其他服务。例如：一个大key占用空间是1MB，每秒访问1000次，就有1000MB的流量。</li>
+<li>主从同步延迟。当Redis实例配置了主从同步时，大Key可能导致主从同步延迟。由于大Key占用较多内存，同步过程中需要传输大量数据，这会导致主从之间的网络传输延迟增加，进而影响数据一致性。</li>
+<li>数据倾斜。在Redis集群模式中，某个数据分片的内存使用率远超其他数据分片，无法使数据分片的内存资源达到均衡。另外也可能造成Redis内存达到maxmemory参数定义的上限导致重要的key被逐出，甚至引发内存溢出。</li>
+</ul>
+<h3 id="如何解决大Key问题"><a href="#如何解决大Key问题" class="headerlink" title="如何解决大Key问题"></a>如何解决大Key问题</h3><h4 id="对大Key进行拆分存储"><a href="#对大Key进行拆分存储" class="headerlink" title="对大Key进行拆分存储"></a>对大Key进行拆分存储</h4><ul>
+<li>例如将user:123:profile拆分成<code>user:123:basic</code>、<code>user:123:contact</code>等</li>
+</ul>
+<h4 id="分页存储"><a href="#分页存储" class="headerlink" title="分页存储"></a>分页存储</h4><ul>
+<li>例如order:list 存了用户的所有订单，几百万条，一旦 LRANGE 就阻塞很久。</li>
+<li>拆分成：<ul>
+<li>order:list:1（第 1 页，存最近 100 条）</li>
+<li>order:list:2（第 2 页）…</li>
+</ul>
+</li>
+</ul>
+<h4 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h4><ul>
+<li>例如article:content:999 里存了一篇几十 KB ~ MB 的文章全文，每次访问都直接从 Redis 取全量，浪费流量和 CPU。</li>
+<li>初次访问时，只缓存常用的前几段文字到 Redis，其余段落不立即缓存</li>
+<li>用户滚动到需要的段落时，再去数据库加载，并单独缓存到 article:content:999:part:{n}</li>
+<li>下次再访问该段落时，直接命中缓存</li>
+</ul>
+<h3 id="什么是热Key"><a href="#什么是热Key" class="headerlink" title="什么是热Key"></a>什么是热Key</h3><ul>
+<li>在 Redis 里，热 Key（Hot Key） 指的是某个 Key 被频繁访问，访问量远超其他 Key。热 Key 常见于爆款商品详情、库存、计数器、排行榜、用户会话与配置开关。</li>
+<li>带来的影响：<ul>
+<li><p>CPU&#x2F;网络压力集中：单个 Key 高并发访问，占用大量 CPU 和网络带宽</p>
+</li>
+<li><p>缓存雪崩风险：热 Key 过期瞬间，海量请求直击数据库</p>
+</li>
+<li><p>延迟波动：其他正常请求受到影响，整体响应变慢</p>
+</li>
+<li><p>集群节点失衡：在分布式 Redis 中，热 Key 所在节点压力爆表</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="解决热Key问题"><a href="#解决热Key问题" class="headerlink" title="解决热Key问题"></a>解决热Key问题</h3><h4 id="在Redis集群架构中对热Key进行复制"><a href="#在Redis集群架构中对热Key进行复制" class="headerlink" title="在Redis集群架构中对热Key进行复制"></a>在Redis集群架构中对热Key进行复制</h4><ul>
+<li>假设 item_stock:1001 是热门商品库存 Key，可拆分成：<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">item_stock:</span><span class="hljs-number">1001</span>:<span class="hljs-number">0</span><br><span class="hljs-symbol">item_stock:</span><span class="hljs-number">1001</span>:<span class="hljs-number">1</span><br>...<br></code></pre></td></tr></table></figure></li>
+<li>下单时随机访问一个分片 Key，并在应用层汇总库存。</li>
+</ul>
+<h4 id="使用本地缓存"><a href="#使用本地缓存" class="headerlink" title="使用本地缓存"></a>使用本地缓存</h4><ul>
+<li>先在本地（应用服务器内存，例如 Guava Cache、Caffeine）缓存数据，减少 Redis 请求。</li>
+<li>在分布式情况下需要保证一致性问题，多个服务实例需要保证看到同一个热key，京东开源的hotkey框架采用worker进行分布式计算统一识别，统一下发</li>
+</ul>
+<h4 id="使用读写分离架构"><a href="#使用读写分离架构" class="headerlink" title="使用读写分离架构"></a>使用读写分离架构</h4><ul>
+<li><strong>如果热Key的产生来自于读请求，您可以将实例改造成读写分离架构来降低每个数据分片的读请求压力，甚至可以不断地增加从节点。</strong>但是读写分离架构在增加业务代码复杂度的同时，也会增加Redis集群架构复杂度。不仅要为多个从节点提供转发层（如Proxy，LVS等）来实现负载均衡，还要考虑从节点数量显著增加后带来故障率增加的问题。Redis集群架构变更会为监控、运维、故障处理带来了更大的挑战。</li>
+</ul>
+<h3 id="如何保证-redis-和-mysql-数据缓存一致性问题？"><a href="#如何保证-redis-和-mysql-数据缓存一致性问题？" class="headerlink" title="如何保证 redis 和 mysql 数据缓存一致性问题？"></a>如何保证 redis 和 mysql 数据缓存一致性问题？</h3><h4 id="不一致场景"><a href="#不一致场景" class="headerlink" title="不一致场景"></a>不一致场景</h4><ul>
+<li>先修改数据库，在删除缓存，更新数据库成功，但删除缓存失败</li>
+<li>先删除缓存，再更新数据库，如果删除缓存成功，未来得及更新数据库，此时用户再来一次请求，此时缓存会从数据库中取出旧值</li>
+</ul>
+<h4 id="双写事务"><a href="#双写事务" class="headerlink" title="双写事务"></a>双写事务</h4><ul>
+<li>利用数据库事务和Redis事务放在同一个事务进行处理</li>
+<li>优点是简单，缺点是无法保证完全一致性，适合小型系统简单读写，不适合高并发</li>
+</ul>
+<h4 id="延迟双删"><a href="#延迟双删" class="headerlink" title="延迟双删"></a>延迟双删</h4><ul>
+<li>数据库完成更新时，马上删除Redis缓存，延迟一段时间，再删一次</li>
+<li>优点实现简单，缺点是延迟时间无法控制，可能会发生覆盖的风险</li>
+</ul>
+<h4 id="订阅更新机制"><a href="#订阅更新机制" class="headerlink" title="订阅更新机制"></a>订阅更新机制</h4><ul>
+<li>使用消息队列，数据库更新后向消息队列发送消息，Redis订阅这个消息队列更新缓存</li>
+<li>优点是同步效果非常好，缺点是复杂性增加，需要维护消息队列</li>
+</ul>
+<h4 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h4><ul>
+<li>把写操作全部操作数据库，再通过一个异步线程，更新Redis一致性</li>
+<li>优点是缓存压力降低很多，适合大流量系统，缺点是项目开发复杂，要做好异步逻辑</li>
+</ul>
+<h4 id="Cannal订阅Binlog同步Redis"><a href="#Cannal订阅Binlog同步Redis" class="headerlink" title="Cannal订阅Binlog同步Redis"></a>Cannal订阅Binlog同步Redis</h4><ul>
+<li>修改数据库时，数据库操作会写入bin log，使用Canal中间件订阅binlog变化，监听到变化后将更新的数据同步给redis</li>
+</ul>
+<h3 id="缓存雪崩、缓存击穿、缓存穿透"><a href="#缓存雪崩、缓存击穿、缓存穿透" class="headerlink" title="缓存雪崩、缓存击穿、缓存穿透"></a>缓存雪崩、缓存击穿、缓存穿透</h3><h4 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h4><ul>
+<li>当大量缓存数据在同一时间过期（失效）或者 Redis 故障宕机时，如果此时有大量的用户请求，都无法在 Redis 中处理，于是全部请求都直接访问数据库</li>
+<li>解决方案：<ul>
+<li>避免给大量数据设置同一过期时间，使用随机数</li>
+<li>互斥锁：当业务线程在处理用户请求时，如果发现访问的数据不在 Redis 里，就加个互斥锁，保证同一时间内只有一个请求来构建缓存。未获取锁的请求则等待锁释放或返回默认值或者空值</li>
+<li>后台更新缓存：业务线程不再负责更新缓存，缓存也不设置有效期，而是让缓存“永久有效”，并将更新缓存的工作交由后台线程定时更新。</li>
+</ul>
+</li>
+</ul>
+<h4 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h4><ul>
+<li>如果缓存中的某个热点数据过期了，此时大量的请求访问了该热点数据，就无法从缓存中读取，直接访问数据库，数据库很容易就被高并发的请求冲垮</li>
+<li>解决方案：<ul>
+<li>互斥锁方案，保证同一时间只有一个业务线程更新缓存，未能获取互斥锁的请求，要么等待锁释放后重新读取缓存，要么就返回空值或者默认值。</li>
+<li>不给热点数据设置过期时间，由后台异步更新缓存，或者在热点数据准备要过期前，提前通知后台线程更新缓存以及重新设置过期时间；</li>
+</ul>
+</li>
+</ul>
+<h4 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h4><ul>
+<li>当用户访问的数据，既不在缓存中，也不在数据库中，导致请求在访问缓存时，发现缓存缺失，再去访问数据库时，发现数据库中也没有要访问的数据，没办法构建缓存数据，来服务后续的请求。那么当有大量这样的请求到来时，数据库的压力骤增，这就是缓存穿透的问题。</li>
+<li>解决方案：<ul>
+<li>非法请求的限制：当有大量恶意请求访问不存在的数据的时候，也会发生缓存穿透，因此在 API 入口处我们要判断求请求参数是否合理，请求参数是否含有非法值、请求字段是否存在，如果判断出是恶意请求就直接返回错误，避免进一步访问缓存和数据库。</li>
+<li>缓存空值或者默认值：当我们线上业务发现缓存穿透的现象时，可以针对查询的数据，在缓存中设置一个空值或者默认值，这样后续请求就可以从缓存中读取到空值或者默认值，返回给应用，而不会继续查询数据库。</li>
+<li>布隆过滤器：我们可以在写入数据库数据时，使用布隆过滤器做个标记，然后在用户请求到来时，业务线程确认缓存失效后，可以通过查询布隆过滤器快速判断数据是否存在，如果不存在，就不用通过查询数据库来判断数据是否存在。即使发生了缓存穿透，大量请求只会查询 Redis 和布隆过滤器，而不会查询数据库，保证了数据库能正常运行，Redis 自身也是支持布隆过滤器的。</li>
+</ul>
+</li>
+</ul>
+<h3 id="布隆过滤器原理介绍一下"><a href="#布隆过滤器原理介绍一下" class="headerlink" title="布隆过滤器原理介绍一下"></a>布隆过滤器原理介绍一下</h3><ul>
+<li>布隆过滤器由「初始值都为 0 的位图数组」和「 N 个哈希函数」两部分组成。当我们在写入数据库数据时，在布隆过滤器里做个标记，这样下次查询数据是否在数据库时，只需要查询布隆过滤器，如果查询到数据没有被标记，说明不在数据库中。</li>
+<li>布隆过滤器会通过 3 个操作完成标记：<ul>
+<li>第一步，使用 N 个哈希函数分别对数据做哈希计算，得到 N 个哈希值；</li>
+<li>第二步，将第一步得到的 N 个哈希值对位图数组的长度取模，得到每个哈希值在位图数组的对应位置。</li>
+<li>第三步，将每个哈希值在位图数组的对应位置的值设置为 1；</li>
+</ul>
+</li>
+<li>举个例子，假设有一个位图数组长度为 8，哈希函数 3 个的布隆过滤器。</li>
+<li>在数据库写入数据 x 后，把数据 x 标记在布隆过滤器时，数据 x 会被 3 个哈希函数分别计算出 3 个哈希值，然后在对这 3 个哈希值对 8 取模，假设取模的结果为 1、4、6，然后把位图数组的第 1、4、6 位置的值设置为 1。当应用要查询数据 x 是否数据库时，通过布隆过滤器只要查到位图数组的第 1、4、6 位置的值是否全为 1，只要有一个为 0，就认为数据 x 不在数据库中。</li>
+<li>布隆过滤器由于是基于哈希函数实现查找的，高效查找的同时存在哈希冲突的可能性，比如数据 x 和数据 y 可能都落在第 1、4、6 位置，而事实上，可能数据库中并不存在数据 y，存在误判的情况。</li>
+<li>所以，查询布隆过滤器说数据存在，并不一定证明数据库中存在这个数据，但是查询到数据不存在，数据库中一定就不存在这个数据。</li>
+</ul>
+<h3 id="如何设计秒杀场景处理高并发以及超卖现象？"><a href="#如何设计秒杀场景处理高并发以及超卖现象？" class="headerlink" title="如何设计秒杀场景处理高并发以及超卖现象？"></a>如何设计秒杀场景处理高并发以及超卖现象？</h3><h4 id="使用数据库悲观锁"><a href="#使用数据库悲观锁" class="headerlink" title="使用数据库悲观锁"></a>使用数据库悲观锁</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">BEGIN</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> goods <span class="hljs-keyword">WHERE</span> goods_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">UPDATE</span>;  <span class="hljs-comment">-- 阶段1：锁行</span><br><span class="hljs-keyword">UPDATE</span> goods <span class="hljs-keyword">SET</span> stock <span class="hljs-operator">=</span> stock <span class="hljs-operator">-</span> <span class="hljs-number">1</span><br>  <span class="hljs-keyword">WHERE</span> goods_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">AND</span> stock <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>;                <span class="hljs-comment">-- 阶段2：更新</span><br><span class="hljs-keyword">COMMIT</span>;                                            <span class="hljs-comment">-- 释放锁</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>先对商品行加锁，再进行库存更新</li>
+<li>悲观锁方案在高并发下会串行化对同一行的操作，安全但吞吐量会急剧下降。</li>
+</ul>
+<h4 id="使用数据库乐观锁"><a href="#使用数据库乐观锁" class="headerlink" title="使用数据库乐观锁"></a>使用数据库乐观锁</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">UPDATE</span> goods<br><span class="hljs-keyword">SET</span> stock <span class="hljs-operator">=</span> stock <span class="hljs-operator">-</span> <span class="hljs-number">1</span><br><span class="hljs-keyword">WHERE</span> goods_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">AND</span> stock <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>这样让数据库自己做并发控制，受影响行数&#x3D;0时再提示库存不足，可大幅减少阻塞。</li>
+</ul>
+<h4 id="使用分布式锁"><a href="#使用分布式锁" class="headerlink" title="使用分布式锁"></a>使用分布式锁</h4><ul>
+<li>同一个锁key，同一时间只能有一个客户端拿到锁，其他客户端会陷入无限的等待来尝试获取那个锁，只有获取到锁的客户端才能执行下面的业务逻辑。</li>
+<li>这种方案的缺点是同一个商品在多用户同时下单的情况下，会基于分布式锁串行化处理，导致没法同时处理同一个商品的大量下单的请求。</li>
+</ul>
+<h4 id="利用分段式锁-分段缓存"><a href="#利用分段式锁-分段缓存" class="headerlink" title="利用分段式锁+分段缓存"></a>利用分段式锁+分段缓存</h4><ul>
+<li><p>把数据分成很多个段，每个段是一个单独的锁，所以多个线程过来并发修改数据的时候，可以并发的修改不同段的数据</p>
+</li>
+<li><p>假设场景：假如你现在商品有100个库存，在redis存放5个库存key，形如:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">key1</span>=goods-<span class="hljs-number">01</span>,value=<span class="hljs-number">20</span><span class="hljs-comment">;</span><br><span class="hljs-attr">key2</span>=goods-<span class="hljs-number">02</span>,value=<span class="hljs-number">20</span><span class="hljs-comment">;</span><br><span class="hljs-attr">key3</span>=goods-<span class="hljs-number">03</span>，value=<span class="hljs-number">20</span><br></code></pre></td></tr></table></figure></li>
+<li><p>用户下单时对用户id进行%5计算，看落在哪个redis的key上，就去取哪个，这样每次就能够处理5个进程请求；或者使用轮询的方式</p>
+</li>
+<li><p>这种方案可以解决同一个商品在多用户同时下单的情况，但有个坑需要解决：当某段锁的库存不足，一定要实现自动释放锁然后换下一个分段库存再次尝试加锁处理，此种方案复杂比较高。</p>
+</li>
+</ul>
+<h4 id="利用redis的incr、decr的原子性-异步队列"><a href="#利用redis的incr、decr的原子性-异步队列" class="headerlink" title="利用redis的incr、decr的原子性 + 异步队列"></a>利用redis的incr、decr的原子性 + 异步队列</h4><ul>
+<li>在系统初始化时，将商品的库存数量加载到redis缓存中</li>
+<li>接收到秒杀请求时，在redis中使用lua脚本进行预减库存（利用redis decr的原子性），当redis中的库存不足时，直接返回秒杀失败，否则继续进行第3步；</li>
+<li>将请求放入异步队列中，返回正在排队中；</li>
+<li>服务端异步队列将请求出队（哪些请求可以出队，可以根据业务来判定，比如：判断对应用户是否已经秒杀过对应商品，防止重复秒杀），出队成功的请求可以生成秒杀订单，减少数据库库存（在扣减库存的sql如下，返回秒杀订单详情）<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> goods <span class="hljs-keyword">set</span> stock <span class="hljs-operator">=</span> stock <span class="hljs-operator">-</span> <span class="hljs-number">1</span> <span class="hljs-keyword">where</span> goods_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">and</span> stock <span class="hljs-operator">&gt;</span><span class="hljs-number">0</span><br></code></pre></td></tr></table></figure></li>
+<li>用户在客户端申请秒杀请求后，进行轮询，查看是否秒杀成功，秒杀成功则进入秒杀订单详情，否则秒杀失败</li>
+<li>缺点：由于是通过异步队列写入数据库中，可能存在数据不一致，其次引用多个组件复杂度比较高</li>
+</ul>
 
                 
               </div>
