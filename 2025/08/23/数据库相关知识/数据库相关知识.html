@@ -1,286 +1,5 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
-<head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
-  
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="yrg">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="数据库相关知识SQL基础NOSQL和SQL的区别ACID和BASE ACID 即原子性，一致性，隔离性和持续性。 BASE 即基本可用，软状态和最终一致性。 从实用的角度出发，我们需要考虑对于面对的应用场景，ACID 是否是必须的。比如银行应用就必须保证 ACID，否则一笔钱可能被使用两次；又比如社交软件不必保证 ACID，因为一条状态的更新对于所有用户读取先后时间有数秒不同并不影响使用。  扩展">
-<meta property="og:type" content="article">
-<meta property="og:title" content="数据库相关知识">
-<meta property="og:url" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/index.html">
-<meta property="og:site_name" content="yrg的博客">
-<meta property="og:description" content="数据库相关知识SQL基础NOSQL和SQL的区别ACID和BASE ACID 即原子性，一致性，隔离性和持续性。 BASE 即基本可用，软状态和最终一致性。 从实用的角度出发，我们需要考虑对于面对的应用场景，ACID 是否是必须的。比如银行应用就必须保证 ACID，否则一笔钱可能被使用两次；又比如社交软件不必保证 ACID，因为一条状态的更新对于所有用户读取先后时间有数秒不同并不影响使用。  扩展">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%8C%89%E6%95%B0%E6%8D%AE%E6%9C%BA%E6%9E%84%E5%88%86%E7%B1%BB.png">
-<meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png">
-<meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E5%93%88%E5%B8%8C%E8%A1%A8%E6%89%A9%E5%AE%B9.png">
-<meta property="og:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.png">
-<meta property="article:published_time" content="2025-08-23T11:29:18.000Z">
-<meta property="article:modified_time" content="2025-08-27T13:24:07.967Z">
-<meta property="article:author" content="yrg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sdueryrg.github.io/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%8C%89%E6%95%B0%E6%8D%AE%E6%9C%BA%E6%9E%84%E5%88%86%E7%B1%BB.png">
-  
-  
-  
-  <title>数据库相关知识 - yrg的博客</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
-  
-
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
-
-  
-<meta name="generator" content="Hexo 7.3.0"></head>
-
-
-<body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>姚仁广的博客</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="数据库相关知识"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-08-23 19:29" pubdate>
-          2025年8月23日 晚上
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          26k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          219 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
-      </div>
-
-      
-    </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">数据库相关知识</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="数据库相关知识"><a href="#数据库相关知识" class="headerlink" title="数据库相关知识"></a>数据库相关知识</h1><h2 id="SQL基础"><a href="#SQL基础" class="headerlink" title="SQL基础"></a>SQL基础</h2><h3 id="NOSQL和SQL的区别"><a href="#NOSQL和SQL的区别" class="headerlink" title="NOSQL和SQL的区别"></a>NOSQL和SQL的区别</h3><h4 id="ACID和BASE"><a href="#ACID和BASE" class="headerlink" title="ACID和BASE"></a>ACID和BASE</h4><ul>
+<hr>
+<h2 id="title-数据库相关知识date-2025-08-23-19-29-18tags"><a href="#title-数据库相关知识date-2025-08-23-19-29-18tags" class="headerlink" title="title: 数据库相关知识date: 2025-08-23 19:29:18tags:"></a>title: 数据库相关知识<br>date: 2025-08-23 19:29:18<br>tags:</h2><h1 id="数据库相关知识"><a href="#数据库相关知识" class="headerlink" title="数据库相关知识"></a>数据库相关知识</h1><h2 id="SQL基础"><a href="#SQL基础" class="headerlink" title="SQL基础"></a>SQL基础</h2><h3 id="NOSQL和SQL的区别"><a href="#NOSQL和SQL的区别" class="headerlink" title="NOSQL和SQL的区别"></a>NOSQL和SQL的区别</h3><h4 id="ACID和BASE"><a href="#ACID和BASE" class="headerlink" title="ACID和BASE"></a>ACID和BASE</h4><ul>
 <li>ACID 即原子性，一致性，隔离性和持续性。</li>
 <li>BASE 即基本可用，软状态和最终一致性。</li>
 <li>从实用的角度出发，我们需要考虑对于面对的应用场景，ACID 是否是必须的。比如银行应用就必须保证 ACID，否则一笔钱可能被使用两次；又比如社交软件不必保证 ACID，因为一条状态的更新对于所有用户读取先后时间有数秒不同并不影响使用。</li>
@@ -310,17 +29,37 @@
 <li>右外连接返回右表中的所有行，即使左表中没有匹配的行。未匹配的左表列会包含NULL。</li>
 </ul>
 <h4 id="全外连接（MySQL不支持）"><a href="#全外连接（MySQL不支持）" class="headerlink" title="全外连接（MySQL不支持）"></a>全外连接（MySQL不支持）</h4><ul>
-<li>全外连接返回两个表中所有行，包括非匹配行，在MySQL中，FULL JOIN 需要使用左外连接 UNION 右外连接来实现，因为 MySQL 不直接支持 FULL JOIN。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> c.id, c.name, o.product<br><span class="hljs-keyword">FROM</span> customers c<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> orders o <span class="hljs-keyword">ON</span> c.id <span class="hljs-operator">=</span> o.customer_id<br><span class="hljs-keyword">UNION</span><br><span class="hljs-keyword">SELECT</span> c.id, c.name, o.product<br><span class="hljs-keyword">FROM</span> customers c<br><span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> orders o <span class="hljs-keyword">ON</span> c.id <span class="hljs-operator">=</span> o.customer_id;<br></code></pre></td></tr></table></figure></li>
+<li>全外连接返回两个表中所有行，包括非匹配行，在MySQL中，FULL JOIN 需要使用左外连接 UNION 右外连接来实现，因为 MySQL 不直接支持 FULL JOIN。</li>
 </ul>
+<pre><code class="sql">SELECT c.id, c.name, o.product
+FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id
+UNION
+SELECT c.id, c.name, o.product
+FROM customers c
+RIGHT JOIN orders o ON c.id = o.customer_id;
+</code></pre>
 <h3 id="MySQL如何避免插入重复数据"><a href="#MySQL如何避免插入重复数据" class="headerlink" title="MySQL如何避免插入重复数据"></a>MySQL如何避免插入重复数据</h3><h4 id="使用UNIQUE约束"><a href="#使用UNIQUE约束" class="headerlink" title="使用UNIQUE约束"></a>使用UNIQUE约束</h4><ul>
-<li>在表的相关列上添加UNIQUE约束，确保每个值在该列中唯一。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> users (<br>    id <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY</span> KEY AUTO_INCREMENT,<br>    email <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">UNIQUE</span>,<br>);<br></code></pre></td></tr></table></figure></li>
+<li>在表的相关列上添加UNIQUE约束，确保每个值在该列中唯一。</li>
 </ul>
+<pre><code class="sql">CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) UNIQUE,
+);
+</code></pre>
 <h4 id="使用INSERT-…-ON-DUPLICATE-KEY-UPDATE"><a href="#使用INSERT-…-ON-DUPLICATE-KEY-UPDATE" class="headerlink" title="使用INSERT … ON DUPLICATE KEY UPDATE"></a>使用INSERT … ON DUPLICATE KEY UPDATE</h4><ul>
-<li>这种语句允许在插入记录时处理重复键的情况。如果插入的记录与现有记录冲突，可以选择更新现有记录：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> users (email, name) <br><span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;example@example.com&#x27;</span>, <span class="hljs-string">&#x27;John Doe&#x27;</span>)<br><span class="hljs-keyword">ON</span> DUPLICATE KEY <span class="hljs-keyword">UPDATE</span> name <span class="hljs-operator">=</span> <span class="hljs-keyword">VALUES</span>(name);<br></code></pre></td></tr></table></figure></li>
+<li>这种语句允许在插入记录时处理重复键的情况。如果插入的记录与现有记录冲突，可以选择更新现有记录：</li>
 </ul>
+<pre><code class="sql">INSERT INTO users (email, name) 
+VALUES (&#39;example@example.com&#39;, &#39;John Doe&#39;)
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+</code></pre>
 <h4 id="使用INSERT-IGNORE"><a href="#使用INSERT-IGNORE" class="headerlink" title="使用INSERT IGNORE"></a>使用INSERT IGNORE</h4><ul>
-<li>该语句会在插入记录时忽略那些因重复键而导致的插入错误。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> IGNORE <span class="hljs-keyword">INTO</span> users (email, name) <br><span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;example@example.com&#x27;</span>, <span class="hljs-string">&#x27;John Doe&#x27;</span>);<br></code></pre></td></tr></table></figure></li>
+<li>该语句会在插入记录时忽略那些因重复键而导致的插入错误。</li>
 </ul>
+<pre><code class="sql">INSERT IGNORE INTO users (email, name) 
+VALUES (&#39;example@example.com&#39;, &#39;John Doe&#39;);
+</code></pre>
 <h3 id="CHAR-和-VARCHAR有什么区别"><a href="#CHAR-和-VARCHAR有什么区别" class="headerlink" title="CHAR 和 VARCHAR有什么区别"></a>CHAR 和 VARCHAR有什么区别</h3><ul>
 <li>CHAR固定长度，定义时需要指定长度，存储时会在末尾补足空格</li>
 <li>VARCHAR可变长第，定义时需要指定最大长度</li>
@@ -358,7 +97,8 @@
 <li>MAX(column)：返回指定列的最大值。</li>
 <li>MIN(column)：返回指定列的最小值。</li>
 </ul>
-<h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><h3 id="执行一条SQL请求的过程是什么？"><a href="#执行一条SQL请求的过程是什么？" class="headerlink" title="执行一条SQL请求的过程是什么？"></a>执行一条SQL请求的过程是什么？</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">客户端 → 连接器 → 查询缓存 → 分析器 → 优化器 → 执行器 → 存储引擎 → 返回结果<br></code></pre></td></tr></table></figure>
+<h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><h3 id="执行一条SQL请求的过程是什么？"><a href="#执行一条SQL请求的过程是什么？" class="headerlink" title="执行一条SQL请求的过程是什么？"></a>执行一条SQL请求的过程是什么？</h3><pre><code>客户端 → 连接器 → 查询缓存 → 分析器 → 优化器 → 执行器 → 存储引擎 → 返回结果
+</code></pre>
 <h4 id="连接器"><a href="#连接器" class="headerlink" title="连接器"></a>连接器</h4><ul>
 <li>建立客户端与 MySQL 服务器的 TCP 连接，并进行身份认证和权限验证。</li>
 </ul>
@@ -402,7 +142,7 @@
 <li>按「字段特性」分类：主键索引、唯一索引、普通索引、前缀索引。</li>
 <li>按「字段个数」分类：单列索引、联合索引。</li>
 </ul>
-<h4 id="按数据结构分类"><a href="#按数据结构分类" class="headerlink" title="按数据结构分类"></a>按数据结构分类</h4><p><img src="/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%8C%89%E6%95%B0%E6%8D%AE%E6%9C%BA%E6%9E%84%E5%88%86%E7%B1%BB.png" srcset="/img/loading.gif" lazyload alt="按数据机构分类"></p>
+<h4 id="按数据结构分类"><a href="#按数据结构分类" class="headerlink" title="按数据结构分类"></a>按数据结构分类</h4><p><img src="/%E6%8C%89%E6%95%B0%E6%8D%AE%E6%9C%BA%E6%9E%84%E5%88%86%E7%B1%BB.png" alt="按数据机构分类"></p>
 <ul>
 <li>InnoDB 是在 MySQL 5.5 之后成为默认的 MySQL 存储引擎，B+Tree 索引类型也是 MySQL 存储引擎采用最多的索引类型。</li>
 <li>在创建表时，InnoDB 存储引擎会根据不同的场景选择不同的列作为索引：<ul>
@@ -424,29 +164,68 @@
 <h4 id="按字段特性分类"><a href="#按字段特性分类" class="headerlink" title="按字段特性分类"></a>按字段特性分类</h4><ul>
 <li>主键索引<ul>
 <li>主键索引就是建立在主键字段上的索引，通常在创建表的时候一起创建，一张表最多只有一个主键索引，索引列的值不允许有空值。</li>
-<li>在创建表时，创建主键索引的方式如下：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> table_name  (<br>  <span class="hljs-keyword">PRIMARY</span> KEY (index_column_1) <span class="hljs-keyword">USING</span> BTREE<br>);<br></code></pre></td></tr></table></figure></li>
+<li>在创建表时，创建主键索引的方式如下：</li>
 </ul>
 </li>
+</ul>
+<pre><code class="sql">CREATE TABLE table_name  (
+  PRIMARY KEY (index_column_1) USING BTREE
+);
+</code></pre>
+<ul>
 <li>唯一索引<ul>
 <li>唯一索引建立在 UNIQUE 字段上的索引，一张表可以有多个唯一索引，索引列的值必须唯一，但是允许有空值。</li>
-<li>在创建表时，创建唯一索引的方式如下：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> table_name  (<br>  ....<br>  <span class="hljs-keyword">UNIQUE</span> KEY(index_column_1,index_column_2,...) <br>);<br></code></pre></td></tr></table></figure></li>
-<li>建表后，如果要创建唯一索引，可以使用这面这条命令：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">UNIQUE</span> INDEX index_name<br><span class="hljs-keyword">ON</span> table_name(index_column_1,index_column_2,...);<br></code></pre></td></tr></table></figure></li>
+<li>在创建表时，创建唯一索引的方式如下：</li>
 </ul>
 </li>
+</ul>
+<pre><code class="sql">CREATE TABLE table_name  (
+  ....
+  UNIQUE KEY(index_column_1,index_column_2,...) 
+);
+</code></pre>
+<ul>
+<li>建表后，如果要创建唯一索引，可以使用这面这条命令：</li>
+</ul>
+<pre><code class="sql">CREATE UNIQUE INDEX index_name
+ON table_name(index_column_1,index_column_2,...);
+</code></pre>
+<ul>
 <li>普通索引<ul>
 <li>普通索引就是建立在普通字段上的索引，既不要求字段为主键，也不要求字段为 UNIQUE。</li>
-<li>在创建表时，创建普通索引的方式如下：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> table_name  (<br>  INDEX(index_column_1,index_column_2,...) <br>);<br></code></pre></td></tr></table></figure></li>
-<li>建表后，如果要创建普通索引，可以使用这面这条命令：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> INDEX index_name<br><span class="hljs-keyword">ON</span> table_name(index_column_1,index_column_2,...);<br></code></pre></td></tr></table></figure></li>
+<li>在创建表时，创建普通索引的方式如下：</li>
 </ul>
 </li>
+</ul>
+<pre><code class="sql">CREATE TABLE table_name  (
+  INDEX(index_column_1,index_column_2,...) 
+);
+</code></pre>
+<ul>
+<li>建表后，如果要创建普通索引，可以使用这面这条命令：</li>
+</ul>
+<pre><code class="sql">CREATE INDEX index_name
+ON table_name(index_column_1,index_column_2,...);
+</code></pre>
+<ul>
 <li>前缀索引<ul>
 <li>前缀索引是指对字符类型字段的前几个字符建立的索引，而不是在整个字段上建立的索引，前缀索引可以建立在字段类型为 char、 varchar、binary、varbinary 的列上。</li>
 <li>使用前缀索引的目的是为了减少索引占用的存储空间，提升查询效率。</li>
-<li>在创建表时，创建前缀索引的方式如下：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> table_name(<br>    column_list,<br>    INDEX(column_name(length))<br>);<br></code></pre></td></tr></table></figure></li>
-<li>建表后，如果要创建前缀索引，可以使用这面这条命令：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> INDEX index_name<br><span class="hljs-keyword">ON</span> table_name(column_name(length));<br></code></pre></td></tr></table></figure></li>
+<li>在创建表时，创建前缀索引的方式如下：</li>
 </ul>
 </li>
 </ul>
+<pre><code class="sql">CREATE TABLE table_name(
+    column_list,
+    INDEX(column_name(length))
+);
+</code></pre>
+<ul>
+<li>建表后，如果要创建前缀索引，可以使用这面这条命令：</li>
+</ul>
+<pre><code class="sql">CREATE INDEX index_name
+ON table_name(column_name(length));
+</code></pre>
 <h4 id="按字段个数分类"><a href="#按字段个数分类" class="headerlink" title="按字段个数分类"></a>按字段个数分类</h4><ul>
 <li>从字段个数的角度来看，索引分为单列索引、联合索引（复合索引）。<ul>
 <li>建立在单列上的索引称为单列索引，比如主键索引；</li>
@@ -555,9 +334,12 @@
 <li><p>mysql 优化器会分析每个索引的查询成本，然后选择成本最低的方案来执行 sql。</p>
 </li>
 <li><p>如果单列索引是 a，联合索引是（a ，b），那么针对下面这个查询：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> a, b <span class="hljs-keyword">from</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">where</span> a <span class="hljs-operator">=</span> ? <span class="hljs-keyword">and</span> b <span class="hljs-operator">=</span>?<br></code></pre></td></tr></table></figure></li>
-<li><p>优化器会选择联合索引，因为查询成本更低，查询也不需要回表，直接索引覆盖了。</p>
 </li>
+</ul>
+<pre><code class="sql">select a, b from table where a = ? and b =?
+</code></pre>
+<ul>
+<li>优化器会选择联合索引，因为查询成本更低，查询也不需要回表，直接索引覆盖了。</li>
 </ul>
 <h3 id="索引已经建好了，那我再插入一条数据，索引会有哪些变化？"><a href="#索引已经建好了，那我再插入一条数据，索引会有哪些变化？" class="headerlink" title="索引已经建好了，那我再插入一条数据，索引会有哪些变化？"></a>索引已经建好了，那我再插入一条数据，索引会有哪些变化？</h3><ul>
 <li><p>插入新数据可能导致B+树结构的调整和索引信息的更新，以保持B+树的平衡性和正确性，这些变化通常由数据库系统自动处理，确保数据的一致性和索引的有效性。</p>
@@ -831,7 +613,7 @@
 <li>最重要的是redolog具备故障恢复的能力，Redo Log 记录的是物理级别的修改，包括页的修改，如插入、更新、删除操作在磁盘上的物理位置和修改内容。例如，当执行一个更新操作时，Redo Log 会记录修改的数据页的地址和更新后的数据，而不是 SQL 语句本身。</li>
 <li>在数据页实际更新之前，先将修改操作写入 Redo Log。当数据库重启时，会进行恢复操作。首先，根据 Redo Log 检查哪些事务已经提交但数据页尚未完全写入磁盘。然后，使用 Redo Log 中的记录对这些事务进行重做（Redo）操作，将未完成的数据页修改完成，确保事务的修改生效。</li>
 </ul>
-<h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="Redis有哪些数据结构"><a href="#Redis有哪些数据结构" class="headerlink" title="Redis有哪些数据结构"></a>Redis有哪些数据结构</h3><p><img src="/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="Redis数据结构"></p>
+<h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="Redis有哪些数据结构"><a href="#Redis有哪些数据结构" class="headerlink" title="Redis有哪些数据结构"></a>Redis有哪些数据结构</h3><p><img src="/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="Redis数据结构"></p>
 <h3 id="Zset-底层是怎么实现的？"><a href="#Zset-底层是怎么实现的？" class="headerlink" title="Zset 底层是怎么实现的？"></a>Zset 底层是怎么实现的？</h3><ul>
 <li>Zset 类型的底层数据结构是由压缩列表或跳表实现的：<ul>
 <li>如果有序集合的元素个数小于 128 个，并且每个元素的值小于 64 字节时，Redis 会使用压缩列表作为 Zset 类型的底层数据结构；</li>
@@ -964,7 +746,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="哈希表的扩容"><a href="#哈希表的扩容" class="headerlink" title="哈希表的扩容"></a>哈希表的扩容</h3><h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E5%93%88%E5%B8%8C%E8%A1%A8%E6%89%A9%E5%AE%B9.png" srcset="/img/loading.gif" lazyload alt="哈希表扩容"></p>
+<h3 id="哈希表的扩容"><a href="#哈希表的扩容" class="headerlink" title="哈希表的扩容"></a>哈希表的扩容</h3><h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="/%E5%93%88%E5%B8%8C%E8%A1%A8%E6%89%A9%E5%AE%B9.png" alt="哈希表扩容"></p>
 <ul>
 <li>问题：如果「哈希表 1 」的数据量非常大，那么在迁移至「哈希表 2 」的时候，因为会涉及大量的数据拷贝，此时可能会对 Redis 造成阻塞，无法服务其他请求。</li>
 </ul>
@@ -1135,7 +917,20 @@
 </li>
 </ul>
 <h3 id="介绍一下Redis过期删除策略"><a href="#介绍一下Redis过期删除策略" class="headerlink" title="介绍一下Redis过期删除策略"></a>介绍一下Redis过期删除策略</h3><h4 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h4><ul>
-<li>Redis 的惰性删除策略由 db.c 文件中的 expireIfNeeded 函数实现，代码如下：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">expireIfNeeded</span><span class="hljs-params">(redisDb *db, robj *key)</span> &#123;<br>    <span class="hljs-comment">// 判断 key 是否过期</span><br>    <span class="hljs-keyword">if</span> (!keyIsExpired(db,key)) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    ....<br>    <span class="hljs-comment">/* 删除过期键 */</span><br>    ....<br>    <span class="hljs-comment">// 如果 server.lazyfree_lazy_expire 为 1 表示异步删除，反之同步删除；</span><br>    <span class="hljs-keyword">return</span> server.lazyfree_lazy_expire ? dbAsyncDelete(db,key) :<br>                                         dbSyncDelete(db,key);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>Redis 的惰性删除策略由 db.c 文件中的 expireIfNeeded 函数实现，代码如下：</li>
+</ul>
+<pre><code class="c">int expireIfNeeded(redisDb *db, robj *key) {
+    // 判断 key 是否过期
+    if (!keyIsExpired(db,key)) return 0;
+    ....
+    /* 删除过期键 */
+    ....
+    // 如果 server.lazyfree_lazy_expire 为 1 表示异步删除，反之同步删除；
+    return server.lazyfree_lazy_expire ? dbAsyncDelete(db,key) :
+                                         dbSyncDelete(db,key);
+}
+</code></pre>
+<ul>
 <li>Redis 在访问或者修改 key 之前，都会调用 expireIfNeeded 函数对其进行检查，检查 key 是否过期：<ul>
 <li>如果过期，则删除该 key，至于选择异步删除，还是选择同步删除，根据 lazyfree_lazy_expire 参数配置决定（Redis 4.0版本开始提供参数），然后返回 null 客户端；</li>
 <li>如果没有过期，不做任何处理，然后返回正常的键值对给客户端；</li>
@@ -1320,7 +1115,7 @@
 <li><strong>RedLock算法：</strong>为了提高分布式锁的可靠性，Redis作者Antirez提出了RedLock算法，它基于多个独立的Redis实例来实现一个更安全的分布式锁。它的基本原理是客户端尝试在多数（大于半数）Redis实例上同时加锁，只有当在大多数实例上加锁成功时才认为获取锁成功。锁的超时时间应该远小于单个实例的超时时间，以避免死锁。该方式可以通过跨多个节点减少单点故障的影响，提高了锁的可用性和安全性。</li>
 </ul>
 <h3 id="Redis分布式锁的实现原理？什么场景下用到分布式锁？"><a href="#Redis分布式锁的实现原理？什么场景下用到分布式锁？" class="headerlink" title="Redis分布式锁的实现原理？什么场景下用到分布式锁？"></a>Redis分布式锁的实现原理？什么场景下用到分布式锁？</h3><ul>
-<li>分布式锁是用于分布式环境下并发控制的一种机制，用于控制某个资源在同一时刻只能被一个应用所使用。如下图所示：<br><img src="/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.png" srcset="/img/loading.gif" lazyload alt="Redis分布式锁"></li>
+<li>分布式锁是用于分布式环境下并发控制的一种机制，用于控制某个资源在同一时刻只能被一个应用所使用。如下图所示：<br><img src="/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.png" alt="Redis分布式锁"></li>
 </ul>
 <h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><ul>
 <li><p>Redis 本身可以被多个客户端共享访问，正好就是一个共享存储系统，可以用来保存分布式锁，而且 Redis 的读写性能高，可以应对高并发的锁操作场景。Redis 的 SET 命令有个 NX 参数可以实现「key不存在才插入」，所以可以用它来实现分布式锁：</p>
@@ -1337,23 +1132,31 @@
 <li><p>锁变量的值需要能区分来自不同客户端的加锁操作，以免在释放锁时，出现误释放操作，所以，我们使用 SET 命令设置锁变量值时，每个客户端设置的值是一个唯一值，用于标识客户端；</p>
 </li>
 <li><p>满足这三个条件的分布式命令如下：</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">SET</span> lock_key <span class="hljs-comment">unique_value NX PX 10000</span><br></code></pre></td></tr></table></figure></li>
-<li><p>lock_key 就是 key 键；</p>
 </li>
-<li><p>unique_value 是客户端生成的唯一的标识，区分来自不同客户端的锁操作；</p>
-</li>
-<li><p>NX 代表只在 lock_key 不存在时，才对 lock_key 进行设置操作；</p>
-</li>
-<li><p>PX 10000 表示设置 lock_key 的过期时间为 10s，这是为了避免客户端发生异常而无法释放锁。</p>
-</li>
+</ul>
+<pre><code>SET lock_key unique_value NX PX 10000
+</code></pre>
+<ul>
+<li>lock_key 就是 key 键；</li>
+<li>unique_value 是客户端生成的唯一的标识，区分来自不同客户端的锁操作；</li>
+<li>NX 代表只在 lock_key 不存在时，才对 lock_key 进行设置操作；</li>
+<li>PX 10000 表示设置 lock_key 的过期时间为 10s，这是为了避免客户端发生异常而无法释放锁。</li>
 </ul>
 <h4 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h4><ul>
 <li><p>解锁的过程就是将 lock_key 键删除（del lock_key），但不能乱删，要保证执行操作的客户端就是加锁的客户端。所以，解锁的时候，我们要先判断锁的 unique_value 是否为加锁客户端，是的话，才将 lock_key 键删除。</p>
 </li>
 <li><p>可以看到，解锁是有两个操作，这时就需要 Lua 脚本来保证解锁的原子性，因为 Redis 在执行 Lua 脚本时，可以以原子性的方式执行，保证了锁释放操作的原子性。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs lua">// 释放锁时，先比较 unique_value 是否相等，避免锁的误释放<br><span class="hljs-keyword">if</span> redis.call(<span class="hljs-string">&quot;get&quot;</span>,KEYS[<span class="hljs-number">1</span>]) == ARGV[<span class="hljs-number">1</span>] <span class="hljs-keyword">then</span><br>  <span class="hljs-keyword">return</span> redis.call(<span class="hljs-string">&quot;del&quot;</span>,KEYS[<span class="hljs-number">1</span>])<br><span class="hljs-keyword">else</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure></li>
-<li><p>这样一来，就通过使用 SET 命令和 Lua 脚本在 Redis 单节点上完成了分布式锁的加锁和解锁。</p>
 </li>
+</ul>
+<pre><code class="lua">// 释放锁时，先比较 unique_value 是否相等，避免锁的误释放
+if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1] then
+  return redis.call(&quot;del&quot;,KEYS[1])
+else
+  return 0
+end
+</code></pre>
+<ul>
+<li>这样一来，就通过使用 SET 命令和 Lua 脚本在 Redis 单节点上完成了分布式锁的加锁和解锁。</li>
 </ul>
 <h3 id="大Key问题的缺点？"><a href="#大Key问题的缺点？" class="headerlink" title="大Key问题的缺点？"></a>大Key问题的缺点？</h3><ul>
 <li>内存占用过高。大Key占用过多的内存空间，可能导致可用内存不足，从而触发内存淘汰策略。在极端情况下，可能导致内存耗尽，Redis实例崩溃，影响系统的稳定性。</li>
@@ -1395,7 +1198,13 @@
 </li>
 </ul>
 <h3 id="解决热Key问题"><a href="#解决热Key问题" class="headerlink" title="解决热Key问题"></a>解决热Key问题</h3><h4 id="在Redis集群架构中对热Key进行复制"><a href="#在Redis集群架构中对热Key进行复制" class="headerlink" title="在Redis集群架构中对热Key进行复制"></a>在Redis集群架构中对热Key进行复制</h4><ul>
-<li>假设 item_stock:1001 是热门商品库存 Key，可拆分成：<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">item_stock:</span><span class="hljs-number">1001</span>:<span class="hljs-number">0</span><br><span class="hljs-symbol">item_stock:</span><span class="hljs-number">1001</span>:<span class="hljs-number">1</span><br>...<br></code></pre></td></tr></table></figure></li>
+<li>假设 item_stock:1001 是热门商品库存 Key，可拆分成：</li>
+</ul>
+<pre><code>item_stock:1001:0
+item_stock:1001:1
+...
+</code></pre>
+<ul>
 <li>下单时随机访问一个分片 Key，并在应用层汇总库存。</li>
 </ul>
 <h4 id="使用本地缓存"><a href="#使用本地缓存" class="headerlink" title="使用本地缓存"></a>使用本地缓存</h4><ul>
@@ -1467,12 +1276,20 @@
 <li>布隆过滤器由于是基于哈希函数实现查找的，高效查找的同时存在哈希冲突的可能性，比如数据 x 和数据 y 可能都落在第 1、4、6 位置，而事实上，可能数据库中并不存在数据 y，存在误判的情况。</li>
 <li>所以，查询布隆过滤器说数据存在，并不一定证明数据库中存在这个数据，但是查询到数据不存在，数据库中一定就不存在这个数据。</li>
 </ul>
-<h3 id="如何设计秒杀场景处理高并发以及超卖现象？"><a href="#如何设计秒杀场景处理高并发以及超卖现象？" class="headerlink" title="如何设计秒杀场景处理高并发以及超卖现象？"></a>如何设计秒杀场景处理高并发以及超卖现象？</h3><h4 id="使用数据库悲观锁"><a href="#使用数据库悲观锁" class="headerlink" title="使用数据库悲观锁"></a>使用数据库悲观锁</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">BEGIN</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> goods <span class="hljs-keyword">WHERE</span> goods_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">UPDATE</span>;  <span class="hljs-comment">-- 阶段1：锁行</span><br><span class="hljs-keyword">UPDATE</span> goods <span class="hljs-keyword">SET</span> stock <span class="hljs-operator">=</span> stock <span class="hljs-operator">-</span> <span class="hljs-number">1</span><br>  <span class="hljs-keyword">WHERE</span> goods_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">AND</span> stock <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>;                <span class="hljs-comment">-- 阶段2：更新</span><br><span class="hljs-keyword">COMMIT</span>;                                            <span class="hljs-comment">-- 释放锁</span><br></code></pre></td></tr></table></figure>
+<h3 id="如何设计秒杀场景处理高并发以及超卖现象？"><a href="#如何设计秒杀场景处理高并发以及超卖现象？" class="headerlink" title="如何设计秒杀场景处理高并发以及超卖现象？"></a>如何设计秒杀场景处理高并发以及超卖现象？</h3><h4 id="使用数据库悲观锁"><a href="#使用数据库悲观锁" class="headerlink" title="使用数据库悲观锁"></a>使用数据库悲观锁</h4><pre><code class="sql">BEGIN;
+SELECT * FROM goods WHERE goods_id = ? FOR UPDATE;  -- 阶段1：锁行
+UPDATE goods SET stock = stock - 1
+  WHERE goods_id = ? AND stock &gt; 0;                -- 阶段2：更新
+COMMIT;                                            -- 释放锁
+</code></pre>
 <ul>
 <li>先对商品行加锁，再进行库存更新</li>
 <li>悲观锁方案在高并发下会串行化对同一行的操作，安全但吞吐量会急剧下降。</li>
 </ul>
-<h4 id="使用数据库乐观锁"><a href="#使用数据库乐观锁" class="headerlink" title="使用数据库乐观锁"></a>使用数据库乐观锁</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">UPDATE</span> goods<br><span class="hljs-keyword">SET</span> stock <span class="hljs-operator">=</span> stock <span class="hljs-operator">-</span> <span class="hljs-number">1</span><br><span class="hljs-keyword">WHERE</span> goods_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">AND</span> stock <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+<h4 id="使用数据库乐观锁"><a href="#使用数据库乐观锁" class="headerlink" title="使用数据库乐观锁"></a>使用数据库乐观锁</h4><pre><code class="sql">UPDATE goods
+SET stock = stock - 1
+WHERE goods_id = ? AND stock &gt; 0;
+</code></pre>
 <ul>
 <li>这样让数据库自己做并发控制，受影响行数&#x3D;0时再提示库存不足，可大幅减少阻塞。</li>
 </ul>
@@ -1484,7 +1301,13 @@
 <li><p>把数据分成很多个段，每个段是一个单独的锁，所以多个线程过来并发修改数据的时候，可以并发的修改不同段的数据</p>
 </li>
 <li><p>假设场景：假如你现在商品有100个库存，在redis存放5个库存key，形如:</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">key1</span>=goods-<span class="hljs-number">01</span>,value=<span class="hljs-number">20</span><span class="hljs-comment">;</span><br><span class="hljs-attr">key2</span>=goods-<span class="hljs-number">02</span>,value=<span class="hljs-number">20</span><span class="hljs-comment">;</span><br><span class="hljs-attr">key3</span>=goods-<span class="hljs-number">03</span>，value=<span class="hljs-number">20</span><br></code></pre></td></tr></table></figure></li>
+</li>
+</ul>
+<pre><code>key1=goods-01,value=20;
+key2=goods-02,value=20;
+key3=goods-03，value=20
+</code></pre>
+<ul>
 <li><p>用户下单时对用户id进行%5计算，看落在哪个redis的key上，就去取哪个，这样每次就能够处理5个进程请求；或者使用轮询的方式</p>
 </li>
 <li><p>这种方案可以解决同一个商品在多用户同时下单的情况，但有个坑需要解决：当某段锁的库存不足，一定要实现自动释放锁然后换下一个分段库存再次尝试加锁处理，此种方案复杂比较高。</p>
@@ -1494,379 +1317,11 @@
 <li>在系统初始化时，将商品的库存数量加载到redis缓存中</li>
 <li>接收到秒杀请求时，在redis中使用lua脚本进行预减库存（利用redis decr的原子性），当redis中的库存不足时，直接返回秒杀失败，否则继续进行第3步；</li>
 <li>将请求放入异步队列中，返回正在排队中；</li>
-<li>服务端异步队列将请求出队（哪些请求可以出队，可以根据业务来判定，比如：判断对应用户是否已经秒杀过对应商品，防止重复秒杀），出队成功的请求可以生成秒杀订单，减少数据库库存（在扣减库存的sql如下，返回秒杀订单详情）<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> goods <span class="hljs-keyword">set</span> stock <span class="hljs-operator">=</span> stock <span class="hljs-operator">-</span> <span class="hljs-number">1</span> <span class="hljs-keyword">where</span> goods_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">and</span> stock <span class="hljs-operator">&gt;</span><span class="hljs-number">0</span><br></code></pre></td></tr></table></figure></li>
+<li>服务端异步队列将请求出队（哪些请求可以出队，可以根据业务来判定，比如：判断对应用户是否已经秒杀过对应商品，防止重复秒杀），出队成功的请求可以生成秒杀订单，减少数据库库存（在扣减库存的sql如下，返回秒杀订单详情）</li>
+</ul>
+<pre><code class="sql">update goods set stock = stock - 1 where goods_id = ? and stock &gt;0
+</code></pre>
+<ul>
 <li>用户在客户端申请秒杀请求后，进行轮询，查看是否秒杀成功，秒杀成功则进入秒杀订单详情，否则秒杀失败</li>
 <li>缺点：由于是通过异步队列写入数据库中，可能存在数据不一致，其次引用多个组件复杂度比较高</li>
 </ul>
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>数据库相关知识</div>
-      <div>https://sdueryrg.github.io/2025/08/23/数据库相关知识/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>yrg</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2025年8月23日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
-
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2025/08/28/%E8%AE%A1%E7%BD%91OS%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="计网OS相关知识">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">计网OS相关知识</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2025/08/23/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="数据库相关知识">
-                        <span class="hidden-mobile">数据库相关知识</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-  
-  
-    <article id="comments" lazyload>
-      
-  <div id="valine"></div>
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#valine', function() {
-      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
-        var options = Object.assign(
-          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
-          {
-            el: "#valine",
-            path: window.location.pathname
-          }
-        )
-        new Valine(options);
-        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
-          var imgSelector = '#valine .vcontent img:not(.vemoji)';
-          Fluid.plugins.imageCaption(imgSelector);
-          Fluid.plugins.fancyBox(imgSelector);
-        })
-      });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-    </article>
-  
-
-
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
