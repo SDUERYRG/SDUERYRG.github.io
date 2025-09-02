@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://sdueryrg.github.io/2025/08/28/%E8%AE%A1%E7%BD%91OS%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png">
 <meta property="og:image" content="https://sdueryrg.github.io/2025/08/28/%E8%AE%A1%E7%BD%91OS%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/%E6%97%B6%E9%92%9F%E7%AE%97%E6%B3%95.png">
 <meta property="article:published_time" content="2025-08-28T08:25:57.000Z">
-<meta property="article:modified_time" content="2025-09-02T08:11:17.782Z">
+<meta property="article:modified_time" content="2025-09-02T09:05:21.075Z">
 <meta property="article:author" content="yrg">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary_large_image">
@@ -250,7 +250,7 @@
         
         
         
-          232 分钟
+          238 分钟
         
       </span>
     
@@ -1454,31 +1454,50 @@
 <li>多路复用多线程web服务器：将多进程和多路复用的功能结合起来形成的web服务器架构，其避免了让一个进程服务于过多的用户请求，并能充分利用多CPU主机所提供的计算能力。（这种架构可以理解为有多个进程，并且一个进程又生成多个线程，每个线程处理一个请求）</li>
 </ul>
 <h3 id="讲一下io多路复用"><a href="#讲一下io多路复用" class="headerlink" title="讲一下io多路复用"></a>讲一下io多路复用</h3><ul>
-<li>指的是复用一个线程，处理多个socket中的事件。能够资源复用，防止创建过多线程导致的上下文切换的开销。<pre class="mermaid">sequenceDiagram
-  autonumber
-  participant App as 应用程序
-  participant Kernel as 内核
-  participant Mon1 as 描述符1
-  participant Mon2 as 描述符2
+<li>指的是复用一个线程，处理多个socket中的事件。能够资源复用，防止创建过多线程导致的上下文切换的开销。<pre><code class=" mermaid">sequenceDiagram
+    autonumber
+    participant App as 应用程序1
+    participant Kernel as 内核
+    participant Mon1 as 描述符1
+    participant Mon2 as 描述符2
 
-  Note over App: 应用程序发起 IO 多路复用，阻塞等待任一 fd 就绪
-  App->>Kernel: select/poll/epoll(fd1, fd2, ..., fdN)
+    Note over App: 应用程序发起 IO 多路复用，阻塞等待任一 fd 就绪
+    App-&gt;&gt;Kernel: select/poll/epoll(fd1, fd2, ..., fdN)
 
-  par 并行监控
-      Kernel-->>Mon1: 监控收发/事件订阅
-      Mon1->>Kernel: 数据准备好/事件就绪
-      Mon1-->>App: 通知/唤醒
-  and
-      Kernel-->>Mon2: 监控收发/事件订阅
-      Mon2->>Kernel: 数据准备好/事件就绪
-      Mon2-->>App: 通知/唤醒
-  end
+    par 并行监控
+        Kernel--&gt;&gt;Mon1: 监控收发/事件订阅
+        Mon1-&gt;&gt;Kernel: 数据准备好/事件就绪
+        Mon1--&gt;&gt;App: 通知/唤醒
+    and
+        Kernel--&gt;&gt;Mon2: 监控收发/事件订阅
+        Mon2-&gt;&gt;Kernel: 数据准备好/事件就绪
+        Mon2--&gt;&gt;App: 通知/唤醒
+    end
 
-  Kernel-->>App: 返回就绪的 fd（例如 fd2）
-  App->>Kernel: read(fd2)
-  Kernel-->>App: 返回数据
-  App->>App: 处理数据
-  App->>Kernel: 下一轮 select/poll/epoll(fd1, fd2, ..., fdN)</pre></li>
+    Kernel--&gt;&gt;App: 返回就绪的 fd（例如 fd2）
+    App-&gt;&gt;Kernel: read(fd2)
+    Kernel--&gt;&gt;App: 返回数据
+    App-&gt;&gt;App: 处理数据
+    App-&gt;&gt;Kernel: 下一轮 select/poll/epoll(fd1, fd2, ..., fdN)
+</code></pre></li>
+</ul>
+<h3 id="select、poll、epoll-的区别是什么？"><a href="#select、poll、epoll-的区别是什么？" class="headerlink" title="select、poll、epoll 的区别是什么？"></a>select、poll、epoll 的区别是什么？</h3><ul>
+<li>内核提供给用户态的多路复用系统调用，进程可以通过一个系统调用函数从内核中获取多个事件。</li>
+</ul>
+<h4 id="select-poll"><a href="#select-poll" class="headerlink" title="select&#x2F;poll"></a>select&#x2F;poll</h4><ul>
+<li>将已连接的 Socket 都放到一个文件描述符集合</li>
+<li>然后调用 select 函数将文件描述符集合拷贝到内核里，让内核来检查是否有网络事件产生</li>
+<li>通过遍历文件描述符集合的方式，当检查到有事件产生后，将此 Socket 标记为可读或可写， 接着再把整个文件描述符集合拷贝回用户态里，然后用户态还需要再通过遍历的方法找到可读或可写的 Socket，然后再对其处理。<ul>
+<li>一共两次遍历和两次拷贝</li>
+<li>select 使用固定长度的 BitsMap，表示文件描述符集合，而且所支持的文件描述符的个数是有限制的，在 Linux 系统中，由内核中的 FD_SETSIZE 限制， 默认最大值为 1024，只能监听 0~1023 的文件描述符。</li>
+</ul>
+</li>
+<li>poll 不再用 BitsMap 来存储所关注的文件描述符，取而代之用动态数组，突破了 select 的文件描述符个数限制，当然还会受到系统文件描述符限制。</li>
+<li>总结：都是使用「线性结构」存储进程关注的 Socket 集合，因此都需要遍历文件描述符集合来找到可读或可写的 Socket，时间复杂度为 O(n)，而且也需要在用户态与内核态之间拷贝文件描述符集合</li>
+</ul>
+<h4 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h4><ul>
+<li>epoll 在内核里使用红黑树来跟踪进程所有待检测的文件描述字，把需要监控的 socket 通过 epoll_ctl() 函数加入内核中的红黑树里，红黑树是个高效的数据结构，增删改一般时间复杂度是 O(logn)。而 select&#x2F;poll 内核里没有类似 epoll 红黑树这种保存所有待检测的 socket 的数据结构，所以 select&#x2F;poll 每次操作时都传入整个 socket 集合给内核，而 epoll 因为在内核维护了红黑树，可以保存所有待检测的 socket ，所以只需要传入一个待检测的 socket，减少了内核和用户空间大量的数据拷贝和内存分配。</li>
+<li>epoll 使用事件驱动的机制，内核里维护了一个链表来记录就绪事件，当某个 socket 有事件发生时，通过回调函数内核会将其加入到这个就绪事件列表中（不会删除红黑树中的），当用户调用 epoll_wait() 函数时，只会返回有事件发生的文件描述符的个数，不需要像 select&#x2F;poll 那样轮询扫描整个 socket 集合，大大提高了检测的效率。</li>
 </ul>
 
                 
