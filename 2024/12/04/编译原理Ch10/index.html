@@ -1,0 +1,938 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第十章 优化一、优化1.概念 对程序进行各种等价变换，使得从变换后的程序出发能够生成更有效得目标代码  2.优化的级别 局部优化、循环优化、全局优化  3.优化组成 对程序控制流分析 数据流分析 代码变换  4.目的 产生更高效的代码  5.遵循的原则(1)等价原则 优化不应改变程序运行的结果  (2)有效原则 使优化后所产生的目标代码运行时间较短，占用的存储空间较小  (3)合算原则 应尽可能以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理Ch10">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="第十章 优化一、优化1.概念 对程序进行各种等价变换，使得从变换后的程序出发能够生成更有效得目标代码  2.优化的级别 局部优化、循环优化、全局优化  3.优化组成 对程序控制流分析 数据流分析 代码变换  4.目的 产生更高效的代码  5.遵循的原则(1)等价原则 优化不应改变程序运行的结果  (2)有效原则 使优化后所产生的目标代码运行时间较短，占用的存储空间较小  (3)合算原则 应尽可能以">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%BC%98%E5%8C%96%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E6%BA%90%E7%A8%8B%E5%BA%8F.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD3.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD4.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD5.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD6.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD7.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD8.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD9.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E8%B5%8B%E5%80%BC1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E8%B5%8B%E5%80%BC2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E5%89%8A%E5%BC%B11.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E5%89%8A%E5%BC%B12.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E6%B5%81%E5%9B%BE.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA3.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA4.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA5.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/Node%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%AE%9A%E5%80%BC%E5%88%B0%E8%BE%BE.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%96%E6%8F%90%E7%9A%84%E4%BD%8D%E7%BD%AE.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%BB%A3%E7%A0%81%E5%A4%96%E6%8F%90%E4%BE%8B%E5%AD%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%96%E6%8F%90%E6%9D%A1%E4%BB%B6%E4%BE%8B%E5%AD%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%96%E6%8F%90%E6%9D%A1%E4%BB%B6%E4%BE%8B%E5%AD%902.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%96%E6%8F%90%E6%9D%A1%E4%BB%B6%E4%BE%8B%E5%AD%903.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E6%B6%88%E5%BC%B1%E4%BE%8B1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E6%B6%88%E5%BC%B1%E4%BE%8B2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F%E4%BE%8B1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F%E4%BE%8B2.png">
+<meta property="article:published_time" content="2024-12-04T08:38:16.000Z">
+<meta property="article:modified_time" content="2024-12-26T10:15:37.331Z">
+<meta property="article:author" content="yrg">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%BC%98%E5%8C%96%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87.png">
+  
+  
+  
+  <title>编译原理Ch10 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="编译原理Ch10"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-04 16:38" pubdate>
+          2024年12月4日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">编译原理Ch10</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第十章-优化"><a href="#第十章-优化" class="headerlink" title="第十章 优化"></a><center>第十章 优化</center></h1><h2 id="一、优化"><a href="#一、优化" class="headerlink" title="一、优化"></a>一、优化</h2><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><ul>
+<li>对程序进行各种等价变换，使得从变换后的程序出发能够生成更有效得目标代码</li>
+</ul>
+<h3 id="2-优化的级别"><a href="#2-优化的级别" class="headerlink" title="2.优化的级别"></a>2.优化的级别</h3><ul>
+<li><strong>局部优化、循环优化</strong>、全局优化</li>
+</ul>
+<h3 id="3-优化组成"><a href="#3-优化组成" class="headerlink" title="3.优化组成"></a>3.优化组成</h3><ul>
+<li>对程序控制流分析</li>
+<li>数据流分析</li>
+<li>代码变换<br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%BC%98%E5%8C%96%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87.png" srcset="/img/loading.gif" lazyload alt="优化编译器的组织"></li>
+</ul>
+<h3 id="4-目的"><a href="#4-目的" class="headerlink" title="4.目的"></a>4.目的</h3><ul>
+<li>产生更高效的代码</li>
+</ul>
+<h3 id="5-遵循的原则"><a href="#5-遵循的原则" class="headerlink" title="5.遵循的原则"></a>5.遵循的原则</h3><h4 id="1-等价原则"><a href="#1-等价原则" class="headerlink" title="(1)等价原则"></a>(1)等价原则</h4><ul>
+<li>优化不应改变程序运行的结果</li>
+</ul>
+<h4 id="2-有效原则"><a href="#2-有效原则" class="headerlink" title="(2)有效原则"></a>(2)有效原则</h4><ul>
+<li>使优化后所产生的目标代码运行时间较短，占用的存储空间较小</li>
+</ul>
+<h4 id="3-合算原则"><a href="#3-合算原则" class="headerlink" title="(3)合算原则"></a>(3)合算原则</h4><ul>
+<li>应尽可能以较低的代价取得较好的优化效果</li>
+</ul>
+<h3 id="6-优化的种类"><a href="#6-优化的种类" class="headerlink" title="6.优化的种类"></a>6.优化的种类</h3><ul>
+<li>删除多余运算（删除公用子表达式）</li>
+<li>合并已知量</li>
+<li>复写传播</li>
+<li>删除无用赋值</li>
+<li>代码外提</li>
+<li>强度消弱</li>
+<li>变换循环控制条件</li>
+</ul>
+<h3 id="6-优化示例"><a href="#6-优化示例" class="headerlink" title="6.优化示例"></a>6.优化示例</h3><h4 id="1-源程序"><a href="#1-源程序" class="headerlink" title="(1)源程序"></a>(1)源程序</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E6%BA%90%E7%A8%8B%E5%BA%8F.png" srcset="/img/loading.gif" lazyload alt="源程序"></p>
+<h4 id="2-中间代码"><a href="#2-中间代码" class="headerlink" title="(2)中间代码"></a>(2)中间代码</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81.png" srcset="/img/loading.gif" lazyload alt="中间代码"></p>
+<h4 id="3-复写传播"><a href="#3-复写传播" class="headerlink" title="(3)复写传播"></a>(3)复写传播</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD1.png" srcset="/img/loading.gif" lazyload alt="复写传播1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD2.png" srcset="/img/loading.gif" lazyload alt="复写传播2"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD3.png" srcset="/img/loading.gif" lazyload alt="复写传播3"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD4.png" srcset="/img/loading.gif" lazyload alt="复写传播4"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD5.png" srcset="/img/loading.gif" lazyload alt="复写传播5"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD6.png" srcset="/img/loading.gif" lazyload alt="复写传播6"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD7.png" srcset="/img/loading.gif" lazyload alt="复写传播7"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD8.png" srcset="/img/loading.gif" lazyload alt="复写传播8"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%8D%E5%86%99%E4%BC%A0%E6%92%AD9.png" srcset="/img/loading.gif" lazyload alt="复写传播9"></p>
+<h4 id="4-删除无用赋值"><a href="#4-删除无用赋值" class="headerlink" title="(4)删除无用赋值"></a>(4)删除无用赋值</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E8%B5%8B%E5%80%BC1.png" srcset="/img/loading.gif" lazyload alt="删除无用赋值1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E8%B5%8B%E5%80%BC2.png" srcset="/img/loading.gif" lazyload alt="删除无用赋值2"></p>
+<h4 id="5-强度削弱"><a href="#5-强度削弱" class="headerlink" title="(5)强度削弱"></a>(5)强度削弱</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E5%89%8A%E5%BC%B11.png" srcset="/img/loading.gif" lazyload alt="强度削弱1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E5%89%8A%E5%BC%B12.png" srcset="/img/loading.gif" lazyload alt="强度削弱2"></p>
+<h4 id="6-删除归纳变量"><a href="#6-删除归纳变量" class="headerlink" title="(6)删除归纳变量"></a>(6)删除归纳变量</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F1.png" srcset="/img/loading.gif" lazyload alt="删除归纳变量1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F2.png" srcset="/img/loading.gif" lazyload alt="删除归纳变量2"></p>
+<h2 id="二、局部优化"><a href="#二、局部优化" class="headerlink" title="二、局部优化"></a>二、局部优化</h2><h3 id="1-基本快"><a href="#1-基本快" class="headerlink" title="1.基本快"></a>1.基本快</h3><ul>
+<li>连续的语句序列，控制流从它的开始进入，并从它的末尾离开</li>
+<li>再用有向边表示基本块之间的控制流信息，就能得到程序的流图</li>
+</ul>
+<h3 id="2-划分基本快算法"><a href="#2-划分基本快算法" class="headerlink" title="2.划分基本快算法"></a>2.划分基本快算法</h3><ul>
+<li>找出中间语言（三地址语句）程序中各个基本快的入口语句<ul>
+<li>程序的第一个语句</li>
+<li>能由条件转移语句或无条件转移语句转移到的语句</li>
+<li>紧跟在条件转移后面的语句</li>
+</ul>
+</li>
+<li>对以上求出的每个入口语句，确定七所属的基本快。它是由该入口语句到下一入口语句（不包括该入口语句）、或到以转移语句（包括该转移语句）、或一停语句（包括停语句）之间的语句序列组成的</li>
+</ul>
+<h3 id="3-流图"><a href="#3-流图" class="headerlink" title="3.流图"></a>3.流图</h3><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E6%B5%81%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="流图"></p>
+<h2 id="三、有向无环图"><a href="#三、有向无环图" class="headerlink" title="三、有向无环图"></a>三、有向无环图</h2><h3 id="1-DAG的扩充"><a href="#1-DAG的扩充" class="headerlink" title="1.DAG的扩充"></a>1.DAG的扩充</h3><ul>
+<li>在DAG增加标记和附加信息<ul>
+<li>图的叶节点以一标识符或常数作为标记，表示该结点代表该变量或常数的值</li>
+<li>图的内部结点以一运算符作为标记，表示该结点代表应用该运算符对其后继结点所代表的值进行运算的结果</li>
+<li>各个结点上可能附加一个或多个标识符（称附加标识符）表示这些变量具有该结点所代表的值</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-四元式的DAG表示"><a href="#2-四元式的DAG表示" class="headerlink" title="2.四元式的DAG表示"></a>2.四元式的DAG表示</h3><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA1.png" srcset="/img/loading.gif" lazyload alt="四元式的DAG表示1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA2.png" srcset="/img/loading.gif" lazyload alt="四元式的DAG表示2"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA3.png" srcset="/img/loading.gif" lazyload alt="四元式的DAG表示3"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA4.png" srcset="/img/loading.gif" lazyload alt="四元式的DAG表示4"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84DAG%E8%A1%A8%E7%A4%BA5.png" srcset="/img/loading.gif" lazyload alt="四元式的DAG表示5"></p>
+<h3 id="3-基本块的优化算法"><a href="#3-基本块的优化算法" class="headerlink" title="3.基本块的优化算法"></a>3.基本块的优化算法</h3><ul>
+<li>一个基本块，可用一个DAG表示</li>
+<li>对基本块中每一条四元式代码，依次构造对应的DAG图，最后基本块中所有四元式构造出来DAG连成整个基本块的DAG<ul>
+<li>准备操作数的结点</li>
+<li>合并已知量</li>
+<li>删除公共子表达式</li>
+<li>删除无用赋值</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-构造基本块的DAG示例"><a href="#4-构造基本块的DAG示例" class="headerlink" title="4.构造基本块的DAG示例"></a>4.构造基本块的DAG示例</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1DJ411M7eV/?p=211&vd_source=91c1408476b2fc672c9212aeb2e40090">点击跳转</a></p>
+<h3 id="5-构造基本块的DAG的算法"><a href="#5-构造基本块的DAG的算法" class="headerlink" title="5.构造基本块的DAG的算法"></a>5.构造基本块的DAG的算法</h3><ul>
+<li>引入函数Node<br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/Node%E5%87%BD%E6%95%B0.png" srcset="/img/loading.gif" lazyload alt="Node函数"></li>
+</ul>
+<h4 id="1-准备操作数结点"><a href="#1-准备操作数结点" class="headerlink" title="(1)准备操作数结点"></a>(1)准备操作数结点</h4><ul>
+<li>如果Node(B)无定义，则构造一标记为B的叶节点并定义Node(B)为这个结点<ul>
+<li>如果当前四元式是0型（A:&#x3D;B），则记Node(B)的值为n，转4</li>
+<li>如果当前四元式是1型（A:&#x3D;op B），则转2(1)</li>
+<li>如果当前四元式是2型（A:&#x3D;B op C），则(i)如果Node(C)无定义，则构造一标记为C的叶节点并定义Node(C)为这个结点;(ii)转2(2)</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-合并已知量"><a href="#2-合并已知量" class="headerlink" title="(2)合并已知量"></a>(2)合并已知量</h4><ul>
+<li>如果Node(B)是标记为常熟的叶节点，则转2(3);否则，转3(1)（用来处理1型指令）</li>
+<li>如果Node(B)和Node(C)都是标记为常数的叶节点，则转2(4);否则，转3(2)（用来处理2型指令）</li>
+<li>执行op B（即合并已知量）。令得到的新常数为P，如果Node(B)是处理当前四元式时新构造出来的结点，则删除它。如果Node(P)无定义，则构造一用P作标记的叶节点n。置Node(P)&#x3D;n，转4（用来处理1型指令）</li>
+<li>执行B op C（即合并已知量）。令得到的新常数为P。如果Node(B)或Node(C)是处理当前四元式时新构造出来的结点，则删除它。如果Node(P)无定义，则构造一用P作标记的叶节点n。置Node(P)&#x3D;n，转4（用来处理2型指令）</li>
+</ul>
+<h4 id="3-删除公共子表达式"><a href="#3-删除公共子表达式" class="headerlink" title="(3)删除公共子表达式"></a>(3)删除公共子表达式</h4><ul>
+<li>检查DAG中是否已有一结点，其唯一后继为Node(B)且标记为op（即公共子表达式）。如果没有，则构造该结点n，否则，把已有的结点作为它的结点并设该节点为n。转4</li>
+<li>检查DAG中是否已有一结点，其左后继为Node(B)，右后继为Node(C)，且标记为op（即公共子表达式）。如果没有，则构造该结点n，否则，把已有的结点作为它的结点并设该节点为n。转4</li>
+</ul>
+<h4 id="4-删除无用赋值-1"><a href="#4-删除无用赋值-1" class="headerlink" title="(4)删除无用赋值"></a>(4)删除无用赋值</h4><ul>
+<li>如果Node(A)无定义，则把A附加在结点n上冰令Node(A)&#x3D;n；否则，先把A从Node(A)结点上的附加标识符集中删除（注意，如果Node(A)是叶节点，则其A标记不删除）。把A附加到新结点n上并置Node(A)&#x3D;n。转处理下一四元式</li>
+</ul>
+<h3 id="6-从DAG中得到的优化信息"><a href="#6-从DAG中得到的优化信息" class="headerlink" title="6.从DAG中得到的优化信息"></a>6.从DAG中得到的优化信息</h3><ul>
+<li>在基本快外被定值并在基本快内被引用的所有标识符，就是作为叶子结点上标记的那些标识符</li>
+<li>在基本块内被定值并且该值在基本块后面可以被引用的所有标识符，就是DAG各结点上的那些标记或者附加标识符</li>
+</ul>
+<h2 id="四、循环优化"><a href="#四、循环优化" class="headerlink" title="四、循环优化"></a>四、循环优化</h2><h3 id="1-循环优化的措施（主要介绍前三种）"><a href="#1-循环优化的措施（主要介绍前三种）" class="headerlink" title="1.循环优化的措施（主要介绍前三种）"></a>1.循环优化的措施（主要介绍前三种）</h3><ul>
+<li>代码外提</li>
+<li>强度消弱</li>
+<li>删除归纳变量（变换循环控制条件）</li>
+<li>循环展开</li>
+<li>循环合并</li>
+</ul>
+<h3 id="2-代码外提"><a href="#2-代码外提" class="headerlink" title="2.代码外提"></a>2.代码外提</h3><h4 id="1-定值到达"><a href="#1-定值到达" class="headerlink" title="(1)定值到达"></a>(1)定值到达</h4><ul>
+<li>所谓变量A在某点d的定值到达另一点u（或称变量A的定值点d到达另一点u），是指：流图中从d有一通路到达u且该通路上没有A的其他定值</li>
+<li>A在d点的定值到达了u<br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%AE%9A%E5%80%BC%E5%88%B0%E8%BE%BE.png" srcset="/img/loading.gif" lazyload alt="定值到达"></li>
+</ul>
+<h4 id="2-循环不变运算"><a href="#2-循环不变运算" class="headerlink" title="(2)循环不变运算"></a>(2)循环不变运算</h4><ul>
+<li>对四元式A:&#x3D;B op C，若B和C是常数，或者到达它们的B和C的定值点都在循环外</li>
+</ul>
+<h4 id="3-查找循环中不变运算的算法"><a href="#3-查找循环中不变运算的算法" class="headerlink" title="(3)查找循环中不变运算的算法"></a>(3)查找循环中不变运算的算法</h4><ul>
+<li>依次查看L中各基本块的每个四元式，如果它的每个运算对象或为常数，或者定值点在L外，则将此四元式标记为“不变运算”</li>
+<li>重复第3步直到没有新的四元式被标为“不变运算”为止</li>
+<li>一次查看尚未标记为“不变运算”的四元式，如果它的每个运算对象或为常数，或者定值点在L外，或只有一个到达定值点且该点上的四元式已被标记为“不变运算”，则把被查看的四元式标记为“不变运算”</li>
+</ul>
+<h4 id="4-把循环不变运算提到循环体外"><a href="#4-把循环不变运算提到循环体外" class="headerlink" title="(4)把循环不变运算提到循环体外"></a>(4)把循环不变运算提到循环体外</h4><h4 id="5-代码外提的位置"><a href="#5-代码外提的位置" class="headerlink" title="(5)代码外提的位置"></a>(5)代码外提的位置</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%96%E6%8F%90%E7%9A%84%E4%BD%8D%E7%BD%AE.png" srcset="/img/loading.gif" lazyload alt="外提的位置"></p>
+<h4 id="6-示例"><a href="#6-示例" class="headerlink" title="(6)示例"></a>(6)示例</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E4%BB%A3%E7%A0%81%E5%A4%96%E6%8F%90%E4%BE%8B%E5%AD%90.png" srcset="/img/loading.gif" lazyload alt="代码外提例子"></p>
+<h4 id="7-外提的条件"><a href="#7-外提的条件" class="headerlink" title="(7)外提的条件"></a>(7)外提的条件</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%96%E6%8F%90%E6%9D%A1%E4%BB%B6%E4%BE%8B%E5%AD%90.png" srcset="/img/loading.gif" lazyload alt="外提条件例子"></p>
+<ul>
+<li>出现这种情况是因为$B_3$结点并不是所有循环出口的必经结点</li>
+<li>因此，必须保证<strong>不变运算所在结点是L所有出口结点的必经结点</strong></li>
+<li>但不变运算所在结点是L所有出口结点的必经结点，也不一定能外提<br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%96%E6%8F%90%E6%9D%A1%E4%BB%B6%E4%BE%8B%E5%AD%902.png" srcset="/img/loading.gif" lazyload alt="外提条件例子2"></li>
+<li><strong>A在循环中其他地方未再定值</strong>，才能把循环不变运算A:&#x3D;B op C外提</li>
+<li>但不变运算所在结点是L所有出口结点的必经结点，且A在循环中其他地方未再定值，也不一定能外提<br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%A4%96%E6%8F%90%E6%9D%A1%E4%BB%B6%E4%BE%8B%E5%AD%903.png" srcset="/img/loading.gif" lazyload alt="外提条件例子3"></li>
+<li>此例中，$B_3$中的I不仅可能来自于$B_4$中的I，还有可能来自于$B_1$中的I</li>
+<li><strong>循环中所有A的引用点只有S中的A的定值才能到达</strong>，此例中，要想将(5)外提，则对I的引用点(3)不能再有其他定值(1)到达</li>
+<li>或者：（2.3相同，1不同）<ul>
+<li>A在离开L后不再是活跃的</li>
+<li>A在L中其他地方未再定值</li>
+<li>L中所有A的引用点只有S中的A的定值才能到达</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-代码外提算法"><a href="#8-代码外提算法" class="headerlink" title="(8)代码外提算法"></a>(8)代码外提算法</h4><ul>
+<li>求出L的所有不变运算</li>
+<li>对于每个不变运算S:A:&#x3D;B op C 或A:&#x3D;op B或A:&#x3D;B检查是否满足上述条件中的一个</li>
+<li>按步骤1所找出的不变运算的次序，依次把符合步骤2的条件的不变运算S提到L的前置结点中。但是，如果S的运算对象B或C是在L中定值的，那么，只有当这些定值四元式都已外提，才能把S也外提。即将A依赖的B和C的所有定值运算都外提后才能外提A</li>
+</ul>
+<h3 id="3-强度消弱"><a href="#3-强度消弱" class="headerlink" title="3.强度消弱"></a>3.强度消弱</h3><h4 id="1-示例"><a href="#1-示例" class="headerlink" title="(1)示例"></a>(1)示例</h4><p><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E6%B6%88%E5%BC%B1%E4%BE%8B1.png" srcset="/img/loading.gif" lazyload alt="强度消弱例1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%BC%BA%E5%BA%A6%E6%B6%88%E5%BC%B1%E4%BE%8B2.png" srcset="/img/loading.gif" lazyload alt="强度消弱例2"></p>
+<h4 id="2-强度消弱"><a href="#2-强度消弱" class="headerlink" title="(2)强度消弱"></a>(2)强度消弱</h4><ul>
+<li>强度消弱通常是针对<strong>与循环控制变量有线性关系的变量赋值</strong>进行</li>
+<li>经过强度消弱后，循环中可能出现一些新的无用赋值</li>
+<li>对于消弱下标变量地址计算的强度非常有效</li>
+</ul>
+<h4 id="3-删除归纳变量"><a href="#3-删除归纳变量" class="headerlink" title="(3)删除归纳变量"></a>(3)删除归纳变量</h4><ul>
+<li>如果循环中对于变量I只有唯一的形如I:&#x3D;I±C的赋值，且C为循环不变量，则称I为循环中的基本归纳变量</li>
+<li>若I是循环中的一个基本归纳变量，J在循环中的定值总是可化归为I的同一线性函数，即J是I的一次函数，则J是归纳变量，并称J与I同族。基本归纳变量也是一归纳变量<br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F%E4%BE%8B1.png" srcset="/img/loading.gif" lazyload alt="删除归纳变量例1"><br><img src="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch10/%E5%88%A0%E9%99%A4%E5%BD%92%E7%BA%B3%E5%8F%98%E9%87%8F%E4%BE%8B2.png" srcset="/img/loading.gif" lazyload alt="删除归纳变量例2"></li>
+<li>删除归纳变量在强度消弱以后进行</li>
+</ul>
+<h4 id="4-强度削弱和删除归纳变量的统一算法框架"><a href="#4-强度削弱和删除归纳变量的统一算法框架" class="headerlink" title="(4)强度削弱和删除归纳变量的统一算法框架"></a>(4)强度削弱和删除归纳变量的统一算法框架</h4><ul>
+<li>利用循环不变运算信息，找出循环中的所有基本归纳变量</li>
+<li>找出所有其他归纳变量A，并找出A与已知基本归纳变量X的同族线性函数关系$F_A(X)$</li>
+<li>对2中找到的每一个归纳变量A，进行强度消弱</li>
+<li>删除对归纳变量的无用赋值</li>
+<li>删除基本归纳变量，如果基本归纳变量B在循环出口后不是活跃的，并且在循环中，除在其自身的递归赋值中被引用外，只在形如if B rop Y goto L的语句中被引用，则可选取一与B同族的归纳变量M来替换B进行条件控制。最后删除循环中对B的递归赋值的代码</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="category-chain-item">编译原理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="print-no-link">#编译原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>编译原理Ch10</div>
+      <div>https://sdueryrg.github.io/2024/12/04/编译原理Ch10/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/12/07/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch11/" title="编译原理Ch11">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">编译原理Ch11</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch9/" title="编译原理Ch9">
+                        <span class="hidden-mobile">编译原理Ch9</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

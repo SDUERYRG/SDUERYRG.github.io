@@ -1,0 +1,981 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一章 NoSQL数据库概述关系数据库的不足 大量数据的写入处理 表结构变更及建立索引 字段不固定的应用 对简单查询需要快速返回结果的处理  NoSQL数据库的优势 易于数据的分散 提升性能和增大规模 模式灵活 扩展性好  NoSQL数据库的种类   存储类型 代表解决方案 特点    列存储 Hbase, Cassandra, Hypertable 按列存储,适用于数据压缩,对一个或几个字段进行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSQL复习">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="第一章 NoSQL数据库概述关系数据库的不足 大量数据的写入处理 表结构变更及建立索引 字段不固定的应用 对简单查询需要快速返回结果的处理  NoSQL数据库的优势 易于数据的分散 提升性能和增大规模 模式灵活 扩展性好  NoSQL数据库的种类   存储类型 代表解决方案 特点    列存储 Hbase, Cassandra, Hypertable 按列存储,适用于数据压缩,对一个或几个字段进行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/ACID%E5%92%8CBASE%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%8D%8F%E8%AE%AE%E6%88%90%E5%8A%9F.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%8D%8F%E8%AE%AE%E5%A4%B1%E8%B4%A5.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E6%96%87%E6%A1%A3%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/MongoDB%E8%AF%AD%E5%8F%A5.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/QQ%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/HBase%E8%A1%A8%E6%9C%BA%E6%9E%84.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E6%96%87%E7%AB%A0.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E6%97%B6%E9%97%B4%E5%92%8C%E8%AF%84%E5%88%86.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E6%8A%95%E7%A5%A8%E5%89%8D%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%98%E5%8C%96.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/Neo4J%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/Neo4j%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BD%ACMongo%E7%A4%BA%E4%BE%8B%E9%A2%98%E7%9B%AE.png">
+<meta property="article:published_time" content="2024-12-30T07:50:16.000Z">
+<meta property="article:modified_time" content="2025-01-04T06:39:47.160Z">
+<meta property="article:author" content="yrg">
+<meta property="article:tag" content="Nosql">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/ACID%E5%92%8CBASE%E5%AF%B9%E6%AF%94.png">
+  
+  
+  
+  <title>NoSQL复习 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="NoSQL复习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-30 15:50" pubdate>
+          2024年12月30日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">NoSQL复习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第一章-NoSQL数据库概述"><a href="#第一章-NoSQL数据库概述" class="headerlink" title="第一章 NoSQL数据库概述"></a>第一章 NoSQL数据库概述</h2><h3 id="关系数据库的不足"><a href="#关系数据库的不足" class="headerlink" title="关系数据库的不足"></a>关系数据库的不足</h3><ul>
+<li>大量数据的写入处理</li>
+<li>表结构变更及建立索引</li>
+<li>字段不固定的应用</li>
+<li>对简单查询需要快速返回结果的处理</li>
+</ul>
+<h3 id="NoSQL数据库的优势"><a href="#NoSQL数据库的优势" class="headerlink" title="NoSQL数据库的优势"></a>NoSQL数据库的优势</h3><ul>
+<li>易于数据的分散</li>
+<li>提升性能和增大规模</li>
+<li>模式灵活</li>
+<li>扩展性好</li>
+</ul>
+<h3 id="NoSQL数据库的种类"><a href="#NoSQL数据库的种类" class="headerlink" title="NoSQL数据库的种类"></a>NoSQL数据库的种类</h3><table>
+<thead>
+<tr>
+<th>存储类型</th>
+<th>代表解决方案</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>列存储</td>
+<td>Hbase, Cassandra, Hypertable</td>
+<td>按列存储,适用于数据压缩,对一个或几个字段进行查询的效率很高。</td>
+</tr>
+<tr>
+<td>文档存储</td>
+<td>MongoDB, CouchDB, riak</td>
+<td>保证海量数据存储的同时,具有良好的查询性能。用类JSON格式进行存储。</td>
+</tr>
+<tr>
+<td>key-value 存储</td>
+<td>Dynamo, Redis, Tokyo Cabinet, MemcacheDB</td>
+<td>具有极高的并发读写性能。通过key迅速查找到value,但只能通过key查询。</td>
+</tr>
+<tr>
+<td>图数据库</td>
+<td>Neo4j, HyperGraphDB</td>
+<td>图形关系的最佳存储模式。</td>
+</tr>
+<tr>
+<td>对象数据库</td>
+<td>db4o, Versant</td>
+<td>类似面向对象语言的语法操作数据库,通过对象的方式存取数据。</td>
+</tr>
+<tr>
+<td>XML数据库</td>
+<td>Berkerey DB XML, BaseX</td>
+<td>高效存储XML数据,并支持XML的内部查询语法。</td>
+</tr>
+</tbody></table>
+<h2 id="数据一致性理论"><a href="#数据一致性理论" class="headerlink" title="数据一致性理论"></a>数据一致性理论</h2><h3 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h3><ul>
+<li>C: Consistency 一致性<ul>
+<li>在分布式系统完成某写操作后任何读操作，都应该获取到该写操作写入的那个最新的值</li>
+<li>相当于要求分布式系统中的各节点时时刻刻保持数据的一致性</li>
+</ul>
+</li>
+<li>A: Availability 可用性<ul>
+<li>一直可以正常的做读写操作。简单而言就是客户端一直可以正常访问并得到系统的正常响应</li>
+<li>用户角度来看就是不会出现系统操作失败或者访问超时等问题</li>
+</ul>
+</li>
+<li>P: Tolerance of network Partition 分区容错性<ul>
+<li>指的分布式系统中的某个节点或者网络出现了故障的时候，整个系统仍然能对外提供满足一致性和可用性的服务，也就是说部分故障不影响整体使用</li>
+</ul>
+</li>
+<li>一个分布式系统不可能满足一致性，可用性和分区容错性这三个需求，最多只能同时满足两个</li>
+<li>选择CA，放弃P<ul>
+<li>关系型数据库</li>
+</ul>
+</li>
+<li>选择CP，放弃A<ul>
+<li>分布式数据库</li>
+</ul>
+</li>
+<li>选择AP，放弃C<ul>
+<li>保证最终一致性，如BASE</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据一致性"><a href="#数据一致性" class="headerlink" title="数据一致性"></a>数据一致性</h3><ul>
+<li>强一致性：在任何时刻，所有节点的数据都保持一致。每次读操作都能返回最新的写操作结果，确保用户看到的是最新的数据。</li>
+<li>最终一致性：在经历一段时间后，所有节点的数据会达到一致状态。虽然短期内可能不一致，但系统保证最终一致。是一种弱一致性特例</li>
+<li>弱一致性：没有保证数据在任何时间点的一致性，可能在长时间内保持不一致。</li>
+</ul>
+<hr>
+<ul>
+<li>因果一致性<ul>
+<li>如果Process A通知Process B它已经更新了数据，那么Process B的后续读取操作则读取A写入的最新值，而与A没有因果关系的C则可以最终一致性</li>
+</ul>
+</li>
+<li>读自写一致性<ul>
+<li>用户在写入数据后，立即进行读取操作时，能够读取到自己刚刚写入的数据。</li>
+<li>用户在社交媒体上发布了一条状态，随后立即查看自己的个人主页，能够看到这条状态。</li>
+</ul>
+</li>
+<li>会话一致性<ul>
+<li>此种一致性要求客户端和存储系统交互的整个会话阶段保证读自写一致性</li>
+</ul>
+</li>
+<li>单调读一致性<ul>
+<li>如果一个读操作在某个时间点发生在另一个读操作之后，那么第二个读操作的结果不会比第一个读操作的结果更旧。</li>
+</ul>
+</li>
+<li>单调写一致性<ul>
+<li>如果一个写操作在某个时间点发生在另一个写操作之后，那么第一个写操作的结果会在第二个写操作之前生效。</li>
+</ul>
+</li>
+</ul>
+<h3 id="BASE模型"><a href="#BASE模型" class="headerlink" title="BASE模型"></a>BASE模型</h3><h4 id="Basically-Availble-–基本可用"><a href="#Basically-Availble-–基本可用" class="headerlink" title="Basically Availble –基本可用"></a>Basically Availble –基本可用</h4><ul>
+<li>分布式系统在出现不可预知故障的时候，允许损失部分可用性——但请注意，这绝不等价于系统不可用</li>
+</ul>
+<h4 id="Soft-state-–软状态-柔性事务"><a href="#Soft-state-–软状态-柔性事务" class="headerlink" title="Soft-state –软状态&#x2F;柔性事务"></a>Soft-state –软状态&#x2F;柔性事务</h4><ul>
+<li>是指允许系统中的数据存在中间状态，并认为该中间状态的存在不会影响系统的整体可用性，即允许系统在不同节点的数据副本之间进行数据同步的过程存在延时</li>
+</ul>
+<h4 id="Eventual-Consistency-–最终一致性"><a href="#Eventual-Consistency-–最终一致性" class="headerlink" title="Eventual Consistency –最终一致性"></a>Eventual Consistency –最终一致性</h4><ul>
+<li>最终一致性强调的是系统中所有的数据副本，在经过一段时间的同步后，最终能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性<br><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/ACID%E5%92%8CBASE%E5%AF%B9%E6%AF%94.png" srcset="/img/loading.gif" lazyload alt="ACID和BASE对比"></li>
+</ul>
+<h3 id="NWR模型————数据一致性实现技术"><a href="#NWR模型————数据一致性实现技术" class="headerlink" title="NWR模型————数据一致性实现技术"></a>NWR模型————数据一致性实现技术</h3><ul>
+<li>N: 复制的节点数量，即副本数</li>
+<li>R: 成功读操作的最小节点数</li>
+<li>W: 成功写操作的最小节点数</li>
+<li>只需W + R &gt; N，就可以保证强一致性，因为读取数据的节点和被同步写入的节点是有重叠的<blockquote>
+<p>N&#x3D;3，W&#x3D;2, R&#x3D;2 ，那么表示系统中数据有3个不同的副本，当进行写操作时，需要等待至少有2个副本完成了该写操作系统才会返回执行成功的状态，对于读操作，系统有同样的特性</p>
+</blockquote>
+</li>
+<li>如果R+W&gt;N,那么分布式系统就会提供强一致性的保证，因为读取数据的节点和被同步写入的节点有重叠</li>
+<li>如果R+ W≤N,这时读取和写入操作是不重叠的，系统只能保证最终一致性， 而副本达到一致的时间则依赖于系统异步更新的实现方式</li>
+</ul>
+<h3 id="两阶段提交协议"><a href="#两阶段提交协议" class="headerlink" title="两阶段提交协议"></a>两阶段提交协议</h3><ul>
+<li>两阶段提交协议是很常见的解决分布式事务的方式，可以保证分布式事务中，要么所有参与的进程都提交事务成功，要么都取消事务，这样做可以在分布式环境中保持ACID中A(原子性)</li>
+</ul>
+<p><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%8D%8F%E8%AE%AE%E6%88%90%E5%8A%9F.png" srcset="/img/loading.gif" lazyload alt="两阶段提交协议成功"><br><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%8D%8F%E8%AE%AE%E5%A4%B1%E8%B4%A5.png" srcset="/img/loading.gif" lazyload alt="两阶段提交协议失败"></p>
+<ul>
+<li>优点<ul>
+<li>实现简单</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>同步阻塞问题：所有结点因为在执行事务，任何其他结点的访问都阻塞</li>
+<li>单点故障：一旦协调者发生故障，参与者会一直阻塞下去。</li>
+<li>数据不一致：若只有一部分参与者收到了提交请求，导致</li>
+<li>协调者再发出commit消息之后宕机，而唯一接收到这条消息的参与者同时也宕机了。此时事务不知道执行与否</li>
+</ul>
+</li>
+</ul>
+<h2 id="第三章-文档型数据库"><a href="#第三章-文档型数据库" class="headerlink" title="第三章 文档型数据库"></a>第三章 文档型数据库</h2><h3 id="文档型数据库和关系数据库区别"><a href="#文档型数据库和关系数据库区别" class="headerlink" title="文档型数据库和关系数据库区别"></a>文档型数据库和关系数据库区别</h3><p><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E6%96%87%E6%A1%A3%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93.png" srcset="/img/loading.gif" lazyload alt="文档型数据库和关系数据库"></p>
+<h3 id="文档型数据库特性"><a href="#文档型数据库特性" class="headerlink" title="文档型数据库特性"></a>文档型数据库特性</h3><ul>
+<li>一致性：开发者可以根据应用程序需要和业务需求，为每次操作指定数据库的“一致性”强度</li>
+<li>事务：支持单文档级别的事务，也可以使用NWR协议来实现事务功能</li>
+<li>可用性：文档数据库视图用主从数据复制技术来增强可用性</li>
+<li>查询：可以使用视图查询，可用物化视图</li>
+<li>可扩展性：可用“分片”技术</li>
+</ul>
+<h3 id="MongoDB语句"><a href="#MongoDB语句" class="headerlink" title="MongoDB语句"></a>MongoDB语句</h3><p><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/MongoDB%E8%AF%AD%E5%8F%A5.png" srcset="/img/loading.gif" lazyload alt="MongoDB语句"></p>
+<ul>
+<li>or：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">db<span class="hljs-selector-class">.col</span><span class="hljs-selector-class">.find</span>(&#123;<span class="hljs-variable">$or</span>:<span class="hljs-selector-attr">[&#123;<span class="hljs-string">&quot;by&quot;</span>:<span class="hljs-string">&quot;菜鸟教程&quot;</span>&#125;,&#123;<span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;MongoDB 教程&quot;</span>&#125;]</span>&#125;)<span class="hljs-selector-class">.pretty</span>() <br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="QQ空间设计"><a href="#QQ空间设计" class="headerlink" title="QQ空间设计"></a>QQ空间设计</h3><p><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/QQ%E7%A9%BA%E9%97%B4.png" srcset="/img/loading.gif" lazyload alt="QQ空间"></p>
+<h3 id="空间刷新算法"><a href="#空间刷新算法" class="headerlink" title="空间刷新算法"></a>空间刷新算法</h3><ul>
+<li>获取用户的好友列表：<ul>
+<li>从用户集合中获取当前用户的好友列表。</li>
+</ul>
+</li>
+<li>获取好友的最新动态：<ul>
+<li>从日志集合、说说集合和相册照片集合中获取好友的最新动态，按时间戳排序。</li>
+</ul>
+</li>
+<li>合并动态：<ul>
+<li>将不同集合中的动态合并成一个列表，并按时间戳排序。</li>
+</ul>
+</li>
+<li>分页加载：<ul>
+<li>为了提高性能，可以采用分页加载的方式，每次加载一定数量的动态，用户滚动到页面底部时再加载更多。</li>
+</ul>
+</li>
+</ul>
+<h3 id="MongoDB怎样实现分页"><a href="#MongoDB怎样实现分页" class="headerlink" title="MongoDB怎样实现分页"></a>MongoDB怎样实现分页</h3><ul>
+<li>在MongoDB中，可以通过使用skip和limit方法来实现分页。</li>
+<li>例如，要查询第二页的数据（每页10条），可以使用以下代码：</li>
+<li>db.collection.find().skip(10).limit(10)</li>
+<li>这里的skip方法用于跳过前10条数据，limit方法用于限制返回的文档数。</li>
+<li>如果要查询第三页的数据，可以使用以下代码：</li>
+<li>db.collection.find().skip(20).limit(10)</li>
+<li>以此类推，可以通过调整skip和limit方法的参数来实现分页查询。</li>
+</ul>
+<h2 id="第四章-列存储数据库"><a href="#第四章-列存储数据库" class="headerlink" title="第四章 列存储数据库"></a>第四章 列存储数据库</h2><h3 id="HBase表机构"><a href="#HBase表机构" class="headerlink" title="HBase表机构"></a>HBase表机构</h3><p><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/HBase%E8%A1%A8%E6%9C%BA%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="HBase表机构"></p>
+<h3 id="HLog"><a href="#HLog" class="headerlink" title="HLog"></a>HLog</h3><ul>
+<li><p>预写日志（WAL，Write Ahead Log）是HBase中用于保证数据一致性的机制。</p>
+</li>
+<li><p>原理是在对数据进行修改操作之前，先将修改操作的信息写入WAL中，然后再进行实际的数据修改。如果在数据修改过程中发生错误，可以通过WAL中记录的信息来恢复数据。</p>
+</li>
+<li><p>预写日志在HBase中有如下作用：</p>
+<ul>
+<li><p>(1)保证数据一致性：在数据修改过程中，如果发生错误，可以通过WAL中记录的信息来恢复数据，保证数据的一致性。</p>
+</li>
+<li><p>(2)支持数据恢复：如果HBase服务器意外崩溃，可以通过WAL中记录的信息来恢复数据。</p>
+</li>
+<li><p>(3)支持多种数据修改操作：WAL支持多种数据修改操作，包括插入、更新和删除操作。</p>
+</li>
+<li><p>(4)加速数据修改：由于WAL的写入是异步的，因此可以在写入WAL的同时进行数据修改，从而加速数据修改的速度。</p>
+</li>
+<li><p>(5)保证最终一致性：WAL可以保证最终一致。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="热点"><a href="#热点" class="headerlink" title="热点"></a>热点</h3><ul>
+<li>热点发生在大量的client直接访问集群的一个或极少数个节点（访问可能是读，写或者其他操作）</li>
+<li>大量访问会使热点数据块所在的单个机器超出自身承受能力，引起性能下降甚至数据块不可用，这也会影响同一个节点上的其他数据块，由于主机无法服务其他数据块的请求</li>
+</ul>
+<h2 id="第五章-键值数据库"><a href="#第五章-键值数据库" class="headerlink" title="第五章 键值数据库"></a>第五章 键值数据库</h2><h3 id="Redis设计示例（文章网站后端）"><a href="#Redis设计示例（文章网站后端）" class="headerlink" title="Redis设计示例（文章网站后端）"></a>Redis设计示例（文章网站后端）</h3><p><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E6%96%87%E7%AB%A0.png" srcset="/img/loading.gif" lazyload alt="文章"><br><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E6%97%B6%E9%97%B4%E5%92%8C%E8%AF%84%E5%88%86.png" srcset="/img/loading.gif" lazyload alt="时间和评分"></p>
+<ul>
+<li>通过这两个有序集合，网站既可根据文章发布的先后顺序来展示文章，又可根据文章评分的高低来展示文章<br><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E6%8A%95%E7%A5%A8%E5%89%8D%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%98%E5%8C%96.png" srcset="/img/loading.gif" lazyload alt="投票前后的数据变化"></li>
+</ul>
+<h2 id="第六章-图数据库"><a href="#第六章-图数据库" class="headerlink" title="第六章 图数据库"></a>第六章 图数据库</h2><h3 id="Neo4J数据模型"><a href="#Neo4J数据模型" class="headerlink" title="Neo4J数据模型"></a>Neo4J数据模型</h3><p><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/Neo4J%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.png" srcset="/img/loading.gif" lazyload alt="Neo4J数据模型"><br><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/Neo4j%E7%A4%BA%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="Neo4j示例"></p>
+<h3 id="图数据库转Mongo示例"><a href="#图数据库转Mongo示例" class="headerlink" title="图数据库转Mongo示例"></a>图数据库转Mongo示例</h3><p>将Neo4j转换到MongoDB数据库中，写明设计思路和逻辑结构，以及两种数据库如何进行图书平均评分Top k的查找。<br><img src="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BD%ACMongo%E7%A4%BA%E4%BE%8B%E9%A2%98%E7%9B%AE.png" srcset="/img/loading.gif" lazyload alt="图数据库转Mongo示例题目"></p>
+<h4 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h4><p>1.<strong>books集合</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;_id&quot;</span><span class="hljs-punctuation">:</span> ObjectId(<span class="hljs-string">&quot;60b1234567890abcdef012345&quot;</span>)<span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;book_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;B001&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Java开发手册&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;阿里巴巴&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">99.99</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;stock&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>2.<strong>readers集合</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;_id&quot;</span><span class="hljs-punctuation">:</span> ObjectId(<span class="hljs-string">&quot;60b7890abcdef0123456789&quot;</span>)<span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;reader_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;R001&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;小明&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;xiaoming@example.com&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>3.<strong>reviews集合</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;_id&quot;</span><span class="hljs-punctuation">:</span> ObjectId(<span class="hljs-string">&quot;60b789abcdef0123456789ab&quot;</span>)<span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;book_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;B001&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;reader_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;R001&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;score&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4.5</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<h4 id="查找图书平均评分Top-k"><a href="#查找图书平均评分Top-k" class="headerlink" title="查找图书平均评分Top k"></a>查找图书平均评分Top k</h4><p>1.<strong>Neo4j</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">MATCH</span> (b:Book)<span class="hljs-operator">-</span>[r:RATED_BY]<span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span>(r:Reader)<br><span class="hljs-keyword">RETURN</span> b.title, <span class="hljs-built_in">AVG</span>(r.score) <span class="hljs-keyword">AS</span> avg_score<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> avg_score <span class="hljs-keyword">DESC</span><br>LIMIT k<br></code></pre></td></tr></table></figure>
+<p>2.<strong>Mongo</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript">db.<span class="hljs-property">reviews</span>.<span class="hljs-title function_">aggregate</span>([<br>  &#123; <span class="hljs-attr">$group</span>: &#123; <span class="hljs-attr">_id</span>: <span class="hljs-string">&quot;$book_id&quot;</span>, <span class="hljs-attr">avg_score</span>: &#123; <span class="hljs-attr">$avg</span>: <span class="hljs-string">&quot;$score&quot;</span> &#125; &#125; &#125;,<br>  &#123; <span class="hljs-attr">$sort</span>: &#123; <span class="hljs-attr">avg_score</span>: -<span class="hljs-number">1</span> &#125; &#125;,<br>  &#123; <span class="hljs-attr">$limit</span>: k &#125;,<br>  &#123; <span class="hljs-attr">$lookup</span>: &#123;<br>      <span class="hljs-attr">from</span>: <span class="hljs-string">&quot;books&quot;</span>,<br>      <span class="hljs-attr">localField</span>: <span class="hljs-string">&quot;_id&quot;</span>,<br>      <span class="hljs-attr">foreignField</span>: <span class="hljs-string">&quot;book_id&quot;</span>,<br>      <span class="hljs-attr">as</span>: <span class="hljs-string">&quot;book_info&quot;</span><br>    &#125;<br>  &#125;,<br>  &#123; <span class="hljs-attr">$project</span>: &#123;<br>      <span class="hljs-attr">_id</span>: <span class="hljs-number">0</span>,<br>      <span class="hljs-attr">title</span>: &#123; <span class="hljs-attr">$arrayElemAt</span>: [<span class="hljs-string">&quot;$book_info.title&quot;</span>, <span class="hljs-number">0</span>] &#125;,<br>      <span class="hljs-attr">avg_score</span>: <span class="hljs-number">1</span><br>    &#125;<br>  &#125;<br>]);<br></code></pre></td></tr></table></figure>
+<h3 id="聚合管道"><a href="#聚合管道" class="headerlink" title="聚合管道"></a>聚合管道</h3><h4 id="常用管道命令"><a href="#常用管道命令" class="headerlink" title="常用管道命令"></a>常用管道命令</h4><ul>
+<li>$group： 将集合中的⽂档分组， 可⽤于统计结果</li>
+<li>$match： 过滤数据， 只输出符合条件的⽂档</li>
+<li>$project： 修改输⼊⽂档的结构， 如重命名、 增加、 删除字段、 创建计算结果</li>
+<li>$sort： 将输⼊⽂档排序后输出</li>
+<li>$limit： 限制聚合管道返回的⽂档数</li>
+<li>$lookup: 关联其他表查询<ul>
+<li>from: 关联的表名</li>
+<li>localField：本表的属性</li>
+<li>foreignField：from表的属性</li>
+<li>as：命名为</li>
+</ul>
+</li>
+<li><code>&#123; $arrayElemAt: [ &lt;array&gt;, &lt;index&gt; ] &#125;</code>：用于从数组中获取指定索引位置的元素<ul>
+<li>&lt;array&gt;: 要从中获取元素的数组表达式。</li>
+<li>&lt;index&gt;: 要获取的元素的索引位置。索引从0开始计数。</li>
+</ul>
+</li>
+</ul>
+<h3 id="描述RDB数据库、NoSQL数据库和NewSQL数据库的区别和特点"><a href="#描述RDB数据库、NoSQL数据库和NewSQL数据库的区别和特点" class="headerlink" title="描述RDB数据库、NoSQL数据库和NewSQL数据库的区别和特点"></a>描述RDB数据库、NoSQL数据库和NewSQL数据库的区别和特点</h3><ul>
+<li><p>(1)RDB数据库是将复杂的数据结构以行和列的形式进行存储及展示，对数据的操作几乎都是建立在一个或多个关系表的基础上。通过表的关系来实现数据库的管理。典型的关系型数据库有Oracle、MySql、SQL Server等。</p>
+</li>
+<li><p>RDBMS优势:</p>
+</li>
+<li><p>（通用性和高性能）保持数据的一致性（事务处理）、最小冗余、复杂查询如join、成熟的技术关系。</p>
+</li>
+<li><p>RDBMS不足：</p>
+</li>
+<li><p>大量数据的写入处理；表结构变更及建立索引；字段不固定的应用；对简单查询需要快速返回结果的处理。</p>
+</li>
+<li><p>(2)NoSQL指的是非关系型的数据库。NoSQL用于超大规模数据的存储。这些类型的数据存储不需要固定的模式，无需多余操作就可以横向扩展。常见的有Redis、Hbase、MongoDB等。</p>
+</li>
+<li><p>NoSQL优势：</p>
+</li>
+<li><p>易于数据的分散；提升性能和增大规模；模式自由；扩展性好。</p>
+</li>
+<li><p>NoSQL缺点:</p>
+</li>
+<li><p>不能保证ACID，采取最终一致性原则。</p>
+</li>
+<li><p>(3)NewSQL是对各种新的可扩展&#x2F;高性能数据库的简称，具有NoSQL对海量数据的存储管理能力，保持了传统数据库支持ACID和SQL等特性。</p>
+</li>
+<li><p>NewSql特点:</p>
+</li>
+<li><p>支持关系数据模型；使用SQL作为其主要接口</p>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Nosql/" class="category-chain-item">Nosql</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Nosql/" class="print-no-link">#Nosql</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>NoSQL复习</div>
+      <div>https://sdueryrg.github.io/2024/12/30/NoSQL复习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/" title="人工智能导论复习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">人工智能导论复习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/26/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/" title="数据科学导论复习">
+                        <span class="hidden-mobile">数据科学导论复习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

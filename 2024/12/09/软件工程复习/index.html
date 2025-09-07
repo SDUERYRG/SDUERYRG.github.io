@@ -1,0 +1,1322 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="软件工程复习提纲Chapter 1 Why Software Engineering1.软件工程的的定义、目的、方法及作用 定义：用系统科学的方法解决问题，采用工具、技术等用来解决现实问题的综合过程 目的：给出包含高质量软件的解决方案，并考虑有助于提高质量的特征 方法及作用 分析：分析问题，检查软件失败或成功的例子 设计：给出解决方案 开发团队，描述在团队中的人员的角色和职责 开发：实现解决方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件工程复习">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="软件工程复习提纲Chapter 1 Why Software Engineering1.软件工程的的定义、目的、方法及作用 定义：用系统科学的方法解决问题，采用工具、技术等用来解决现实问题的综合过程 目的：给出包含高质量软件的解决方案，并考虑有助于提高质量的特征 方法及作用 分析：分析问题，检查软件失败或成功的例子 设计：给出解决方案 开发团队，描述在团队中的人员的角色和职责 开发：实现解决方案">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/DFD%E7%BB%84%E7%BB%87.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%94%A8%E4%BE%8B%E5%9B%BE%E7%9A%84%E7%BB%84%E6%88%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%B1%BB%E5%9B%BE%E7%9A%84%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%B1%BB%E5%9B%BE%E4%B8%AD%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E6%B4%BB%E5%8A%A8%E5%9B%BE%E7%94%BB%E6%B3%95.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E6%B4%BB%E5%8A%A8%E5%9B%BE%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E9%A1%BA%E5%BA%8F%E5%9B%BE%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%B7%AF%E5%BE%84%E6%B5%8B%E8%AF%95%E6%B3%95.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%AF%BE%E5%A0%82%E7%BB%83%E4%B9%A01.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%AF%BE%E5%A0%82%E7%BB%83%E4%B9%A01.2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%AF%BE%E5%A0%82%E7%BB%83%E4%B9%A02.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%94%B1%E5%BA%95%E5%90%91%E4%B8%8A%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95%E6%AD%A5%E9%AA%A4.png">
+<meta property="article:published_time" content="2024-12-09T01:02:13.000Z">
+<meta property="article:modified_time" content="2024-12-21T01:20:12.302Z">
+<meta property="article:author" content="yrg">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/DFD%E7%BB%84%E7%BB%87.png">
+  
+  
+  
+  <title>软件工程复习 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="软件工程复习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-09 09:02" pubdate>
+          2024年12月9日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          74 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">软件工程复习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="软件工程复习提纲"><a href="#软件工程复习提纲" class="headerlink" title="软件工程复习提纲"></a><center>软件工程复习提纲</center></h1><h2 id="Chapter-1-Why-Software-Engineering"><a href="#Chapter-1-Why-Software-Engineering" class="headerlink" title="Chapter 1 Why Software Engineering"></a>Chapter 1 Why Software Engineering</h2><h3 id="1-软件工程的的定义、目的、方法及作用"><a href="#1-软件工程的的定义、目的、方法及作用" class="headerlink" title="1.软件工程的的定义、目的、方法及作用"></a>1.软件工程的的定义、目的、方法及作用</h3><ul>
+<li>定义：用系统科学的方法解决问题，采用工具、技术等用来解决现实问题的综合过程</li>
+<li>目的：给出包含高质量软件的解决方案，并考虑有助于提高质量的特征</li>
+<li>方法及作用<ul>
+<li>分析：分析问题，检查软件失败或成功的例子</li>
+<li>设计：给出解决方案</li>
+<li>开发团队，描述在团队中的人员的角色和职责</li>
+<li>开发：实现解决方案</li>
+<li>项目管理：将系统分为小部分，逐步明确过程，控制进度，处理每个改变等等</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-说明错误、缺陷、失败的含义与联系。（请举例说明）"><a href="#2-说明错误、缺陷、失败的含义与联系。（请举例说明）" class="headerlink" title="2.说明错误、缺陷、失败的含义与联系。（请举例说明）"></a>2.说明错误、缺陷、失败的含义与联系。（请举例说明）</h3><ul>
+<li>错误：软件生产过程中人为的错误（误解需求、错误代码）</li>
+<li>缺陷：函数实现中出现的问题（例如for循环中大于等于号忘记取等）</li>
+<li>失败：在运行时，软件违背了它应该有的行为。（比如，使用者发现某个计算功能算不出结果，是动态的）</li>
+</ul>
+<h3 id="3-软件质量应从哪几个方面来衡量？论述之。"><a href="#3-软件质量应从哪几个方面来衡量？论述之。" class="headerlink" title="3.软件质量应从哪几个方面来衡量？论述之。"></a>3.软件质量应从哪几个方面来衡量？论述之。</h3><ul>
+<li>Quality of the product（最终）产品的质量<ul>
+<li>要从用户和开发者两方面去评判质量</li>
+</ul>
+</li>
+<li>Quality of the process（软件开发及维护）过程的质量<ul>
+<li>许多活动都影响最后的软件质量</li>
+</ul>
+</li>
+<li>Business value（商业应用背景下的软件质量）商业质量<ul>
+<li>商业应用背景下的软件质量</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-现代软件工程大致包含的几个阶段及各个阶段文档。"><a href="#4-现代软件工程大致包含的几个阶段及各个阶段文档。" class="headerlink" title="4.现代软件工程大致包含的几个阶段及各个阶段文档。"></a>4.现代软件工程大致包含的几个阶段及各个阶段文档。</h3><ul>
+<li>需求分析：软件需求规格说明书《SRS》 Software Requirement Specification</li>
+<li>系统设计：系统结构图《SAD》software architecture diagrams</li>
+<li>程序设计：模块功能算法与数据描述</li>
+<li>程序实现：源码和注释</li>
+<li>单元测试：单元测试报告</li>
+<li>集成测试：集成测试报告文档</li>
+<li>系统测试：系统测试报告文档</li>
+<li>系统交付：用户手册</li>
+<li>维护：维护记录文档</li>
+</ul>
+<h3 id="5-什么是软件过程？软件过程的重要性是什么？包含几个阶段？"><a href="#5-什么是软件过程？软件过程的重要性是什么？包含几个阶段？" class="headerlink" title="5.什么是软件过程？软件过程的重要性是什么？包含几个阶段？"></a>5.什么是软件过程？软件过程的重要性是什么？包含几个阶段？</h3><ul>
+<li>软件开发活动中产生某种期望结果的一系列有序任务，涉及活动、约束和资源</li>
+<li>过程有助于保持大量不同人员开发的产品和服务之间的一致性和质量</li>
+<li>上一题的9个阶段</li>
+</ul>
+<h3 id="6-什么是重用、抽象等现代软件工程Wasserman所述的主要概念？"><a href="#6-什么是重用、抽象等现代软件工程Wasserman所述的主要概念？" class="headerlink" title="6.什么是重用、抽象等现代软件工程Wasserman所述的主要概念？"></a>6.什么是重用、抽象等现代软件工程Wasserman所述的主要概念？</h3><ul>
+<li><strong>Abstraction（抽象）</strong>：基于某种层次归纳水平的问题描述。它使我们将注意力集中在问题的关键方面而非细节。</li>
+<li><strong>Reuse（重用）</strong>：重复采用以前开发的软件系统中具有共性的部件, 用到新的开发项目中去</li>
+<li><strong>Measurement（度量&#x2F;测度）</strong>：定量的方法-&gt;描述过程、资源、方法-&gt;提高质量<ul>
+<li>quantitative way(approach)—&gt;describe process,resource,methods—&gt;improving quality</li>
+</ul>
+</li>
+</ul>
+<h2 id="Chapter-2-Modeling-the-Process-and-life-cycle"><a href="#Chapter-2-Modeling-the-Process-and-life-cycle" class="headerlink" title="Chapter 2 Modeling the Process and life cycle"></a>Chapter 2 Modeling the Process and life cycle</h2><h3 id="1-什么是软件过程？软件过程的重要性是什么？软件生命周期"><a href="#1-什么是软件过程？软件过程的重要性是什么？软件生命周期" class="headerlink" title="1.什么是软件过程？软件过程的重要性是什么？软件生命周期"></a>1.什么是软件过程？软件过程的重要性是什么？软件生命周期</h3><ul>
+<li>软件开发活动中产生某种期望结果的一系列有序任务，涉及活动、约束和资源</li>
+<li>过程有助于保持大量不同人员开发的产品和服务之间的一致性和质量</li>
+<li>软件开发过程有时被称为软件生命周期，因为它描述了软件产品从构思到实施、交付、使用和维护的生命周期</li>
+</ul>
+<h3 id="2-瀑布模型及各阶段文档，优缺点"><a href="#2-瀑布模型及各阶段文档，优缺点" class="headerlink" title="2.瀑布模型及各阶段文档，优缺点"></a>2.瀑布模型及各阶段文档，优缺点</h3><ul>
+<li>瀑布模型及各阶段文档：<ul>
+<li>需求分析：软件需求规格说明书《SRS》 Software Requirement Specification</li>
+<li>系统设计：系统结构图《SAD》software architecture diagrams</li>
+<li>程序设计：模块功能算法与数据描述</li>
+<li>程序实现：源码和注释</li>
+<li>单元测试：单元测试报告</li>
+<li>集成测试：集成测试报告文档</li>
+<li>系统测试：系统测试报告文档</li>
+<li>系统交付：用户手册</li>
+<li>维护：维护记录文档</li>
+</ul>
+</li>
+<li>可强迫开发人员用规范的方法。严格地规定了每个阶段必须提交的文档。要求每个阶段交出的产品都必须经过质量保证小组的仔细验证</li>
+<li>面临软件变动时, 该模型无法处理实际过程中的重复开发问题</li>
+</ul>
+<h3 id="3-论述分阶段开发模型的含义-其基本分类及特点是什么"><a href="#3-论述分阶段开发模型的含义-其基本分类及特点是什么" class="headerlink" title="3.论述分阶段开发模型的含义, 其基本分类及特点是什么"></a>3.论述分阶段开发模型的含义, 其基本分类及特点是什么</h3><ul>
+<li>系统被设计成部分提交, 每次用户只能得到部分功能, 而其他部分处于开发过程中</li>
+<li>incremental development (增量式开发)<ul>
+<li>系统需求按照功能分成若干子系统，开始建造的版本是规模小的、部分功能的系统，后续版本添加包含新功能的子系统，最后版本是包含全部功能的子系统集</li>
+</ul>
+</li>
+<li>iterative development (迭代式开发)<ul>
+<li>系统开始就提供了整体功能框架，后续版本陆续增强各个子系统，最后版本使各个子系统的功能达到最强性能</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-螺旋模型四个象限的任务及四重循环的含义"><a href="#4-螺旋模型四个象限的任务及四重循环的含义" class="headerlink" title="4.螺旋模型四个象限的任务及四重循环的含义"></a>4.螺旋模型四个象限的任务及四重循环的含义</h3><ul>
+<li>plan(计划),  goals&#x2F;alternatives(目标&#x2F;可选方案),  risk evaluating(风险评估), develop and test(开发和测试)</li>
+<li>第一次循环得到操作概念，第二次循环得到软件需求，第三次循环中系统开发产生设计，第四次循环能够进行测试</li>
+</ul>
+<h3 id="5-什么是敏捷方法？以及其代表性方法"><a href="#5-什么是敏捷方法？以及其代表性方法" class="headerlink" title="5.什么是敏捷方法？以及其代表性方法"></a>5.什么是敏捷方法？以及其代表性方法</h3><ul>
+<li>不要求遵循传统的软件开发流程，强调快速开发和有效适应需求变化，典型代表如极限编程、测试驱动开发等。</li>
+</ul>
+<h3 id="6-什么是UP，-RUP，迭代等市场流行的过程模型"><a href="#6-什么是UP，-RUP，迭代等市场流行的过程模型" class="headerlink" title="6.什么是UP， RUP，迭代等市场流行的过程模型"></a>6.什么是UP， RUP，迭代等市场流行的过程模型</h3><ul>
+<li>UP（统一过程）：它是用例驱动的、以基本架构为中心的、迭代式和增量性的软件开发过程框架</li>
+<li>RUP（进化式UP）：是IBM等机构提供支持和包装的UP系统</li>
+<li>进化式迭代：迭代开发是统一开发过程(RUP)的关键实践开发被组织成一系列固定的短期小项目每次迭代都产生经过测试、集成并可执行的局部系统每次迭代都具有各自的需求分析、设计、实现和测试随着时间和一次次迭代，系统增量式完善</li>
+</ul>
+<h2 id="Chapter-3-Planning-and-Managing-the-project"><a href="#Chapter-3-Planning-and-Managing-the-project" class="headerlink" title="Chapter 3 Planning and Managing the project"></a>Chapter 3 Planning and Managing the project</h2><h3 id="1-什么是项目进度？活动？里程碑？项目成本？"><a href="#1-什么是项目进度？活动？里程碑？项目成本？" class="headerlink" title="1.什么是项目进度？活动？里程碑？项目成本？"></a>1.什么是项目进度？活动？里程碑？项目成本？</h3><ul>
+<li>项目进度：对特定项目的软件开发周期的刻画。包括对项目阶段、步骤、活动的分解，对各个离散活动的交互关系的描述，以及对各个活动完成时间及整个项目完成时间的初步估算。</li>
+<li>活动：项目的一部分, 一般占用项目进度计划中的一段时间</li>
+<li>里程碑：指特定的时间点, 标志着活动的结束, 通常伴随着提交物</li>
+<li>项目成本：为支持软件开发而购买软件和工具的开支,用于支持需求分析,设计,编码,测试,处理需求变更等等,另外加上工作量开支</li>
+</ul>
+<h3 id="2-如何计算软件项目活动图的关键路径？（习题2，3）冗余时间？最早和最迟开始时间"><a href="#2-如何计算软件项目活动图的关键路径？（习题2，3）冗余时间？最早和最迟开始时间" class="headerlink" title="2.如何计算软件项目活动图的关键路径？（习题2，3）冗余时间？最早和最迟开始时间"></a>2.如何计算软件项目活动图的关键路径？（习题2，3）冗余时间？最早和最迟开始时间</h3><h3 id="3-软件项目团队组织的基本结构？"><a href="#3-软件项目团队组织的基本结构？" class="headerlink" title="3.软件项目团队组织的基本结构？"></a>3.软件项目团队组织的基本结构？</h3><ul>
+<li>主程序员组<ul>
+<li>由一个主程序员主导系统的设计和开发。</li>
+</ul>
+</li>
+<li>忘我方法<ul>
+<li>每个成员平等的承担责任，批评和表扬只针对产品，不针对个人。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-试述COCOMO模型的三个阶段基本工作原理或含义。"><a href="#4-试述COCOMO模型的三个阶段基本工作原理或含义。" class="headerlink" title="4.试述COCOMO模型的三个阶段基本工作原理或含义。"></a>4.试述COCOMO模型的三个阶段基本工作原理或含义。</h3><ul>
+<li>阶段一，计划阶段<ul>
+<li>项目通过构建原型来解决用户界面、软件、交互、性能、技术成熟度等方面的高风险问题 在这一步，使用应用点AP来进行规模测量，比如估算屏幕数、报表数、组件数等</li>
+</ul>
+</li>
+<li>阶段二，早期设计阶段<ul>
+<li>设计者要考察集中可选的体系结构和操作的概念 在这一步，使用需求文档中的功能点FP来进行规模测量</li>
+</ul>
+</li>
+<li>阶段三，后体系结构阶段<ul>
+<li>开发已经开始，软件已经被部分构造出来 在这一步，使用功能点FP和代码量作为衡量标准</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-什么是软件风险？"><a href="#5-什么是软件风险？" class="headerlink" title="5.什么是软件风险？"></a>5.什么是软件风险？</h3><ul>
+<li>在软件生产过程中不希望看到的、有负面结果的事件</li>
+</ul>
+<h3 id="6-弄懂活动图基本原理（参考课本），找出课后练习题–图3-23和3-24的关键路径。"><a href="#6-弄懂活动图基本原理（参考课本），找出课后练习题–图3-23和3-24的关键路径。" class="headerlink" title="6.弄懂活动图基本原理（参考课本），找出课后练习题–图3.23和3.24的关键路径。"></a>6.弄懂活动图基本原理（参考课本），找出课后练习题–图3.23和3.24的关键路径。</h3><h2 id="Chapter-4-Capturing-the-Requirement"><a href="#Chapter-4-Capturing-the-Requirement" class="headerlink" title="Chapter 4  Capturing the Requirement"></a>Chapter 4  Capturing the Requirement</h2><h3 id="1-需求的含义是什么"><a href="#1-需求的含义是什么" class="headerlink" title="1.需求的含义是什么?"></a>1.需求的含义是什么?</h3><ul>
+<li>是对来自用户的关于软件系统的期望行为的综合描述, 涉及系统的对象、状态、约束，功能等</li>
+</ul>
+<h3 id="2-需求阶段作为一个工程，其确定需求的过程是什么？"><a href="#2-需求阶段作为一个工程，其确定需求的过程是什么？" class="headerlink" title="2.需求阶段作为一个工程，其确定需求的过程是什么？"></a>2.需求阶段作为一个工程，其确定需求的过程是什么？</h3><ul>
+<li>原始需求获取：收集用户需求</li>
+<li>问题分析：理解和建模期望的行为</li>
+<li>规格说明草稿：文档化要开发的软件系统的行为</li>
+<li>需求核准：检查我们的规格说明是否与用户的需求匹配</li>
+<li>正式需求文档：SRS软件需求规格说明书</li>
+</ul>
+<h3 id="3-举例说明获取需求时，若有冲突发生时，如何考虑根据优先级进行需求分类。"><a href="#3-举例说明获取需求时，若有冲突发生时，如何考虑根据优先级进行需求分类。" class="headerlink" title="3.举例说明获取需求时，若有冲突发生时，如何考虑根据优先级进行需求分类。"></a>3.举例说明获取需求时，若有冲突发生时，如何考虑根据优先级进行需求分类。</h3><ul>
+<li>绝对要满足的需求（必须的）</li>
+<li>非常值得要但并非必须的需求（值得要的）</li>
+<li>可要可不要的需求（可选的）</li>
+<li>之所以有上述分类的原因：有的软件开发项目受到了技术、开发时间、合作路径、认知差别（画像为证）和资源等诸多因素的限制，有的需要二次资金投入等</li>
+<li>信用卡记账系统必须能够列出最近的费用，将他们加起来并要求在某个日期前支付，这是必须的需求。但是，该记账系统也可能按照购买类型区分费用，以帮助消费者理解购买的模式，这是值得要的需求。最后，记账系统可能要求用黑色来打印贷方账目，用红颜色打印借方账目，这用需求是有用的，但它是可选的需求。</li>
+</ul>
+<h3 id="4-需求文档分为哪两类？"><a href="#4-需求文档分为哪两类？" class="headerlink" title="4.需求文档分为哪两类？"></a>4.需求文档分为哪两类？</h3><ul>
+<li>需求定义：是客户想要的每一件事情的完整列表</li>
+<li>需求规格说明：将需求重新陈述为关于要构建的系统将如何运转的规格说明</li>
+</ul>
+<h3 id="5-什么是功能性需求和非功能性需求-质量需求？"><a href="#5-什么是功能性需求和非功能性需求-质量需求？" class="headerlink" title="5.什么是功能性需求和非功能性需求&#x2F;质量需求？"></a>5.什么是功能性需求和非功能性需求&#x2F;质量需求？</h3><ul>
+<li>描述系统内部功能或系统与外部环境的交互作用,涉及系统输入应对,实体状态变化,输出结果,设计约束与过程约束等</li>
+<li>描述软件方案必须具备的某些质量特征</li>
+</ul>
+<h3 id="6-了解DFD图的构成及画法。"><a href="#6-了解DFD图的构成及画法。" class="headerlink" title="6.了解DFD图的构成及画法。"></a>6.了解DFD图的构成及画法。</h3><ul>
+<li>Data Flow Diagrams（DFD数据流图）<br><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/DFD%E7%BB%84%E7%BB%87.png" srcset="/img/loading.gif" lazyload alt="DFD组织"><br><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="数据流图"></li>
+</ul>
+<h2 id="Chapter-5-Designing-the-system"><a href="#Chapter-5-Designing-the-system" class="headerlink" title="Chapter 5 Designing the system"></a>Chapter 5 Designing the system</h2><h3 id="1-什么是软件体系结构？设计模式？设计公约？设计？"><a href="#1-什么是软件体系结构？设计模式？设计公约？设计？" class="headerlink" title="1.什么是软件体系结构？设计模式？设计公约？设计？"></a>1.什么是软件体系结构？设计模式？设计公约？设计？</h3><ul>
+<li>软件体系结构：一种软件解决方案，用于解释如何将系统分解为单元，以及单元如何相互关联，还包括这些单元的所有外部特性。</li>
+<li>设计模式：一种针对单个软件模块或少量模块而给出的一般性解决方案，它提供较低层次的设计决策。</li>
+<li>设计公约：一系列设计决策和建议的集合，用于提高系统某方面的设计质量。</li>
+<li>设计：将需求中的问题描述转变成软件解决方案的创造性过程</li>
+</ul>
+<h3 id="2-软件设计过程模型的几个阶段？"><a href="#2-软件设计过程模型的几个阶段？" class="headerlink" title="2.软件设计过程模型的几个阶段？"></a>2.软件设计过程模型的几个阶段？</h3><ul>
+<li>初始建模（Modeling）: 尝试可能的分解：根据需求描述的系统的关键特性等确定软件体系结构风格，进行系统级别的决策。<ul>
+<li>(比如：MVC模式就不适合路由选择服务程序的设计，因为事件触发引起的服务程序指向很明确，没有太多的逻辑处理。其对于时间驱动的周期性任务也不适合。)</li>
+</ul>
+</li>
+<li>分析（Analysis）: 关注软件系统的功能及质量属性（性能、安全性、可靠性等）、各种约束等等。(关注系统级别决策)</li>
+<li>文档化（Documentation）: 确定各个不同的模型视图</li>
+<li>复审（Review）: 检查文档是否满足所有功能及质量需求</li>
+<li>final output：Software Architecture Document(正式的 &lt;SAD&gt; ：软件体系结构文档)</li>
+</ul>
+<h3 id="3-论述设计用户界面应考虑的问题"><a href="#3-论述设计用户界面应考虑的问题" class="headerlink" title="3.论述设计用户界面应考虑的问题"></a>3.论述设计用户界面应考虑的问题</h3><ul>
+<li>关键要素：寓意&#x2F;比喻、思维模型、如何在数据、功能、活动和角色中移动及切换、外观、感觉</li>
+<li>文化差异：信仰，价值观，道德规范，传统，风俗，传说</li>
+<li>用户爱好</li>
+</ul>
+<h3 id="4-耦合与内聚的概念及各个层次划分"><a href="#4-耦合与内聚的概念及各个层次划分" class="headerlink" title="4.耦合与内聚的概念及各个层次划分"></a>4.耦合与内聚的概念及各个层次划分</h3><ul>
+<li>耦合：两个软件部件之间的相互关联程度<ul>
+<li>高度耦合 松散耦合 非耦合</li>
+</ul>
+</li>
+<li>内聚：软件部件内部各组成成分的关联程度</li>
+</ul>
+<h3 id="5-举例说明耦合与内聚的基本分类。以及各个分类的含义与特征"><a href="#5-举例说明耦合与内聚的基本分类。以及各个分类的含义与特征" class="headerlink" title="5.举例说明耦合与内聚的基本分类。以及各个分类的含义与特征"></a>5.举例说明耦合与内聚的基本分类。以及各个分类的含义与特征</h3><ul>
+<li>非直接耦合（uncoupled） ：模块相互之间没有信息传递<ul>
+<li>数据耦合（data coupling） ：模块间传递的是数据</li>
+<li>特征耦合（stamp coupling）：模块间传递的是数据结构</li>
+<li>控制耦合（control coupling）：模块间传递的是控制量</li>
+<li>公共耦合（common coupling）：不同模块访问公共数据</li>
+<li>内容耦合（content coupling）：一个模块直接修改另一个模块(A模块直接调用B模块的私有数据, 或直接转移到B模块中去)</li>
+</ul>
+</li>
+<li>偶然性内聚（coincidental）：不相关的功能, 过程,数据等出现在同一个部件中.<br>  - 例如，如果有几个模块都需要执行“读A”、“写Ｂ”等相同的一组操作，为了避免重复书写，可以把这些操作汇成一个模块，供有关的模块调用 （例如：某些数据准备模块等等。）<ul>
+<li>逻辑性内聚（logical）：逻辑上相关或相似的功能或数据放置在同一个部件内<ul>
+<li>例如一个用于计算全班学生平均分和最高分的模块，无论计算哪种分数，都要经过读入全班学生分数，进行计算，输出计算结果等步骤。实际上除中间的一步须按不同的方法计算外，前、后这两步都是相同的。把这两种在逻辑上相似的功能放在一个模块中，就可省去程序中的重复部分</li>
+</ul>
+</li>
+<li>时间性内聚（temporal）：部件各部分要求在同一时间完成<ul>
+<li>例如:一个初始化模块可能包含“为变量赋初值”、“打开某个文件”等为正式处理作准备的功能。又例如：打包一帧数据，内容来自不同数据集。由于要求它们在同一时间内执行，故称为时间性内聚。</li>
+</ul>
+</li>
+<li>过程性内聚（procedural）：各部分有特定次序</li>
+<li>通讯性内聚（communicational）：各个部分访问共享数据（或私有共享、远程共享、云共享等等）</li>
+<li>顺序性内聚（sequential）：各部分有输入输出关系</li>
+<li>功能性内聚（functional）：各部分组成单一功能</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-软件过程中复审的概念，设计复审的重要性"><a href="#6-软件过程中复审的概念，设计复审的重要性" class="headerlink" title="6.软件过程中复审的概念，设计复审的重要性"></a>6.软件过程中复审的概念，设计复审的重要性</h3><ul>
+<li>复审：检查文档是否满足所有功能及质量需求<ul>
+<li>可以和用户一起检查软件的概要设计。</li>
+<li>可以向开发者呈现并明确软件的技术设计。</li>
+<li>程序员通过复审可以在下一阶段的工程实施前得到本阶段工作的反馈。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Chapter-6-Considering-Object"><a href="#Chapter-6-Considering-Object" class="headerlink" title="Chapter 6 Considering Object"></a>Chapter 6 Considering Object</h2><h3 id="1-什么是设计模式？"><a href="#1-什么是设计模式？" class="headerlink" title="1.什么是设计模式？"></a>1.什么是设计模式？</h3><ul>
+<li>一种针对单个软件模块或少量模块而给出的一般性解决方案，它提供较低层次的设计决策。</li>
+</ul>
+<h3 id="2-了解OO设计的基本原则？"><a href="#2-了解OO设计的基本原则？" class="headerlink" title="2.了解OO设计的基本原则？"></a>2.了解OO设计的基本原则？</h3><ul>
+<li>单一职责原则：一个类只负责一个功能领域中的相应职责</li>
+<li>重用原则</li>
+<li>开闭原则</li>
+<li>替换原则</li>
+<li>依赖倒置原则</li>
+<li>接口隔离原则</li>
+<li>迪米特原则：一个软件实体应当尽可能少地与其他实体发生相互作用。</li>
+</ul>
+<h3 id="3-了解OO开发有何优势？"><a href="#3-了解OO开发有何优势？" class="headerlink" title="3.了解OO开发有何优势？"></a>3.了解OO开发有何优势？</h3><ul>
+<li>语言的一致性：采用相同的语义结构（类、对象、接口、属性、行为）描述问题和解决方案</li>
+<li>过程的一致性：需求分析和定义、高层设计、底层设计、编码、测试等各个过程全都采用相同的语义结构</li>
+</ul>
+<h3 id="4-OO开发过程有几个步骤？"><a href="#4-OO开发过程有几个步骤？" class="headerlink" title="4.OO开发过程有几个步骤？"></a>4.OO开发过程有几个步骤？</h3><ul>
+<li>面向对象需求</li>
+<li>面向对象高层设计</li>
+<li>面向对象低层设计</li>
+<li>面向对象编程</li>
+<li>面向对象测试</li>
+</ul>
+<h3 id="5-掌握用例图的组成和画法，用例的几个要素的含义。"><a href="#5-掌握用例图的组成和画法，用例的几个要素的含义。" class="headerlink" title="5.掌握用例图的组成和画法，用例的几个要素的含义。"></a>5.掌握用例图的组成和画法，用例的几个要素的含义。</h3><p><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%94%A8%E4%BE%8B%E5%9B%BE%E7%9A%84%E7%BB%84%E6%88%90.png" srcset="/img/loading.gif" lazyload alt="用例图的组成"></p>
+<h3 id="6-掌握※用例图的实例解析方法，如何辨识和确定一个用例？"><a href="#6-掌握※用例图的实例解析方法，如何辨识和确定一个用例？" class="headerlink" title="6.掌握※用例图的实例解析方法，如何辨识和确定一个用例？"></a>6.掌握※用例图的实例解析方法，如何辨识和确定一个用例？</h3><h3 id="7-用例模型相关建模步骤是什么？"><a href="#7-用例模型相关建模步骤是什么？" class="headerlink" title="7.用例模型相关建模步骤是什么？"></a>7.用例模型相关建模步骤是什么？</h3><ul>
+<li>确定系统边界</li>
+<li>识别并描述参与者，确定角色。我们要找到：谁使用系统？谁从系统获取信息？谁为系统提供信息？<ul>
+<li>参与者：又称执行者。是在系统之外，透过系统边界与系统进行有意义交互的任何事物。</li>
+</ul>
+</li>
+<li>识别用例，给出简要描述。我们可以问自己：参与者用该系统做什么？参与者如何操作系统中的数据？<ul>
+<li>在UML中，用例被定义成系统执行的一个动作（功能单元）。只显示系统外部的功能表现，不考虑系统内部的实现过程。</li>
+<li>参与者和用例分别描述了 <strong>“谁来做？”和“做什么？”</strong> 这两个问题</li>
+</ul>
+</li>
+<li>识别参与者与用例间的关联</li>
+<li>给出每一个用例的详细描述</li>
+<li>细化用例模型</li>
+</ul>
+<h3 id="8-用例图、类图等针对面向对象的项目开发的意义是什么？"><a href="#8-用例图、类图等针对面向对象的项目开发的意义是什么？" class="headerlink" title="8.用例图、类图等针对面向对象的项目开发的意义是什么？"></a>8.用例图、类图等针对面向对象的项目开发的意义是什么？</h3><ul>
+<li>用例图<ul>
+<li>用例图描绘了系统完整功能的<strong>图景</strong></li>
+<li>它们对于与客户、设计师和测试人员沟通特别<strong>有用</strong></li>
+<li>它是系统分析过程中更正式的建模的<strong>基础</strong></li>
+</ul>
+</li>
+<li>类图</li>
+</ul>
+<h3 id="9-熟悉类图中各个类之间的基本关系分类及其含义。"><a href="#9-熟悉类图中各个类之间的基本关系分类及其含义。" class="headerlink" title="9.熟悉类图中各个类之间的基本关系分类及其含义。"></a>9.熟悉类图中各个类之间的基本关系分类及其含义。</h3><p><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%B1%BB%E5%9B%BE%E7%9A%84%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="类图的结构"><br><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%B1%BB%E5%9B%BE%E4%B8%AD%E7%9A%84%E5%85%B3%E7%B3%BB.png" srcset="/img/loading.gif" lazyload alt="类图中的关系"></p>
+<h3 id="10-绘制类图最常用的方法及步骤是什么？识别一个类的基本思路？"><a href="#10-绘制类图最常用的方法及步骤是什么？识别一个类的基本思路？" class="headerlink" title="10.绘制类图最常用的方法及步骤是什么？识别一个类的基本思路？"></a>10.绘制类图最常用的方法及步骤是什么？识别一个类的基本思路？</h3><ul>
+<li>step1：确定类和属性<ul>
+<li>从需求中寻找对象</li>
+<li>可以先定义一个系统中应该有的部分，然后去需求中出现的名词中找到符合的</li>
+</ul>
+</li>
+<li>step2：确定行为<ul>
+<li>去需求里找动词</li>
+<li>思考确定的类应该有什么行为</li>
+</ul>
+</li>
+<li>step3：绘制</li>
+</ul>
+<h3 id="11-熟悉用例图、类图、状态图的组成和画法。"><a href="#11-熟悉用例图、类图、状态图的组成和画法。" class="headerlink" title="11.熟悉用例图、类图、状态图的组成和画法。"></a>11.熟悉用例图、类图、状态图的组成和画法。</h3><ul>
+<li>状态图：<ul>
+<li>描述活动和过程流</li>
+<li>画法：<img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E6%B4%BB%E5%8A%A8%E5%9B%BE%E7%94%BB%E6%B3%95.png" srcset="/img/loading.gif" lazyload alt="活动图画法"></li>
+<li>示例：<img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E6%B4%BB%E5%8A%A8%E5%9B%BE%E7%A4%BA%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="活动图示例"></li>
+</ul>
+</li>
+</ul>
+<h3 id="12-掌握顺序图的含义及画法。"><a href="#12-掌握顺序图的含义及画法。" class="headerlink" title="12.掌握顺序图的含义及画法。"></a>12.掌握顺序图的含义及画法。</h3><p><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E9%A1%BA%E5%BA%8F%E5%9B%BE%E7%A4%BA%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="顺序图示例"></p>
+<ul>
+<li>对象：顺序图中对象的符号和对象图中对象所用的符号一样。将对象置于顺序图的顶部意味着在交互开始的时候对象就已经存在了，如果对象的位置不在顶部，那么表示对象是在交互的过程中被创建的。</li>
+<li>生命线：生命线是一条垂直的虚线，表示顺序图中的对象在一段时间内的存在。每个对象的底部中心的位置都带有生命线。生命线是一个时间线，所用的时间取决于交互持续的时间。</li>
+<li>控制焦点：在对象的生命线上，包含一个矩形，表示对象处于激活状态，处于激活状态的对象正在执行某个任务。对象在完成自己的工作后，被去激活，对象就处于空闲状态。</li>
+</ul>
+<h3 id="13-了解UML其他图示结构的基本用途。"><a href="#13-了解UML其他图示结构的基本用途。" class="headerlink" title="13.了解UML其他图示结构的基本用途。"></a>13.了解UML其他图示结构的基本用途。</h3><h2 id="Chapter-7-Writing-the-Programs"><a href="#Chapter-7-Writing-the-Programs" class="headerlink" title="Chapter 7 Writing the Programs"></a>Chapter 7 Writing the Programs</h2><h3 id="1-一般性的编程原则应该从哪三个方面考虑？"><a href="#1-一般性的编程原则应该从哪三个方面考虑？" class="headerlink" title="1.一般性的编程原则应该从哪三个方面考虑？"></a>1.一般性的编程原则应该从哪三个方面考虑？</h3><ul>
+<li>控制结构：要让程序设计反映出在体系结构和设计中的各种控制结构</li>
+<li>算法：程序设计通常会制定一类算法，用于编写组件。不过在实现算法的编码过程中，自由度还是很大的。但是实现一个高性能的算法还可能引起隐性代价，比如难读</li>
+<li>数据结构：编写程序时，应该安排数据的格式并进行存储，让数据结构决定项目结构，并尽可能以此简化程序</li>
+</ul>
+<h3 id="2-在编写程序内部文档时，除了HCB外，还应添加什么注释信息？注意什么？"><a href="#2-在编写程序内部文档时，除了HCB外，还应添加什么注释信息？注意什么？" class="headerlink" title="2.在编写程序内部文档时，除了HCB外，还应添加什么注释信息？注意什么？"></a>2.在编写程序内部文档时，除了HCB外，还应添加什么注释信息？注意什么？</h3><ul>
+<li>HCB：头部注释板块，是总览性的信息，用于标识程序、描述数据结构、算法、控制结构</li>
+<li>其他程序注释<ul>
+<li>版本注释：随着时间进行修改的记录</li>
+<li>解释性注释：本段源代码是在做什么的注释</li>
+<li>分解性注释：通过注释将代码分解成多个段</li>
+</ul>
+</li>
+<li>编写内部文档还要注意什么？<ul>
+<li>分段注释</li>
+<li>修改代码的同时也要修改注释</li>
+<li>写代码同时就写注释，不延后</li>
+<li>注释要带来新的信息，通过变量名或者简单阅读代码就可以获得的信息是不用加入注释的</li>
+<li>使用有意义的变量名和标签</li>
+<li>使用统一易读的编码格式</li>
+<li>注释应当描述数据结构和它的用法，这一点在强调封装性的OO中尤为重要</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-敏捷方法的大致思想？什么是极限编程-XP-以及派对编程？"><a href="#3-敏捷方法的大致思想？什么是极限编程-XP-以及派对编程？" class="headerlink" title="3.敏捷方法的大致思想？什么是极限编程(XP)? 以及派对编程？"></a>3.敏捷方法的大致思想？什么是极限编程(XP)? 以及派对编程？</h3><ul>
+<li>人与人之间的交互复杂、难以预期，但是这是开发中最重要的方面。 敏捷开发强调人与人的交流，并且以“尽可能早地、持续地交付有价值的软件”为最高目标，而不是把时间精力都花在文档、谈判、计划上，随机应变，唯快不破。</li>
+<li>极限编程（XP）是一种轻量级的软件开发方法论，属于敏捷开发方法。其主要特征是要适应环境变化和需求变化，充分发挥开发人员的主动精神</li>
+<li>派对编程属于主要的敏捷开发方法，其开发方式是两个程序员共同开发程序，且角色分工明确。一个负责编写程序，另一个负责复审与测试。两人定期交换角色。</li>
+</ul>
+<h2 id="Chapter-8-Testing-the-Programs"><a href="#Chapter-8-Testing-the-Programs" class="headerlink" title="Chapter 8 Testing the Programs"></a>Chapter 8 Testing the Programs</h2><h3 id="1-了解产生软件缺陷的原因？"><a href="#1-了解产生软件缺陷的原因？" class="headerlink" title="1.了解产生软件缺陷的原因？"></a>1.了解产生软件缺陷的原因？</h3><ul>
+<li>the software itself (处理大量的系统状态, 处理复杂的公式、活动、数据及算法、网络通讯误差等)</li>
+<li>causes from customer and designer(uncertain、missing、impossible requirement, faults in design，etc.)</li>
+<li>other factor (项目的场景及规模因素, 众多参与者等)</li>
+</ul>
+<h3 id="2-有几种主要的缺陷类型？"><a href="#2-有几种主要的缺陷类型？" class="headerlink" title="2.有几种主要的缺陷类型？"></a>2.有几种主要的缺陷类型？</h3><ul>
+<li>算法缺陷<ul>
+<li>算法的某些处理步骤或逻辑有问题，以至于软件部件对给定的输入数据无法产生正确的输出</li>
+</ul>
+</li>
+<li>计算和精度缺陷<ul>
+<li>算法或公式在编程实现时出现错误或最终结果达不到精度要求</li>
+<li>不同精度变量的混合运算, 浮点数据的不当使用，意料之外的数据截断，实现时操作次序不当，数据的对象化包装不当等等，都会导致精度的下降或失真。</li>
+</ul>
+</li>
+<li>文档缺陷<ul>
+<li>文档描述与程序动作不相符</li>
+</ul>
+</li>
+<li>过载缺陷<ul>
+<li>程序运行时，数据填充量会超过数据结构的规定容量引起的缺陷</li>
+</ul>
+</li>
+<li>能力缺陷 &#x2F; 容量缺陷<ul>
+<li>系统活动量达到系统极限时，系统性能变的不可接受，称为能力缺陷（例如用户数量接近上限）</li>
+</ul>
+</li>
+<li>性能缺陷<ul>
+<li>系统在常规状态下就不能以需求规定的速度执行（例如：响应时间）</li>
+</ul>
+</li>
+<li>时序性缺陷<ul>
+<li>几个同时或有严格执行顺序的进程协调出现问题</li>
+</ul>
+</li>
+<li>恢复性缺陷<ul>
+<li>系统失效时，程序无法再恢复也是一种缺陷</li>
+</ul>
+</li>
+<li>硬件和系统软件缺陷<ul>
+<li>作为底层支持的硬件和系统软件没有按照文档中的操作条件和步骤运作时，也可能引起我们软件的问题，这就是硬件和系统软件缺陷</li>
+</ul>
+</li>
+<li>代码的标准和规程缺陷<ul>
+<li>代码没有遵守组织机构的标准和过程。这个缺陷最大的影响在于：不按照标准的代码可能在测试和修改时让人不好理解，引起问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-测试的各个阶段及其任务？涉及的文档？（图8-3）"><a href="#3-测试的各个阶段及其任务？涉及的文档？（图8-3）" class="headerlink" title="3.测试的各个阶段及其任务？涉及的文档？（图8.3）"></a>3.测试的各个阶段及其任务？涉及的文档？（图8.3）</h3><ul>
+<li>单元测试 验证组件的功能<ul>
+<li>依据文档：程序代码与配套文档</li>
+</ul>
+</li>
+<li>集成测试 验证系统组件是否能正确的协同工作<ul>
+<li>依据文档：系统体系结构文档SAD、程序设计规格说明</li>
+</ul>
+</li>
+<li>功能测试 验证系统是否能执行需求规格说明中描述的功能<ul>
+<li>依据文档：软件需求规格说明书SRS</li>
+</ul>
+</li>
+<li>性能测试 验证系统的软硬件表现和性能是否符合需求规格说明文档 这一步之后，软件系统应当能在客户的实际工作环境中成功执行，这时我们说产生了一个被确认的系统<ul>
+<li>依据文档：软件需求规格说明书SRS</li>
+</ul>
+</li>
+<li>验收测试 验证系统是否满足了客户的需求定义（需求定义和需求规格说明是有区别的）<ul>
+<li>依据文档：客户需求定义</li>
+</ul>
+</li>
+<li>安装测试 验证系统能否在用户使用的真实环境中安装并正常运行<ul>
+<li>依据文档：用户环境的说明</li>
+</ul>
+</li>
+<li>系统测试 &#x3D; 功能测试+性能测试+验收测试+安装测试</li>
+</ul>
+<h3 id="4-掌握测试的方法—-黑盒、白盒的概念？"><a href="#4-掌握测试的方法—-黑盒、白盒的概念？" class="headerlink" title="4.掌握测试的方法—-黑盒、白盒的概念？"></a>4.掌握测试的方法—-黑盒、白盒的概念？</h3><ul>
+<li>黑盒测试：<ul>
+<li>测试人员在完全不了解程序内部的逻辑结构和内部特性的情况下，只依据程序的需求规格及设计说明，检查程序的功能是否符合它的功能说明。</li>
+<li>优点：不受测试对象内部结构和逻辑的约束，只采用有代表性的测试用例完成测试</li>
+<li>缺点：并不总是能够以这种方式运行完整的测试用例</li>
+</ul>
+</li>
+<li>白盒测试：<ul>
+<li>以测试对象的内部结构为基本依据，手工或自动的展开各种测试</li>
+<li>优点：模块的详细测试</li>
+<li>缺点：可能不切实际</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-什么是单元测试？-什么是走查和检查？"><a href="#5-什么是单元测试？-什么是走查和检查？" class="headerlink" title="5.什么是单元测试？ 什么是走查和检查？"></a>5.什么是单元测试？ 什么是走查和检查？</h3><ul>
+<li>将每个程序构件与系统中其他构件隔离，对其单独进行测试</li>
+<li>走查：程序员向评审小组提交代码和相关文档，评审小组非正式地进行讨论，注意力集中在代码上。发现缺陷，不必修改（非正式的代码复审的类型）</li>
+<li>检查：复审团队根据一系列事先准备好的关注点列表核对代码和文档</li>
+</ul>
+<h3 id="6-黑盒、白盒方法各自的分类？测试用例的设计方法和给出方法。"><a href="#6-黑盒、白盒方法各自的分类？测试用例的设计方法和给出方法。" class="headerlink" title="6.黑盒、白盒方法各自的分类？测试用例的设计方法和给出方法。"></a>6.黑盒、白盒方法各自的分类？测试用例的设计方法和给出方法。</h3><ul>
+<li>黑盒测试：</li>
+<li>等价分类法<ul>
+<li>将输入域划分为若干等价类，并且从每个等价类里选择有代表性的少量用例代表其余所有情况。其根本逻辑在于：如果这些代表性用例没有出现问题，那么其他的一般也没有问题</li>
+</ul>
+</li>
+<li>边界值分析法<ul>
+<li>在等价分类法中，代表一个类的测试数据可以在这个类的允许范围内任意选择。但如果把测试值选在等价类的边界上，往住有更好的效果，这就是边界值分析法的主要思想。</li>
+</ul>
+</li>
+<li>错误猜测法<ul>
+<li>猜测程序中哪些地方容易出错，并据此设计测试用例。更多的依赖于测试人员的直觉和经验。</li>
+</ul>
+</li>
+<li>因果图法<ul>
+<li>适用于被测试程序有很多输入条件，程序的输出又依赖输入条件的各种组合的情况。</li>
+</ul>
+</li>
+<li>白盒测试</li>
+<li>逻辑覆盖法：<ul>
+<li>语句覆盖<ul>
+<li>给出的测试用例能使模块中的每一条语句至少执行一遍</li>
+</ul>
+</li>
+<li>分支覆盖<ul>
+<li>每一分支至少执行一次</li>
+</ul>
+</li>
+<li>条件覆盖<ul>
+<li>要求判定中的每个条件均按照“真”、“假”两种结果至少执行一次。</li>
+</ul>
+</li>
+<li>条件组合覆盖<ul>
+<li>要求所有条件结果的组合都至少出现一次(比如 A&amp;&amp;B，两个条件，那么就有四种条件的组合)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>路径测试法：借助程序图设计测试用例<br>  <img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%B7%AF%E5%BE%84%E6%B5%8B%E8%AF%95%E6%B3%95.png" srcset="/img/loading.gif" lazyload alt="路径测试法"><ul>
+<li>结点覆盖：经过所有结点</li>
+<li>边覆盖：覆盖所有边</li>
+<li>完全覆盖：边+点覆盖，这是测试简单程序的最低标准</li>
+<li>路径覆盖：程序图中每条路径都至少经过一次</li>
+</ul>
+</li>
+<li>测试用例的设计方法和给出方法<ul>
+<li>黑盒：根据SRS和其他文档</li>
+<li>白盒：根据模块的内部逻辑</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-黑盒、白盒方法的分类原则，各种覆盖方法等。（课件等）"><a href="#7-黑盒、白盒方法的分类原则，各种覆盖方法等。（课件等）" class="headerlink" title="7.黑盒、白盒方法的分类原则，各种覆盖方法等。（课件等）"></a>7.黑盒、白盒方法的分类原则，各种覆盖方法等。（课件等）</h3><ul>
+<li>如上</li>
+</ul>
+<h3 id="8-如何面对一个命题，设计和给出测试用例的问题。（课件）"><a href="#8-如何面对一个命题，设计和给出测试用例的问题。（课件）" class="headerlink" title="8.如何面对一个命题，设计和给出测试用例的问题。（课件）"></a>8.如何面对一个命题，设计和给出测试用例的问题。（课件）</h3><h3 id="9-——课堂练习的测试题目和讲解内容"><a href="#9-——课堂练习的测试题目和讲解内容" class="headerlink" title="9.——课堂练习的测试题目和讲解内容"></a>9.——课堂练习的测试题目和讲解内容</h3><ul>
+<li>课堂练习:输入三角形三边长，输出是否能构成三角形，构成什么三角形<br><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%AF%BE%E5%A0%82%E7%BB%83%E4%B9%A01.png" srcset="/img/loading.gif" lazyload alt="课堂练习1"><br><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%AF%BE%E5%A0%82%E7%BB%83%E4%B9%A01.2.png" srcset="/img/loading.gif" lazyload alt="课堂练习1.2"></li>
+<li>课堂练习2<br><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%AF%BE%E5%A0%82%E7%BB%83%E4%B9%A02.png" srcset="/img/loading.gif" lazyload alt="课堂练习2"></li>
+</ul>
+<h3 id="10-集成测试及其主要方法的分类？（驱动模块、桩模块的概念）"><a href="#10-集成测试及其主要方法的分类？（驱动模块、桩模块的概念）" class="headerlink" title="10.集成测试及其主要方法的分类？（驱动模块、桩模块的概念）"></a>10.集成测试及其主要方法的分类？（驱动模块、桩模块的概念）</h3><ul>
+<li>驱动模块：代替上级模块传递测试用例的程序（出现在自底而上集成测试中）</li>
+<li>桩模块：代替下级模块的仿真程序（出现在自顶向下）</li>
+<li>由底向上集成测试<ul>
+<li>从模块结构图的最低层开始，由下而上按调用关系逐步添加新模块，组成子系统并分别测试，重复执行直到全部模块组装完毕。（雪球从底层滚起）<br>  <img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%94%B1%E5%BA%95%E5%90%91%E4%B8%8A%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95.png" srcset="/img/loading.gif" lazyload alt="由底向上集成测试"></li>
+</ul>
+</li>
+<li>自顶向下集成测试<ul>
+<li>从顶层控制组件开始，首先对它本身进行测试，然后将被测组件调用的下级组件组合起来，对这个更大的子系统进行测试，反复采用这种组装方法，直到包含了所有组件为止。（雪球从顶层滚起）<br><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95.png" srcset="/img/loading.gif" lazyload alt="自顶向下集成测试"></li>
+</ul>
+</li>
+</ul>
+<h3 id="11-传统测试和OO测试有何不同？OO测试有何困难？"><a href="#11-传统测试和OO测试有何不同？OO测试有何困难？" class="headerlink" title="11.传统测试和OO测试有何不同？OO测试有何困难？"></a>11.传统测试和OO测试有何不同？OO测试有何困难？</h3><ul>
+<li>传统测试，系统发生改变时，我们只需要针对改变在原来的用例基础上，推出新的用例即可 OO测试在子类被重写时，我们需要重新测试，并可能需要使用不同的测试用例 OO测试，在单元测试中更加简单（对象的粒度更小），但是集成测试更难（设计接口、继承、多态等）</li>
+<li>OO测试有何困难<ul>
+<li>需求文档的验证缺乏工具支持。（很多时候依赖人工）</li>
+<li>测试工具生成的测试用例，处理OO模型中的某些对象和方法时，其针对性不强。（某些OO关系是测试工具本身搞不清楚其内在逻辑关系的）</li>
+<li>源代码分析：传统的测试方法（如环路复杂度等）在评价OO系统的规模和复杂性时，还不是很有效，或没有太强的针对性。</li>
+<li>覆盖分析：对象的交互是OO系统复杂性的根源，传统的覆盖分析等测试方法和根据&#x2F;依据的作用有限。缺乏有效的交互模型</li>
+</ul>
+</li>
+</ul>
+<h2 id="Chapter-9"><a href="#Chapter-9" class="headerlink" title="Chapter 9"></a>Chapter 9</h2><h3 id="1-系统测试的主要步骤及各自含义？（图9-2）"><a href="#1-系统测试的主要步骤及各自含义？（图9-2）" class="headerlink" title="1.系统测试的主要步骤及各自含义？（图9.2）"></a>1.系统测试的主要步骤及各自含义？（图9.2）</h3><p><img src="/2024/12/09/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%8D%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95%E6%AD%A5%E9%AA%A4.png" srcset="/img/loading.gif" lazyload alt="系统测试步骤"></p>
+<ul>
+<li>功能测试 验证系统是否能执行需求规格说明中描述的功能<ul>
+<li>依据文档：软件需求规格说明书SRS</li>
+</ul>
+</li>
+<li>性能测试 验证系统的软硬件表现和性能是否符合需求规格说明文档 这一步之后，软件系统应当能在客户的实际工作环境中成功执行，这时我们说产生了一个被确认的系统<ul>
+<li>依据文档：软件需求规格说明书SRS</li>
+</ul>
+</li>
+<li>验收测试 验证系统是否满足了客户的需求定义（需求定义和需求规格说明是有区别的）<ul>
+<li>依据文档：客户需求定义</li>
+</ul>
+</li>
+<li>安装测试 验证系统能否在真实环境中安装并正常运行<ul>
+<li>依据文档：用户环境的说明</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-什么是回归测试？"><a href="#2-什么是回归测试？" class="headerlink" title="2.什么是回归测试？"></a>2.什么是回归测试？</h3><ul>
+<li>回归测试是用于新的版本或者改进版本的一种测试，以验证与旧版本相比，软件是否仍然以同样的方式执行同样的功能。</li>
+</ul>
+<h3 id="3-功能测试的含义极其作用？"><a href="#3-功能测试的含义极其作用？" class="headerlink" title="3.功能测试的含义极其作用？"></a>3.功能测试的含义极其作用？</h3><ul>
+<li>测试SRS（软件需求规格说明书）中的功能性需求</li>
+<li>以高检测率发现缺陷 （因为一项功能测试只面向一小组组件，不容易导致多个缺陷彼此掩盖）</li>
+</ul>
+<h3 id="4-软件系统测试阶段软件功能测试的基本指导原则？"><a href="#4-软件系统测试阶段软件功能测试的基本指导原则？" class="headerlink" title="4.软件系统测试阶段软件功能测试的基本指导原则？"></a>4.软件系统测试阶段软件功能测试的基本指导原则？</h3><ul>
+<li>A: 较高的查错概率</li>
+<li>B: 独立的测试团队</li>
+<li>C: 了解预期的输出结果</li>
+<li>D: 对合法与非法的输入都予以测试（假设是弱健壮等价类）</li>
+<li>E: 绝不能仅仅为了测试的方便而修改系统</li>
+<li>F: 停止测试应该有前提条件</li>
+</ul>
+<h3 id="5-性能测试的含义与作用？"><a href="#5-性能测试的含义与作用？" class="headerlink" title="5.性能测试的含义与作用？"></a>5.性能测试的含义与作用？</h3><ul>
+<li>测试SRS中的非功能性需求，例如：性能、准确度等</li>
+<li>确保系统的可靠性、可用性和可维护性</li>
+</ul>
+<h3 id="6-性能测试的主要分类？"><a href="#6-性能测试的主要分类？" class="headerlink" title="6.性能测试的主要分类？"></a>6.性能测试的主要分类？</h3><ul>
+<li>压力测试&#x2F;强度测试：短时间内加载极限负荷，验证系统能力，对经常产生负荷高峰的系统很有意义</li>
+<li>容量测试&#x2F;巨额数据测试：验证系统处理巨量数据的能力</li>
+<li>计时测试：评估涉及对用户的响应时间以及功能执行耗时的相关需求</li>
+<li>配置测试：对系统软硬件的各种配置进行测试</li>
+<li>兼容性测试：测试其接口在与其他系统互动时能否正常运作</li>
+<li>环境测试：测试系统在安装场所的执行能力，这里指的是外部的物理条件，比如高温、潮湿</li>
+<li>回归测试：验证软件的新版本与旧版本相比，是否仍能以相同的方式执行着相同的功能</li>
+<li>安全性测试：确保安全性需求得到满足</li>
+<li>质量测试：评估系统的可靠性、可维护性和可用性</li>
+<li>恢复测试：检验系统是否能在故障或丢失电源、数据、设备时自我恢复</li>
+<li>人为因素测试&#x2F;可用性测试：检查设计系统用户界面的需求</li>
+</ul>
+<h3 id="7-确认测试概念，确认测试分类？（基准测试和引导测试）"><a href="#7-确认测试概念，确认测试分类？（基准测试和引导测试）" class="headerlink" title="7.确认测试概念，确认测试分类？（基准测试和引导测试）"></a>7.确认测试概念，确认测试分类？（基准测试和引导测试）</h3><ul>
+<li>客户检验系统是否达到需求定义的标准</li>
+<li>分类：<ul>
+<li>基准测试：客户准备一组代表在实际安装后系统运作的典型情况的测试用例，由客户来评估执行的情况。</li>
+<li>引导测试：在试验环境中安装系统，依赖系统的日常工作来进行测试。没有正式和结构化的测试用例。包括alpha测试和beta测试</li>
+<li>并行测试：新系统和旧版本共同运行，使用户适应新系统</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-什么是alpha测试？β测试？"><a href="#8-什么是alpha测试？β测试？" class="headerlink" title="8.什么是alpha测试？β测试？"></a>8.什么是alpha测试？β测试？</h3><ul>
+<li>α：在组织内进行试点测试（由开发人员进行）</li>
+<li>β：由软件应用程序的“真实用户”在“真实环境”中进行的，它可以被认为是一种外部用户验收测试。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="category-chain-item">软件工程</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="print-no-link">#软件工程</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>软件工程复习</div>
+      <div>https://sdueryrg.github.io/2024/12/09/软件工程复习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/12/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh5/" title="计算机网络Ch5">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机网络Ch5</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/07/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch11/" title="编译原理Ch11">
+                        <span class="hidden-mobile">编译原理Ch11</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

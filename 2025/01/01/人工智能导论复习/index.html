@@ -1,0 +1,986 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第四章 不确定性推理方法可信度方法推理 从已知事实（证据）出发，通过运用相关知识逐步推出结论或者证明某个假设成立或不成立的思维过程。  不确定性推理 从不确定性的初始证据出发，通过运用不确定性的知识，最终推出具有一定程度的不确定性但却是合理或者近乎合理的结论的思维过程。  可信度 根据经验对一个事物或现象为真的相信程度。  C－F模型 基于可信度表示的不确定性推理的基本方法。  知识的不确定性表示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人工智能导论复习">
+<meta property="og:url" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="第四章 不确定性推理方法可信度方法推理 从已知事实（证据）出发，通过运用相关知识逐步推出结论或者证明某个假设成立或不成立的思维过程。  不确定性推理 从不确定性的初始证据出发，通过运用不确定性的知识，最终推出具有一定程度的不确定性但却是合理或者近乎合理的结论的思维过程。  可信度 根据经验对一个事物或现象为真的相信程度。  C－F模型 基于可信度表示的不确定性推理的基本方法。  知识的不确定性表示">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%9F%A5%E8%AF%86%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%A1%A8%E7%A4%BA.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%BB%93%E8%AE%BA%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E5%90%88%E6%88%90%E7%AE%97%E6%B3%951.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%BB%93%E8%AE%BA%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E5%90%88%E6%88%90%E7%AE%97%E6%B3%952.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%BB%93%E8%AE%BA%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E4%BE%8B%E5%AD%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E8%A7%A3%E7%AD%941.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E8%A7%A3%E7%AD%942.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E8%A7%A3%E7%AD%943.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E8%A7%A3%E7%AD%944.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%AD%A3%E4%BA%A4%E5%92%8C1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%AD%A3%E4%BA%A4%E5%92%8C2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E7%90%86%E8%AE%BA%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E4%BE%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E7%90%86%E8%AE%BA%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E7%AD%94%E6%A1%881.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E7%90%86%E8%AE%BA%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E7%AD%94%E6%A1%882.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E7%90%86%E8%AE%BA%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E7%AD%94%E6%A1%883.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B4%E8%A1%A8%E7%A4%BA%E6%B3%95.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%85%AB%E6%95%B0%E7%A0%81%E9%97%AE%E9%A2%98%E7%9A%84%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B41.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%85%AB%E6%95%B0%E7%A0%81%E9%97%AE%E9%A2%98%E7%9A%84%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B42.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%85%AB%E6%95%B0%E7%A0%81%E9%97%AE%E9%A2%98%E7%9A%84%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B43.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%97%85%E8%A1%8C%E5%95%86%E9%97%AE%E9%A2%981.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%97%85%E8%A1%8C%E5%95%86%E9%97%AE%E9%A2%982.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%AE%BD%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%AE%BD%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E4%BE%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/A%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E4%BE%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/A%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E7%AD%94%E6%A1%88%E5%9B%BE.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/A%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E7%AD%94%E6%A1%88.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.png">
+<meta property="article:published_time" content="2025-01-01T12:33:49.000Z">
+<meta property="article:modified_time" content="2025-01-04T06:39:39.923Z">
+<meta property="article:author" content="yrg">
+<meta property="article:tag" content="人工智能导论">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%9F%A5%E8%AF%86%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%A1%A8%E7%A4%BA.png">
+  
+  
+  
+  <title>人工智能导论复习 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="人工智能导论复习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-01 20:33" pubdate>
+          2025年1月1日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">人工智能导论复习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第四章-不确定性推理方法"><a href="#第四章-不确定性推理方法" class="headerlink" title="第四章 不确定性推理方法"></a>第四章 不确定性推理方法</h2><h3 id="可信度方法"><a href="#可信度方法" class="headerlink" title="可信度方法"></a>可信度方法</h3><h4 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h4><ul>
+<li>从已知事实（证据）出发，通过运用相关知识逐步推出结论或者证明某个假设成立或不成立的思维过程。</li>
+</ul>
+<h4 id="不确定性推理"><a href="#不确定性推理" class="headerlink" title="不确定性推理"></a>不确定性推理</h4><ul>
+<li>从不确定性的初始证据出发，通过运用不确定性的知识，最终推出具有一定程度的不确定性但却是合理或者近乎合理的结论的思维过程。</li>
+</ul>
+<h4 id="可信度"><a href="#可信度" class="headerlink" title="可信度"></a>可信度</h4><ul>
+<li>根据经验对一个事物或现象为真的相信程度。</li>
+</ul>
+<h4 id="C－F模型"><a href="#C－F模型" class="headerlink" title="C－F模型"></a>C－F模型</h4><ul>
+<li>基于可信度表示的不确定性推理的基本方法。</li>
+</ul>
+<h4 id="知识的不确定性表示"><a href="#知识的不确定性表示" class="headerlink" title="知识的不确定性表示"></a>知识的不确定性表示</h4><p><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%9F%A5%E8%AF%86%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%A1%A8%E7%A4%BA.png" srcset="/img/loading.gif" lazyload alt="知识的不确定性表示"></p>
+<ul>
+<li>CF（H，E）的取值范围: [-1,1]。</li>
+<li>若由于相应证据的出现增加结论 H 为真的可信度，则 CF（H，E）&gt; 0，证据的出现越是支持 H 为真，就使CF（H，E) 的值越大。</li>
+<li>反之，CF（H，E）&lt; 0，证据的出现越是支持 H 为假，CF（H，E）的值就越小。</li>
+<li>若证据的出现与否与 H 无关，则 CF（H，E）&#x3D; 0。</li>
+</ul>
+<h4 id="证据不确定性的表示"><a href="#证据不确定性的表示" class="headerlink" title="证据不确定性的表示"></a>证据不确定性的表示</h4><p>$$<br>CF(E)＝0.6： E的可信度为0.6<br>$$</p>
+<ul>
+<li>证据E的可信度取值范围：[-1，1] 。</li>
+<li>对于初始证据，若所有观察S能肯定它为真，则CF(E)&#x3D; 1。</li>
+<li>若肯定它为假，则  CF(E) &#x3D; –1。</li>
+<li>若以某种程度为真，则   0 &lt; CF(E) &lt; 1。</li>
+<li>若以某种程度为假，则 －1 &lt; CF(E) &lt; 0 。</li>
+<li>若未获得任何相关的观察，则 CF(E) &#x3D; 0。</li>
+<li>静态强度CF（H，E）：知识的强度，即当 E 所对应的证据为真时对 H 的影响程度。</li>
+<li>动态强度 CF（E）：证据 E 当前的不确定性程度。</li>
+</ul>
+<h4 id="组合证据不确定性的算法"><a href="#组合证据不确定性的算法" class="headerlink" title="组合证据不确定性的算法"></a>组合证据不确定性的算法</h4><ul>
+<li>组合证据：多个单一证据的合取</li>
+</ul>
+<p>$$<br>E&#x3D;E1 \space\space AND \space\space E2 \space\space AND …AND \space\space En<br>$$<br>$$<br>则CF(E)&#x3D;min \lbrace CF(E_1),CF(E_2),CF(E_3),…,CF(E_n) \rbrace<br>$$</p>
+<ul>
+<li>组合证据：多个单一证据的析取</li>
+</ul>
+<p>$$<br>E&#x3D;E1 \space\space OR \space\space E2 \space\space OR… OR \space\space En<br>$$<br>$$<br>则CF(E)&#x3D;max\lbrace CF(E_1),CF(E_2),CF(E_3),…,CF(E_n) \rbrace<br>$$</p>
+<h4 id="不确定性的传递算法"><a href="#不确定性的传递算法" class="headerlink" title="不确定性的传递算法"></a>不确定性的传递算法</h4><ul>
+<li>C－F模型中的不确定性推理：从不确定的初始证据出发，通过运用相关的不确定性知识，最终推出结论并求出结论的可信度值。结论 H 的可信度由下式计算：<br>$$<br>CF(H)&#x3D;CF(H,E)*max\lbrace 0,CF(E)\rbrace<br>$$</li>
+</ul>
+<h4 id="结论不确定性的合成算法"><a href="#结论不确定性的合成算法" class="headerlink" title="结论不确定性的合成算法"></a>结论不确定性的合成算法</h4><p><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%BB%93%E8%AE%BA%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E5%90%88%E6%88%90%E7%AE%97%E6%B3%951.png" srcset="/img/loading.gif" lazyload alt="结论不确定性的合成算法1"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%BB%93%E8%AE%BA%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E5%90%88%E6%88%90%E7%AE%97%E6%B3%952.png" srcset="/img/loading.gif" lazyload alt="结论不确定性的合成算法2"></p>
+<h4 id="结论不确定性的合成算法例子"><a href="#结论不确定性的合成算法例子" class="headerlink" title="结论不确定性的合成算法例子"></a>结论不确定性的合成算法例子</h4><p><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%BB%93%E8%AE%BA%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E4%BE%8B%E5%AD%90.png" srcset="/img/loading.gif" lazyload alt="结论不确定性的合成算法例子"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E8%A7%A3%E7%AD%941.png" srcset="/img/loading.gif" lazyload alt="合成算法解答1"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E8%A7%A3%E7%AD%942.png" srcset="/img/loading.gif" lazyload alt="合成算法解答2"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E8%A7%A3%E7%AD%943.png" srcset="/img/loading.gif" lazyload alt="合成算法解答3"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95%E8%A7%A3%E7%AD%944.png" srcset="/img/loading.gif" lazyload alt="合成算法解答4"></p>
+<h3 id="证据理论"><a href="#证据理论" class="headerlink" title="证据理论"></a>证据理论</h3><h4 id="样本空间"><a href="#样本空间" class="headerlink" title="样本空间"></a>样本空间</h4><ul>
+<li>设 D 是变量 x 所有可能取值的集合，且 D 中的元素是互斥的，在任一时刻 x 都取且只能取 D 中的某一个元素为值，则称 D 为 x 的样本空间。</li>
+</ul>
+<h4 id="基本概率分配函数"><a href="#基本概率分配函数" class="headerlink" title="基本概率分配函数"></a>基本概率分配函数</h4><ul>
+<li>基本概率分配函数（Basic Probability Assignment, BPA）是从集合 $2^\Omega $到区间$[0, 1]$的映射，满足以下两个条件：</li>
+</ul>
+<p>$$<br>m: 2^\Omega \rightarrow [0, 1]<br>$$</p>
+<ol>
+<li>$$m(\emptyset) &#x3D; 0$$</li>
+<li>$$\sum_{A \subseteq \Omega} m(A) &#x3D; 1$$</li>
+</ol>
+<ul>
+<li><p>其中，$m(A)$表示对命题A的支持程度。如果 $m(A) &gt; 0$ ，则称A为一个焦元（focal element）。</p>
+</li>
+<li><p>则 $M: 2^\Omega \rightarrow [0, 1] $ 上的基本概率分配函数，$ M(A): A$的基本概率数。</p>
+</li>
+<li><p>例如，设 A&#x3D;{红}，M（A）&#x3D;0.3：命题“x是红色”的信任度是0.3。</p>
+</li>
+</ul>
+<h4 id="信任函数"><a href="#信任函数" class="headerlink" title="信任函数"></a>信任函数</h4><p>$$<br>Bel(A) &#x3D; \sum_{B \subseteq A} m(B)<br>$$</p>
+<ul>
+<li>其中， Bel(A) 表示对命题A的总的信任程度。根据基本概率分配函数的特点，我们可以知道：</li>
+</ul>
+<p>$$<br>Bel(\emptyset) &#x3D; m(\emptyset) &#x3D; 0<br>$$</p>
+<p>$$<br>Bel(\Omega) &#x3D; \sum_{B \subseteq \Omega} m(B) &#x3D; 1<br>$$</p>
+<p>$$<br>Bel(A): A \text{ 的信任度。}<br>$$</p>
+<h4 id="似然函数"><a href="#似然函数" class="headerlink" title="似然函数"></a>似然函数</h4><p>$$<br>\text{似然函数（Plausibility Function）定义如下：}<br>$$</p>
+<p>$$<br>Pl(A) &#x3D; \sum_{B \cap A \neq \emptyset} m(B)<br>$$</p>
+<ul>
+<li>其中，$Pl(A) $ 表示对命题 $ A $ 的似然程度。</li>
+<li>根据基本概率分配函数的特点，我们可以知道：</li>
+</ul>
+<p>$$<br>Pl(\emptyset) &#x3D; 0<br>$$</p>
+<p>$$<br>Pl(\Omega) &#x3D; 1<br>$$</p>
+<p>$$<br>Pl(A): A \text{ 的似然度。}<br>$$</p>
+<ul>
+<li>例如<br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0.png" srcset="/img/loading.gif" lazyload alt="似然函数"></li>
+</ul>
+<h4 id="概率分配函数的正交和（证据的组合）"><a href="#概率分配函数的正交和（证据的组合）" class="headerlink" title="概率分配函数的正交和（证据的组合）"></a>概率分配函数的正交和（证据的组合）</h4><ul>
+<li>设$M_1$和$M_2$是两个概率分配函数，则其正交和$M&#x3D;M_1 \oplus M_2$<br>$$M(\emptyset)&#x3D;0$$<br>$$M(A) &#x3D; \frac{1}{1 - k}\sum_{x \cap y &#x3D; A}M_1(x)M_2(y)$$<br>$$K &#x3D; 1- \sum_{x \cap y &#x3D; \emptyset}M_1(x)M_2(y)&#x3D;\sum_{x \cap y \neq \emptyset}M_1(x)M_2(y)$$</li>
+<li>如果$K \neq 0$，则正交和 M也是一个概率分配函数；</li>
+<li>如果$K &#x3D; 0$，则不存在正交和 M，即没有可能存在概率函数，称$M_1$与$M_2$矛盾。</li>
+<li>例<br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%AD%A3%E4%BA%A4%E5%92%8C1.png" srcset="/img/loading.gif" lazyload alt="正交和1"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%AD%A3%E4%BA%A4%E5%92%8C2.png" srcset="/img/loading.gif" lazyload alt="正交和2"></li>
+</ul>
+<h4 id="基于证据理论的不确定性推理"><a href="#基于证据理论的不确定性推理" class="headerlink" title="基于证据理论的不确定性推理"></a>基于证据理论的不确定性推理</h4><p>基于证据理论的不确定性推理的步骤：</p>
+<ul>
+<li>（1）建立问题的样本空间D。</li>
+<li>（2）由经验给出，或者由随机性规则和事实的信度度量求得基本概率分配函数。</li>
+<li>（3）计算所关心的子集的信任函数值、似然函数值。</li>
+<li>（4）由信任函数值、似然函数值得出结论。<br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E7%90%86%E8%AE%BA%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="基于证据理论的不确定性推理例"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E7%90%86%E8%AE%BA%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E7%AD%94%E6%A1%881.png" srcset="/img/loading.gif" lazyload alt="基于证据理论的不确定性推理答案1"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E7%90%86%E8%AE%BA%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E7%AD%94%E6%A1%882.png" srcset="/img/loading.gif" lazyload alt="基于证据理论的不确定性推理答案2"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%9F%BA%E4%BA%8E%E8%AF%81%E6%8D%AE%E7%90%86%E8%AE%BA%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E7%AD%94%E6%A1%883.png" srcset="/img/loading.gif" lazyload alt="基于证据理论的不确定性推理答案3"></li>
+</ul>
+<h3 id="模糊集合"><a href="#模糊集合" class="headerlink" title="模糊集合"></a>模糊集合</h3><h2 id="第五章-搜索求解策略"><a href="#第五章-搜索求解策略" class="headerlink" title="第五章 搜索求解策略"></a>第五章 搜索求解策略</h2><h3 id="搜索的概念"><a href="#搜索的概念" class="headerlink" title="搜索的概念"></a>搜索的概念</h3><h4 id="搜索方向："><a href="#搜索方向：" class="headerlink" title="搜索方向："></a>搜索方向：</h4><ul>
+<li>数据驱动：从初始状态出发的正向搜索。      <ul>
+<li>正向搜索——从问题给出的条件出发。</li>
+</ul>
+</li>
+<li>目的驱动：从目的状态出发的逆向搜索。<ul>
+<li>逆向搜索：从想达到的目的入手，看哪些操作算子能产生该目的以及应用这些操作算子产生目的时需要哪些条件。</li>
+</ul>
+</li>
+<li>双向搜索<ul>
+<li>从开始状态出发作正向搜索，同时又从目的状态出发作逆向搜索，直到两条路径在中间的某处汇合为止。</li>
+</ul>
+</li>
+</ul>
+<h4 id="盲目搜索"><a href="#盲目搜索" class="headerlink" title="盲目搜索"></a>盲目搜索</h4><ul>
+<li>在不具有对特定问题的任何有关信息的条件下，按固定的步骤（依次或随机调用操作算子）进行的搜索。</li>
+</ul>
+<h4 id="启发式搜索"><a href="#启发式搜索" class="headerlink" title="启发式搜索"></a>启发式搜索</h4><ul>
+<li>考虑特定问题领域可应用的知识，动态地确定调用操作算子的步骤，优先选择较适合的操作算子，尽量减少不必要的搜索，以求尽快地到达结束状态。</li>
+</ul>
+<h3 id="状态空间的搜索策略"><a href="#状态空间的搜索策略" class="headerlink" title="状态空间的搜索策略"></a>状态空间的搜索策略</h3><h4 id="状态空间"><a href="#状态空间" class="headerlink" title="状态空间"></a>状态空间</h4><ul>
+<li>利用状态变量和操作符号，表示系统或问题的有关知识的符号体系，状态空间是一个四元组：<br>$$(S,O,S_0,G)$$</li>
+<li>S:状态集合。      </li>
+<li>O：操作算子的集合。  </li>
+<li>S0：包含问题的初始状态是S的非空子集。 </li>
+<li>G：若干具体状态或满足某些性质的路径信息描述。<br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B4%E8%A1%A8%E7%A4%BA%E6%B3%95.png" srcset="/img/loading.gif" lazyload alt="状态空间表示法"></li>
+</ul>
+<h4 id="八数码问题的状态空间"><a href="#八数码问题的状态空间" class="headerlink" title="八数码问题的状态空间"></a>八数码问题的状态空间</h4><p><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%85%AB%E6%95%B0%E7%A0%81%E9%97%AE%E9%A2%98%E7%9A%84%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B41.png" srcset="/img/loading.gif" lazyload alt="八数码问题的状态空间1"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%85%AB%E6%95%B0%E7%A0%81%E9%97%AE%E9%A2%98%E7%9A%84%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B42.png" srcset="/img/loading.gif" lazyload alt="八数码问题的状态空间2"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%85%AB%E6%95%B0%E7%A0%81%E9%97%AE%E9%A2%98%E7%9A%84%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B43.png" srcset="/img/loading.gif" lazyload alt="八数码问题的状态空间3"></p>
+<h4 id="旅行商问题"><a href="#旅行商问题" class="headerlink" title="旅行商问题"></a>旅行商问题</h4><p><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%97%85%E8%A1%8C%E5%95%86%E9%97%AE%E9%A2%981.png" srcset="/img/loading.gif" lazyload alt="旅行商问题1"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%97%85%E8%A1%8C%E5%95%86%E9%97%AE%E9%A2%982.png" srcset="/img/loading.gif" lazyload alt="旅行商问题2"></p>
+<h3 id="盲目的图搜索策略"><a href="#盲目的图搜索策略" class="headerlink" title="盲目的图搜索策略"></a>盲目的图搜索策略</h3><h4 id="带回溯策略的搜索"><a href="#带回溯策略的搜索" class="headerlink" title="带回溯策略的搜索"></a>带回溯策略的搜索</h4><ul>
+<li>从初始状态出发，不停地、试探性地寻找路径，直到它到达目的或“不可解结点”，即“死胡同”为止。</li>
+<li>若它遇到不可解结点就回溯到路径中最近的父结点上，查看该结点是否还有其他的子结点未被扩展。若有，则沿这些子结点继续搜索；如果找到目标，就成功退出搜索，返回解题路径。</li>
+</ul>
+<h4 id="回溯搜索的算法"><a href="#回溯搜索的算法" class="headerlink" title="回溯搜索的算法"></a>回溯搜索的算法</h4><ul>
+<li>PS（path states）表：保存当前搜索路径上的状态。如果找到了目的，PS就是解路径上的状态有序集。 </li>
+<li>NPS（new path states）表：新的路径状态表。它包含了等待搜索的状态，其后裔状态还未被搜索到，即未被生成扩展 。</li>
+<li>NSS（no solvable states）表：不可解状态集，列出了找不到解题路径的状态。如果在搜索中扩展出的状态是它的元素，则可立即将之排除，不必沿该状态继续搜索。</li>
+</ul>
+<h4 id="宽度优先搜索"><a href="#宽度优先搜索" class="headerlink" title="宽度优先搜索"></a>宽度优先搜索</h4><ul>
+<li>open表（NPS表）：已经生成出来但其子状态未被搜索的状态。</li>
+<li>closed表（ PS表和NSS表的合并）：记录了已被生成扩展过的状态。<br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%AE%BD%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2.png" srcset="/img/loading.gif" lazyload alt="宽度优先搜索"></li>
+<li>例<br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%AE%BD%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="宽度优先搜索例"></li>
+</ul>
+<h4 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h4><p><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2.png" srcset="/img/loading.gif" lazyload alt="深度优先搜索"></p>
+<h3 id="启发式图搜索策略"><a href="#启发式图搜索策略" class="headerlink" title="启发式图搜索策略"></a>启发式图搜索策略</h3><h4 id="启发信息"><a href="#启发信息" class="headerlink" title="启发信息"></a>启发信息</h4><ul>
+<li>用来简化搜索过程有关具体问题领域的特性的信息叫做启发信息。</li>
+</ul>
+<h4 id="A搜索算法"><a href="#A搜索算法" class="headerlink" title="A搜索算法"></a>A搜索算法</h4><ul>
+<li>每次扩展结点都对OPEN表中的元素进行排序<br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/A%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="A搜索算法例"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/A%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E7%AD%94%E6%A1%88%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="A搜索算法答案图"><br><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/A%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E7%AD%94%E6%A1%88.png" srcset="/img/loading.gif" lazyload alt="A搜索算法答案"></li>
+</ul>
+<h2 id="第六章-智能计算及其应用"><a href="#第六章-智能计算及其应用" class="headerlink" title="第六章 智能计算及其应用"></a>第六章 智能计算及其应用</h2><h3 id="进化算法"><a href="#进化算法" class="headerlink" title="进化算法"></a>进化算法</h3><ul>
+<li>进化算法(evolutionary algorithms，EA)是基于自然选择和自然遗传等生物进化机制的一种搜索算法。</li>
+</ul>
+<h3 id="基本遗传算法"><a href="#基本遗传算法" class="headerlink" title="基本遗传算法"></a>基本遗传算法</h3><h4 id="遗传算法"><a href="#遗传算法" class="headerlink" title="遗传算法"></a>遗传算法</h4><ul>
+<li>遗传算法（genetic algorithms，GA）：一类借鉴生物界自然选择和自然遗传机制的随机搜索算法,非常适用于处理传统搜索方法难以解决的复杂和非线性优化问题。</li>
+</ul>
+<h4 id="遗传算法的基本思想"><a href="#遗传算法的基本思想" class="headerlink" title="遗传算法的基本思想"></a>遗传算法的基本思想</h4><p>在求解问题时从多个解开始，然后通过一定的法则进行逐步迭代以产生新的解。</p>
+<h3 id="遗传算法的改进算法"><a href="#遗传算法的改进算法" class="headerlink" title="遗传算法的改进算法"></a>遗传算法的改进算法</h3><h4 id="双倍体遗传算法"><a href="#双倍体遗传算法" class="headerlink" title="双倍体遗传算法"></a>双倍体遗传算法</h4><ul>
+<li>采用显性和隐性两个染色体同时进行进化，提供了一种记忆以前有用的基因块的功能。</li>
+</ul>
+<h4 id="多种群遗传算法"><a href="#多种群遗传算法" class="headerlink" title="多种群遗传算法"></a>多种群遗传算法</h4><ul>
+<li>建立两个遗传算法群体，分别独立地运行复制、交叉、变异操作，同时当每一代运行结束以后，选择两个种群中的随机个体及最优个体分别交换。</li>
+</ul>
+<h4 id="自适应遗传算法"><a href="#自适应遗传算法" class="headerlink" title="自适应遗传算法"></a>自适应遗传算法</h4><ul>
+<li>当种群各个体适应度趋于一致或者趋于局部最优时，使$P_c、P_m$增加，以跳出局部最优；而当群体适应度比较分散时，使$P_c、P_m$减少，以利于优良个体的生存。</li>
+</ul>
+<h3 id="群智能算法（swarm-algorithms，SI）"><a href="#群智能算法（swarm-algorithms，SI）" class="headerlink" title="群智能算法（swarm algorithms，SI）"></a>群智能算法（swarm algorithms，SI）</h3><ul>
+<li>受动物群体智能启发的算法。</li>
+</ul>
+<h3 id="粒子群优化算法"><a href="#粒子群优化算法" class="headerlink" title="粒子群优化算法"></a>粒子群优化算法</h3><h4 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h4><ul>
+<li>将每个个体看作n维搜索空间中一个没有体积质量的粒子，在搜索空间中以一定的速度飞行，该速度决定粒子飞行的方向和距离。所有粒子有一个由优化函数决定的适应值。</li>
+</ul>
+<h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><ul>
+<li>PSO初始化为一群随机粒子，然后通过迭代找到最优解。在每一次迭代中，粒子通过跟踪两个“极值”来更新自己。第一个就是粒子本身所找到的最优解，这个解称为个体极值。另个一是整个种群目前找到的最优解，这个解称为全局极值。</li>
+</ul>
+<h3 id="蚁群算法"><a href="#蚁群算法" class="headerlink" title="蚁群算法"></a>蚁群算法</h3><h4 id="基本思想-1"><a href="#基本思想-1" class="headerlink" title="基本思想"></a>基本思想</h4><ul>
+<li>信息素跟踪：按照一定的概率沿着信息素较强的路径觅食。</li>
+<li>信息素遗留：会在走过的路上会释放信息素，使得在一定的范围内的其他蚂蚁能够觉察到并由此影响它们的行为。</li>
+</ul>
+<h2 id="第七章-专家系统与机器学习"><a href="#第七章-专家系统与机器学习" class="headerlink" title="第七章 专家系统与机器学习"></a>第七章 专家系统与机器学习</h2><h3 id="专家系统"><a href="#专家系统" class="headerlink" title="专家系统"></a>专家系统</h3><h4 id="专家系统定义"><a href="#专家系统定义" class="headerlink" title="专家系统定义"></a>专家系统定义</h4><ul>
+<li>一类包含知识和推理的智能计算机程序。</li>
+</ul>
+<h4 id="专家系统实例"><a href="#专家系统实例" class="headerlink" title="专家系统实例"></a>专家系统实例</h4><ul>
+<li>医疗诊断专家系统<ul>
+<li>背景：医疗诊断专家系统旨在帮助医生诊断疾病，提供治疗建议。</li>
+<li>工作原理：<ul>
+<li>知识库：包含大量医学知识，包括疾病症状、诊断规则和治疗方案。</li>
+<li>推理引擎：使用逻辑推理和规则匹配技术，根据输入的症状和体征，推断可能的疾病。</li>
+<li>用户界面：医生或患者输入症状，系统输出诊断结果和建议。</li>
+</ul>
+</li>
+<li>示例：<ul>
+<li>输入：患者报告发热、咳嗽、喉咙痛。</li>
+<li>推理过程：</li>
+<li>系统检查知识库，发现这些症状与流感、感冒、咽炎等疾病相关。</li>
+<li>系统根据症状的严重程度和持续时间，推断最可能的疾病。</li>
+<li>输出：系统建议患者可能患有流感，并提供相应的治疗建议，如多休息、饮用温水、服用抗病毒药物等。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
+<li>机器学习（Machine learning）使计算机能模拟人的学习行为，自动地通过学习来获取知识和技能，不断改善性能，实现自我完善。</li>
+</ul>
+<h4 id="学习系统基本结构"><a href="#学习系统基本结构" class="headerlink" title="学习系统基本结构"></a>学习系统基本结构</h4><p><img src="/2025/01/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="学习系统基本结构"></p>
+<h4 id="机械式学习"><a href="#机械式学习" class="headerlink" title="机械式学习"></a>机械式学习</h4><ul>
+<li>记忆学习，或死记式学习：通过直接记忆或者存储外部环境所提供的信息达到学习的目的，并在以后通过对知识库的检索得到相应的知识直接用来求解问题。</li>
+</ul>
+<h4 id="指导式学习（learning-by-being-told）"><a href="#指导式学习（learning-by-being-told）" class="headerlink" title="指导式学习（learning by being told）"></a>指导式学习（learning by being told）</h4><ul>
+<li>又称嘱咐式学习或教授式学习：由外部环境向系统提供一般性的指示或建议，系统把它们具体地转化为细节知识并送入知识库中。在学习过程中要反复对形成的知识进行评价，使其不断完善。</li>
+<li>指导式学习的学习过程：征询指导者的指示或建议 、把征询意见转换为可执行的内部形式 、加入知识库、评价。</li>
+</ul>
+<h4 id="示例学习（learning-from-examples，实例学习或从例子中学习）"><a href="#示例学习（learning-from-examples，实例学习或从例子中学习）" class="headerlink" title="示例学习（learning from examples，实例学习或从例子中学习）"></a>示例学习（learning from examples，实例学习或从例子中学习）</h4><ul>
+<li>通过从环境中取得若干与某概念有关的例子，经归纳得出一般性概念的一种学习方法。</li>
+<li>示例学习中，外部环境（教师）提供一组例子（正例和反例），然后从这些特殊知识中归纳出适用于更大范围的一般性知识，它将覆盖所有的正例并排除所有反例。</li>
+</ul>
+<h3 id="知识发现与数据挖掘"><a href="#知识发现与数据挖掘" class="headerlink" title="知识发现与数据挖掘"></a>知识发现与数据挖掘</h3><h4 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h4><ul>
+<li>知识发现的全称是从数据库中发现知识（KDD）。</li>
+<li>数据挖掘（DM）是从数据库中挖掘知识。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA/" class="category-chain-item">人工智能导论</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA/" class="print-no-link">#人工智能导论</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>人工智能导论复习</div>
+      <div>https://sdueryrg.github.io/2025/01/01/人工智能导论复习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/" title="计算机网络复习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机网络复习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/30/NoSQL%E5%A4%8D%E4%B9%A0/" title="NoSQL复习">
+                        <span class="hidden-mobile">NoSQL复习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
