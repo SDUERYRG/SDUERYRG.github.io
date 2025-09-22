@@ -19,22 +19,21 @@
   <meta name="author" content="yrg">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第二章 知识表示与知识图谱一、知识与知识表示的概念1.知识 在长期的生活及社会实践中、在科学研究及实验中积累起来的对客观世界的认识与经验 事实   把有关信息关联在一起所形成的信息结构 信息关联形式：“如果……，则……” 规则   知识反映了客观世界中事物之间的关系，不同事物或者相同事物间的不同关系形成了不同的知识  2.知识的特性(1)相对正确性 任何知识都是在一定条件及环境下产生的，在这种条件">
+    <meta name="description" content="详解DDD——用菜鸟的视角从零开始DDD的基础DDD出现的背景 我知道背景很没用很枯燥，但是对于我而言，如果不理解DDD的背景，我就无法知晓为什么要使用DDD，我现在写这段话时依旧觉得分层架构已经足够，DDD思想的整洁架构、菱形架构、六边形架构等都没有必要。因此只有了解背景，我们才能更好的理解：为什么要使用DDD。  软件工程体系中，我们最先学到的一定是瀑布模型，将软件工程的全生命周期分为有序的几">
 <meta property="og:type" content="article">
-<meta property="og:title" content="人工智能导论Ch2">
-<meta property="og:url" content="https://sdueryrg.github.io/2024/09/24/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BACh2/index.html">
+<meta property="og:title" content="领域驱动设计">
+<meta property="og:url" content="https://sdueryrg.github.io/2025/09/19/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="yrg的博客">
-<meta property="og:description" content="第二章 知识表示与知识图谱一、知识与知识表示的概念1.知识 在长期的生活及社会实践中、在科学研究及实验中积累起来的对客观世界的认识与经验 事实   把有关信息关联在一起所形成的信息结构 信息关联形式：“如果……，则……” 规则   知识反映了客观世界中事物之间的关系，不同事物或者相同事物间的不同关系形成了不同的知识  2.知识的特性(1)相对正确性 任何知识都是在一定条件及环境下产生的，在这种条件">
+<meta property="og:description" content="详解DDD——用菜鸟的视角从零开始DDD的基础DDD出现的背景 我知道背景很没用很枯燥，但是对于我而言，如果不理解DDD的背景，我就无法知晓为什么要使用DDD，我现在写这段话时依旧觉得分层架构已经足够，DDD思想的整洁架构、菱形架构、六边形架构等都没有必要。因此只有了解背景，我们才能更好的理解：为什么要使用DDD。  软件工程体系中，我们最先学到的一定是瀑布模型，将软件工程的全生命周期分为有序的几">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-24T11:00:03.000Z">
-<meta property="article:modified_time" content="2025-01-07T08:21:28.547Z">
+<meta property="article:published_time" content="2025-09-19T11:49:07.000Z">
+<meta property="article:modified_time" content="2025-09-22T09:09:30.631Z">
 <meta property="article:author" content="yrg">
-<meta property="article:tag" content="人工智能导论">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>人工智能导论Ch2 - yrg的博客</title>
+  <title>领域驱动设计 - yrg的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="人工智能导论Ch2"></span>
+            <span id="subtitle" data-typed-text="领域驱动设计"></span>
           
         </div>
 
@@ -211,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-24 19:00" pubdate>
-          2024年9月24日 晚上
+        <time datetime="2025-09-19 19:49" pubdate>
+          2025年9月19日 晚上
         </time>
       </span>
     
@@ -223,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          503 字
+          2.5k 字
         
       </span>
     
@@ -234,7 +233,7 @@
         
         
         
-          5 分钟
+          21 分钟
         
       </span>
     
@@ -271,59 +270,152 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">人工智能导论Ch2</h1>
+            <h1 id="seo-header">领域驱动设计</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="第二章-知识表示与知识图谱"><a href="#第二章-知识表示与知识图谱" class="headerlink" title="第二章 知识表示与知识图谱"></a><center>第二章 知识表示与知识图谱</center></h1><h2 id="一、知识与知识表示的概念"><a href="#一、知识与知识表示的概念" class="headerlink" title="一、知识与知识表示的概念"></a>一、知识与知识表示的概念</h2><h3 id="1-知识"><a href="#1-知识" class="headerlink" title="1.知识"></a>1.知识</h3><ul>
-<li>在长期的生活及社会实践中、在科学研究及实验中积累起来的对客观世界的认识与经验<ul>
-<li>事实</li>
-</ul>
-</li>
-<li>把有关信息关联在一起所形成的信息结构<ul>
-<li>信息关联形式：“如果……，则……”</li>
-<li>规则</li>
-</ul>
-</li>
-<li>知识反映了客观世界中事物之间的关系，不同事物或者相同事物间的不同关系形成了不同的知识</li>
-</ul>
-<h3 id="2-知识的特性"><a href="#2-知识的特性" class="headerlink" title="2.知识的特性"></a>2.知识的特性</h3><h4 id="1-相对正确性"><a href="#1-相对正确性" class="headerlink" title="(1)相对正确性"></a>(1)相对正确性</h4><ul>
-<li>任何知识都是在一定条件及环境下产生的，在这种条件及环境下才是正确的</li>
-</ul>
-<h4 id="2-不确定性"><a href="#2-不确定性" class="headerlink" title="(2)不确定性"></a>(2)不确定性</h4><ul>
-<li>随机性引起的不确定性<blockquote>
-<p>例：如果头痛流鼻涕，则<strong>可能</strong>得了感冒</p>
+                <h1 id="详解DDD——用菜鸟的视角从零开始"><a href="#详解DDD——用菜鸟的视角从零开始" class="headerlink" title="详解DDD——用菜鸟的视角从零开始"></a>详解DDD——用菜鸟的视角从零开始</h1><h2 id="DDD的基础"><a href="#DDD的基础" class="headerlink" title="DDD的基础"></a>DDD的基础</h2><h3 id="DDD出现的背景"><a href="#DDD出现的背景" class="headerlink" title="DDD出现的背景"></a>DDD出现的背景</h3><blockquote>
+<p>我知道背景很没用很枯燥，但是对于我而言，如果不理解DDD的背景，我就无法知晓为什么要使用DDD，我现在写这段话时依旧觉得分层架构已经足够，DDD思想的整洁架构、菱形架构、六边形架构等都没有必要。因此只有了解背景，我们才能更好的理解：为什么要使用DDD。</p>
 </blockquote>
+<p>软件工程体系中，我们最先学到的一定是瀑布模型，将软件工程的全生命周期分为有序的几个部分。对于时间充裕且变化小的软件来说，瀑布模型无疑是非常有效的，因为规范化的流程能让我们更加有序地开发出可用的软件。</p>
+<p>但我也说了，是对于“时间充裕且变化小的软件”，当今互连网飞速发展，我们的需求可能在不断变化，开发的软件也越来越复杂。编码与设计的分离导致了程序员无法实现产品经理天马行空的想象，产品经理也在不知晓编码细节的情况下，会给出不完善的文档。而不完善的部分一旦很多，程序员不会去向产品经理寻求完善，而是为了赶工期，发挥自己的想象填补。这导致实际交付的软件与客户的需求大相径庭。</p>
+<p>那么，程序员该如何将业务知识的学习和思考结合起来？如何通过有逻辑性的思考来提升自己的业务知识水平，从而编写出更专业的业务软件？</p>
+<p>DDD思想和方法论的诞生，可以说初步解决了程序员的这种困惑。DDD建模思想不同于以往的面向对象分析设计思想那样，建模和代码之间还是存在落差，无法平滑衔接。它将分析和设计完美结合起来，通过引入上下文的特殊性，将项目的真正业务背景和集成复杂性引入设计建模阶段，虽然增加了设计的复杂性，但也提高了设计的实用性。不过，可能因为DDD引入了太多行话，导致其本身很难被传授。</p>
+<h3 id="DDD的发展"><a href="#DDD的发展" class="headerlink" title="DDD的发展"></a>DDD的发展</h3><p>DDD还在发展之中，过去十多年中主要经历了三个阶段：首先是Eric Evans的理论原则创建和普及阶段；然后是引入领域事件、事件溯源阶段；最后是微服务架构的提出阶段。由于DDD提出的有界上下文已经将业务的边界划分清楚，所以微服务的实现就顺理成章了。当然，微服务架构的普及和发展也迅速促进了DDD的普及和发展。</p>
+<p>同时，在人们不断丰富DDD的实现技术以后，突然回首才发现，DDD中的战略模式需要更多的关注，因此，事件风暴等有关组织管理等方面的新事物开始出现。通过事件风暴会议发现领域中的事件，对领域的上下文进行切分，发现其中的聚合，这套方法变得越来越流行。之所以会这样，是因为大家发现寻找领域或上下文边界才是DDD中最难，也是最需要创造力的地方。边界或有界上下文是DDD专门用于解决复杂性的有力武器，是DDD的核心内容。</p>
+<p>那么，该如何识别边界和上下文呢？事件风暴（Event Storming）应运而生。事件风暴是指将产品经理和程序员聚在一起，进行头脑风暴，程序员能够更好地理解业务，产品经理也能够减少自己的逻辑矛盾之处。在事件风暴过程中，大家的认识逐渐一致，复杂性也慢慢被肢解成不同模块，上下文与边界也逐渐明确。</p>
+<p>DDD使传统OO分析和设计不再割裂。传统OO分析和设计是分开的，先进行分析，再根据分析的结果进行设计，期间会出现分析阶段过于理想化，使得设计不得不对分析进行改变，最后交付的软件与分析相去甚远。DDD使分析和设计相互促进、相互优化、相互改正，分析的结果必须经过设计细节验证。传统的OO分析使用的是主语名词法，也就是识别对象，这种分析方法其实受到了ER数据模型的影响。问题在于，如果无法发现名词，人们就只能靠想象。事件风暴倡导从动词入手，识别领域中的事件，对这些事件进行分类，就得到了有界上下文和聚合。使用了分而治之思想。</p>
+<p>当然，DDD也可以通过UML顺序图使用动词分析法，无序拘泥于形式，关键在于从动词入手，发现有界上下文和聚合。</p>
+<h3 id="DDD相关的概念"><a href="#DDD相关的概念" class="headerlink" title="DDD相关的概念"></a>DDD相关的概念</h3><h4 id="问题空间"><a href="#问题空间" class="headerlink" title="问题空间"></a>问题空间</h4><p>问题空间是解决问题的目标所在，有了问题空间，才能提出解决方案</p>
+<h4 id="领域"><a href="#领域" class="headerlink" title="领域"></a>领域</h4><p>定义：</p>
+<ul>
+<li>领域就是软件要解决的业务问题的整体范围，是业务活动的全景图。</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>领域可以进一步拆分为子领域，每个子领域聚焦于一块相对独立的业务能力。</li>
+</ul>
+<p>例子：</p>
+<ul>
+<li>电商领域：商品管理、订单处理、支付结算、库存管理、物流配送、售后服务等。</li>
+<li>在这个领域中，“订单处理”就是一个子领域，它包含订单创建、支付、发货、取消等业务规则。</li>
+</ul>
+<h4 id="界限上下文"><a href="#界限上下文" class="headerlink" title="界限上下文"></a>界限上下文</h4><p>定义：</p>
+<ul>
+<li>限界上下文是领域模型的语义边界，在这个边界内，通用语言中的术语有唯一且明确的含义。</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>一个子领域可能包含一个或多个限界上下文</li>
+</ul>
+<p>例子：</p>
+<ul>
+<li>订单管理上下文：<ul>
+<li>“订单”是主语，包含订单项、收货地址、支付状态等，负责订单生命周期（创建、支付、发货、取消）。</li>
+</ul>
 </li>
-<li>模糊性引起的不确定性<blockquote>
-<p>例：天气冷热、雨的大小</p>
-</blockquote>
+<li>库存管理上下文：<ul>
+<li>“库存”是主语，负责商品库存的增减、预警等。</li>
+<li>这里的“订单”只是一个外部触发库存变动的来源，不包含订单的详细业务规则。</li>
+</ul>
 </li>
-<li>经验引起的不确定性<blockquote>
-<p>例：老马识途</p>
-</blockquote>
+<li>支付上下文：<ul>
+<li>“支付交易”是主语，负责与第三方支付平台交互，处理支付成功&#x2F;失败、退款等。</li>
+<li>这里的“订单”只是支付请求的一个参数。</li>
+</ul>
 </li>
-<li>不完全性引起的不确定性</li>
 </ul>
-<h4 id="3-可表示性与可利用性"><a href="#3-可表示性与可利用性" class="headerlink" title="(3)可表示性与可利用性"></a>(3)可表示性与可利用性</h4><ul>
-<li>可表示性：知识可以用适当的形式表示出来。如：语言、文字、图形、神经网络等</li>
-<li>可利用性：知识可以被利用</li>
+<h4 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h4><p>定义：</p>
+<ul>
+<li>有唯一标识（ID），生命周期内状态可变的业务对象。</li>
 </ul>
-<h3 id="3-知识的表示"><a href="#3-知识的表示" class="headerlink" title="3.知识的表示"></a>3.知识的表示</h3><h4 id="1-概念："><a href="#1-概念：" class="headerlink" title="(1)概念："></a>(1)概念：</h4><ul>
-<li>将人类知识形式化或模型化</li>
-<li>知识表示是对知识的一种描述，或者说是一组约定，一种计算机可以接受的用于描述知识的数据结构</li>
+<p>特点：</p>
+<ul>
+<li>通过 ID 区分，即使属性完全相同，只要 ID 不同就是不同实体。</li>
+<li>关注的是身份和行为，而不仅是数据。</li>
 </ul>
-<h4 id="2-选择表示方法的原则"><a href="#2-选择表示方法的原则" class="headerlink" title="(2)选择表示方法的原则"></a>(2)选择表示方法的原则</h4><h2 id="二、一阶谓词逻辑表示法"><a href="#二、一阶谓词逻辑表示法" class="headerlink" title="二、一阶谓词逻辑表示法"></a>二、一阶谓词逻辑表示法</h2><h3 id="1-命题"><a href="#1-命题" class="headerlink" title="1.命题"></a>1.命题</h3><h3 id="2-谓词"><a href="#2-谓词" class="headerlink" title="2.谓词"></a>2.谓词</h3><p>一种函数</p>
-<h3 id="3-谓词公式"><a href="#3-谓词公式" class="headerlink" title="3.谓词公式"></a>3.谓词公式</h3><h4 id="1-定义："><a href="#1-定义：" class="headerlink" title="(1)定义："></a>(1)定义：</h4><ul>
-<li>单个谓词是谓词公式</li>
-<li>若A是，则非A也是</li>
-<li>若A、B是，则A合取B、A析取B、A→B、A当且仅当B也都是</li>
-<li>若A是，则“任意xA”、“存在xA”是</li>
-<li>以上4点以有限步生成</li>
-<li>连接词优先级：非、合取、析取、→、当且仅当</li>
+<h4 id="值对象"><a href="#值对象" class="headerlink" title="值对象"></a>值对象</h4><p>定义：</p>
+<ul>
+<li>没有唯一标识，仅由属性值定义的对象，通常不可变。</li>
 </ul>
-<h3 id="4-谓词公式的性质"><a href="#4-谓词公式的性质" class="headerlink" title="4.谓词公式的性质"></a>4.谓词公式的性质</h3><h3 id="5-一阶谓词逻辑表示方法"><a href="#5-一阶谓词逻辑表示方法" class="headerlink" title="5.一阶谓词逻辑表示方法"></a>5.一阶谓词逻辑表示方法</h3><h2 id="三、产生式表示法"><a href="#三、产生式表示法" class="headerlink" title="三、产生式表示法"></a>三、产生式表示法</h2>
+<p>特点：</p>
+<ul>
+<li>相等性由属性值决定。</li>
+<li>用于描述事物特征，表达业务概念。</li>
+<li>不可变（修改 &#x3D; 创建新对象）。</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>地址（Address）：由省、市、街道等组成。</li>
+<li>金额（Money）：由币种 + 数值组成。</li>
+</ul>
+<h4 id="聚合与聚合根"><a href="#聚合与聚合根" class="headerlink" title="聚合与聚合根"></a>聚合与聚合根</h4><p>定义：</p>
+<ul>
+<li>聚合：一组相关实体和值对象的集合，作为数据修改和事务一致性的边界。</li>
+<li>聚合根：聚合的入口，负责维护聚合内部不变量（业务规则）。</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>外部只能通过聚合根访问内部成员。</li>
+<li>聚合内的修改必须保持业务一致性。</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>订单聚合（Order Aggregate）：<ul>
+<li>聚合根：订单（Order）</li>
+<li>内部实体：订单项（OrderItem）</li>
+<li>值对象：收货地址（Address）、金额（Money）</li>
+</ul>
+</li>
+</ul>
+<h4 id="工厂"><a href="#工厂" class="headerlink" title="工厂"></a>工厂</h4><p>定义：</p>
+<ul>
+<li>封装复杂对象或聚合的创建逻辑的组件。</li>
+</ul>
+<p>作用：</p>
+<ul>
+<li>避免在聚合根构造函数中塞入过多初始化细节。</li>
+<li>统一创建过程，确保对象创建时满足业务规则。</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li><code>OrderFactory.createOrder(customerId, items)</code>：内部会创建订单、订单项、计算总价等。</li>
+</ul>
+<h4 id="仓储"><a href="#仓储" class="headerlink" title="仓储"></a>仓储</h4><p>定义：</p>
+<ul>
+<li>面向领域层的持久化抽象，负责聚合的加载与保存。</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>隐藏数据访问细节（数据库、缓存、API）。</li>
+<li>以聚合为单位进行存取。</li>
+</ul>
+<p>例子：</p>
+<ul>
+<li><code>OrderRepository.findById(orderId)</code></li>
+<li><code>OrderRepository.save(order)</code></li>
+</ul>
+<h4 id="领域事件"><a href="#领域事件" class="headerlink" title="领域事件"></a>领域事件</h4><p>定义：</p>
+<ul>
+<li>领域内发生的、对业务有意义的事实，通常用过去式命名。</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>反映业务状态变化。</li>
+<li>可用于解耦上下文（事件驱动架构）。</li>
+</ul>
+<p>例子：</p>
+<ul>
+<li>OrderPaid（订单已支付）</li>
+<li>ProductOutOfStock（商品已缺货）</li>
+</ul>
+<h3 id="几种模型"><a href="#几种模型" class="headerlink" title="几种模型"></a>几种模型</h3><p>上述DDD相关概念读者在第一次听说后可能会产生困惑，因为我们并没有实际在开发中使用DDD。现在给大家讲解几种模型来更好的理解。</p>
+<h4 id="失血模型"><a href="#失血模型" class="headerlink" title="失血模型"></a>失血模型</h4><p>失血模型中，数据只有属性和getter&#x2F;setter，没有其他函数。</p>
+<h4 id="贫血模型"><a href="#贫血模型" class="headerlink" title="贫血模型"></a>贫血模型</h4><p>贫血模型很好理解。在我们的分层架构中，通常会定义实体类，这些实体类通常除了getter&#x2F;setter和一些基础函数就没有其他方法了。这种属性与具体业务逻辑分离的数据模型就是贫血模型。</p>
+<h4 id="充血模型"><a href="#充血模型" class="headerlink" title="充血模型"></a>充血模型</h4><p>与贫血模型相反，充血模型中对象既有状态（属性）又有行为（方法），行为直接作用于对象自身的状态。业务规则、计算、状态变更等逻辑放在领域对象内部，而不是全部集中在 Service 层。满足面向对象的封装思想：数据和操作数据的逻辑放在一起。</p>
+<p>可以看出，充血模型非常适合DDD的思想，可以更好地实现有界上下文这一概念。</p>
+
                 
               </div>
             
@@ -331,34 +423,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA/" class="category-chain-item">人工智能导论</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA/" class="print-no-link">#人工智能导论</a>
-      
-    </div>
   
 </div>
 
@@ -368,8 +432,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>人工智能导论Ch2</div>
-      <div>https://sdueryrg.github.io/2024/09/24/人工智能导论Ch2/</div>
+      <div>领域驱动设计</div>
+      <div>https://sdueryrg.github.io/2025/09/19/领域驱动设计/</div>
     </div>
     <div class="license-meta">
       
@@ -381,7 +445,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年9月24日</div>
+          <div>2025年9月19日</div>
         </div>
       
       
@@ -413,18 +477,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/" title="编译原理Ch4">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">编译原理Ch4</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/" title="计算机网络Ch2">
-                        <span class="hidden-mobile">计算机网络Ch2</span>
+                      <a href="/2025/09/11/Spring%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="Spring相关知识">
+                        <span class="hidden-mobile">Spring相关知识</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
