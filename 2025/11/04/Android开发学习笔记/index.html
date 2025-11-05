@@ -1,0 +1,1176 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Android开发学习笔记四大组件篇四大组件有哪些？1️⃣ Activity 用于构建用户界面，代表一个独立的屏幕。 每个 Activity 都有完整的生命周期（如 onCreate、onStart、onResume 等），用于管理 UI 的创建与销毁。 常用于页面跳转、用户交互。  2️⃣ Service 用于在后台执行长时间运行的操作，不提供用户界面。 分为 Started Service 和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发学习笔记">
+<meta property="og:url" content="https://sdueryrg.github.io/2025/11/04/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="Android开发学习笔记四大组件篇四大组件有哪些？1️⃣ Activity 用于构建用户界面，代表一个独立的屏幕。 每个 Activity 都有完整的生命周期（如 onCreate、onStart、onResume 等），用于管理 UI 的创建与销毁。 常用于页面跳转、用户交互。  2️⃣ Service 用于在后台执行长时间运行的操作，不提供用户界面。 分为 Started Service 和">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/11/04/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/11/04/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Service%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/11/04/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ContentProvider.png">
+<meta property="article:published_time" content="2025-11-04T07:46:29.000Z">
+<meta property="article:modified_time" content="2025-11-05T06:48:16.437Z">
+<meta property="article:author" content="yrg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2025/11/04/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+  
+  
+  
+  <title>Android开发学习笔记 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Android开发学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-04 15:46" pubdate>
+          2025年11月4日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          72 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Android开发学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Android开发学习笔记"><a href="#Android开发学习笔记" class="headerlink" title="Android开发学习笔记"></a>Android开发学习笔记</h1><h2 id="四大组件篇"><a href="#四大组件篇" class="headerlink" title="四大组件篇"></a>四大组件篇</h2><h3 id="四大组件有哪些？"><a href="#四大组件有哪些？" class="headerlink" title="四大组件有哪些？"></a>四大组件有哪些？</h3><h4 id="1️⃣-Activity"><a href="#1️⃣-Activity" class="headerlink" title="1️⃣ Activity"></a>1️⃣ Activity</h4><ul>
+<li>用于构建用户界面，代表一个独立的屏幕。</li>
+<li>每个 Activity 都有完整的生命周期（如 onCreate、onStart、onResume 等），用于管理 UI 的创建与销毁。</li>
+<li>常用于页面跳转、用户交互。</li>
+</ul>
+<h4 id="2️⃣-Service"><a href="#2️⃣-Service" class="headerlink" title="2️⃣ Service"></a>2️⃣ Service</h4><ul>
+<li>用于在后台执行长时间运行的操作，不提供用户界面。</li>
+<li>分为 Started Service 和 Bound Service，分别用于独立运行和与组件绑定交互。</li>
+<li>典型应用如音乐播放、文件下载等。</li>
+</ul>
+<h4 id="3️⃣-BroadcastReceiver"><a href="#3️⃣-BroadcastReceiver" class="headerlink" title="3️⃣ BroadcastReceiver"></a>3️⃣ BroadcastReceiver</h4><ul>
+<li>用于接收并响应系统或应用发出的广播消息。</li>
+<li>支持静态注册（Manifest 中声明）和 动态注册（代码中注册）。</li>
+<li>常用于监听系统事件，如网络变化、电量低、电池充电等。</li>
+</ul>
+<h4 id="4️⃣-ContentProvider"><a href="#4️⃣-ContentProvider" class="headerlink" title="4️⃣ ContentProvider"></a>4️⃣ ContentProvider</h4><ul>
+<li>用于在不同应用之间共享数据。</li>
+<li>通过统一的 URI 接口对外提供数据访问能力。</li>
+<li>常用于访问系统联系人、媒体库等，也可自定义 Provider 实现跨应用数据共享。</li>
+</ul>
+<h3 id="什么是Activity？"><a href="#什么是Activity？" class="headerlink" title="什么是Activity？"></a>什么是Activity？</h3><p>Activity（活动）是一个为实现交互而提供的Android应用组件。每个Activity都有一个窗口，该窗口可以全屏幕填充，也可以是一个小窗口浮动在其他窗口上。一个应用程序通常由多个Activity组成，它会指定应用程序中的某个Activity作为主Activity，这意味着当用户第一次启动应用程序时呈现给用户的活动，并且Activity可以相互跳转来执行不同的操作。</p>
+<h3 id="请介绍Activity的生命周期？"><a href="#请介绍Activity的生命周期？" class="headerlink" title="请介绍Activity的生命周期？"></a>请介绍Activity的生命周期？</h3><p><img src="/2025/11/04/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" srcset="/img/loading.gif" lazyload alt="Activity的生命周期"></p>
+<ul>
+<li>Oncreate():创建：作为生命周期的第一种方法，仅在新的Activity创建时调用。在这个方法中，可以做一些初始化工作，比如加载接口布局资源和初始化活动所需的数据。</li>
+<li>OnStart():开始：表示Activity正在启动，并且即将启动。此时Activity已经出现，但还没有出现在前台，我们还不能交互。</li>
+<li>OnResume():活动：表示Activity已经出现在前台，可见可操作。</li>
+<li>OnPause():暂停：表示活动即将停止，仍然可见,但是不能操作了。</li>
+<li>OnStop():停止：表示活动停止，此时不可见，位于后台。</li>
+<li>OnDestory():销毁：表示活动即将被销毁。这是Activity循环的最后一个回调。你可以做一些回收工作和最后的资源回收。<br>最后介绍第七个生命周期onRestart：</li>
+<li>OnRestart():表示Activity重启。在正常情况下，当Activity从不可见状态切换到可见状态，也就是onStop()到onStart()之间，就会调用OnRestart()。这种情况一般是由用户行为引起的。例如，用户在这个活动切换到桌面或打开另一个新的活动，然后用户返回到这个活动。</li>
+</ul>
+<h3 id="Activity生命周期的不同情况"><a href="#Activity生命周期的不同情况" class="headerlink" title="Activity生命周期的不同情况"></a>Activity生命周期的不同情况</h3><h4 id="1️⃣-正常启动与销毁"><a href="#1️⃣-正常启动与销毁" class="headerlink" title="1️⃣ 正常启动与销毁"></a>1️⃣ 正常启动与销毁</h4><ul>
+<li><strong>流程</strong>：<br><code>onCreate()</code> → <code>onStart()</code> → <code>onResume()</code>（进入前台）<br>用户退出或系统销毁：<code>onPause()</code> → <code>onStop()</code> → <code>onDestroy()</code></li>
+<li><strong>场景</strong>：用户点击图标打开应用，再按返回键退出。</li>
+<li><strong>说明</strong>：这是最标准的生命周期流程，适合理解各方法的调用顺序。</li>
+</ul>
+<hr>
+<h4 id="2️⃣-从一个-Activity-跳转到另一个"><a href="#2️⃣-从一个-Activity-跳转到另一个" class="headerlink" title="2️⃣ 从一个 Activity 跳转到另一个"></a>2️⃣ 从一个 Activity 跳转到另一个</h4><ul>
+<li><strong>流程</strong>：<br>当前 Activity：<code>onPause()</code> → <code>onStop()</code><br>新 Activity：<code>onCreate()</code> → <code>onStart()</code> → <code>onResume()</code></li>
+<li><strong>场景</strong>：从首页跳转到详情页。</li>
+<li><strong>说明</strong>：前一个 Activity 进入后台，新的 Activity 进入前台。</li>
+</ul>
+<hr>
+<h4 id="3️⃣-屏幕旋转（配置更改）"><a href="#3️⃣-屏幕旋转（配置更改）" class="headerlink" title="3️⃣ 屏幕旋转（配置更改）"></a>3️⃣ 屏幕旋转（配置更改）</h4><ul>
+<li><strong>流程</strong>：<br><code>onPause()</code> → <code>onStop()</code> → <code>onDestroy()</code> → <code>onCreate()</code> → <code>onStart()</code> → <code>onResume()</code></li>
+<li><strong>场景</strong>：用户横竖屏切换。</li>
+<li><strong>说明</strong>：Activity 被销毁并重建，需通过 <code>onSaveInstanceState()</code> 保存状态。</li>
+</ul>
+<hr>
+<h4 id="4️⃣-按-Home-键返回桌面"><a href="#4️⃣-按-Home-键返回桌面" class="headerlink" title="4️⃣ 按 Home 键返回桌面"></a>4️⃣ 按 Home 键返回桌面</h4><ul>
+<li><strong>流程</strong>：<br><code>onPause()</code> → <code>onStop()</code>（Activity 进入后台，但未销毁）</li>
+<li><strong>场景</strong>：用户暂时离开应用。</li>
+<li><strong>说明</strong>：可以在 <code>onStop()</code> 中释放资源，应用仍保留在任务栈中。</li>
+</ul>
+<hr>
+<h4 id="5️⃣-应用被系统回收（内存不足）"><a href="#5️⃣-应用被系统回收（内存不足）" class="headerlink" title="5️⃣ 应用被系统回收（内存不足）"></a>5️⃣ 应用被系统回收（内存不足）</h4><ul>
+<li><strong>流程</strong>：<br>系统可能直接销毁 Activity，不调用 <code>onDestroy()</code><br>恢复时调用 <code>onCreate()</code>，可通过 <code>onSaveInstanceState()</code> 恢复状态</li>
+<li><strong>场景</strong>：后台运行时被系统杀死，用户重新打开应用。</li>
+<li><strong>说明</strong>：需做好状态保存与恢复，避免用户体验断层。</li>
+</ul>
+<hr>
+<h4 id="6️⃣-弹出-Dialog-或透明-Activity"><a href="#6️⃣-弹出-Dialog-或透明-Activity" class="headerlink" title="6️⃣ 弹出 Dialog 或透明 Activity"></a>6️⃣ 弹出 Dialog 或透明 Activity</h4><ul>
+<li><strong>流程</strong>：<br>原 Activity 只调用 <code>onPause()</code>，不会进入 <code>onStop()</code></li>
+<li><strong>场景</strong>：弹出一个对话框或半透明界面。</li>
+<li><strong>说明</strong>：原 Activity 仍处于可见状态，适合轻量交互。</li>
+</ul>
+<hr>
+<h4 id="7️⃣-多任务切换（Recent-Apps）"><a href="#7️⃣-多任务切换（Recent-Apps）" class="headerlink" title="7️⃣ 多任务切换（Recent Apps）"></a>7️⃣ 多任务切换（Recent Apps）</h4><ul>
+<li><strong>流程</strong>：<br>切换到其他应用：<code>onPause()</code> → <code>onStop()</code><br>切换回来：<code>onRestart()</code> → <code>onStart()</code> → <code>onResume()</code></li>
+<li><strong>场景</strong>：用户通过任务管理器切换应用。</li>
+<li><strong>说明</strong>：<code>onRestart()</code> 是从后台重新进入前台的关键方法。</li>
+</ul>
+<h3 id="切换横竖屏Activity生命周期的变化？"><a href="#切换横竖屏Activity生命周期的变化？" class="headerlink" title="切换横竖屏Activity生命周期的变化？"></a>切换横竖屏Activity生命周期的变化？</h3><p>在 Android 中，切换横竖屏属于配置更改（Configuration Change），默认行为是系统会销毁并重建当前 Activity，因此会触发完整的生命周期流程：</p>
+<blockquote>
+<p>onPause()→ onStop()→ onDestroy()→ onCreate()→ onStart()→ onResume()</p>
+</blockquote>
+<ul>
+<li>系统会销毁当前 Activity 并重新创建一个新的实例。所有 UI 和数据状态都将被重置，除非你手动保存并恢复。</li>
+<li>可通过 onSaveInstanceState(Bundle outState) 保存临时状态，在 onCreate() 或 onRestoreInstanceState() 中恢复。</li>
+<li>如果你不希望 Activity 被重建，可以在 AndroidManifest.xml 中配置：<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-string">android:configChanges=&quot;orientation|screenSize&quot;</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>当屏幕方向（orientation）或屏幕尺寸（screenSize）发生变化时，当前 Activity 自行处理这些变化，系统不需要重新创建它。</p>
+</blockquote>
+</li>
+<li>然后在 onConfigurationChanged() 方法中手动处理布局更新。</li>
+</ul>
+<h3 id="为什么要加-screenSize？"><a href="#为什么要加-screenSize？" class="headerlink" title="为什么要加 screenSize？"></a>为什么要加 screenSize？</h3><p>从 Android 3.2（API 13）开始，横竖屏切换不仅改变方向，还可能改变屏幕尺寸（尤其在平板或多窗口设备上）。因此：</p>
+<ul>
+<li>仅设置 orientation 不足以阻止重建</li>
+<li>必须同时设置 screenSize 才能完整覆盖横竖屏切换场景</li>
+</ul>
+<h3 id="Activity的四种启动模式？"><a href="#Activity的四种启动模式？" class="headerlink" title="Activity的四种启动模式？"></a>Activity的四种启动模式？</h3><table>
+<thead>
+<tr>
+<th>启动模式</th>
+<th>描述</th>
+<th>是否复用已有实例</th>
+<th>是否创建新任务栈</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>standard</code></td>
+<td>默认模式，每次启动都会创建新实例</td>
+<td>❌ 否</td>
+<td>❌ 否</td>
+</tr>
+<tr>
+<td><code>singleTop</code></td>
+<td>如果栈顶已有该 Activity，则复用</td>
+<td>✅ 是（仅栈顶）</td>
+<td>❌ 否</td>
+</tr>
+<tr>
+<td><code>singleTask</code></td>
+<td>如果任务栈中已有该 Activity，则复用并清除其上的所有 Activity</td>
+<td>✅ 是</td>
+<td>✅ 是（可选）</td>
+</tr>
+<tr>
+<td><code>singleInstance</code></td>
+<td>独占任务栈，其他 Activity 无法进入该栈</td>
+<td>✅ 是</td>
+<td>✅ 是（强制）</td>
+</tr>
+</tbody></table>
+<h4 id="1️⃣-standard（默认模式）"><a href="#1️⃣-standard（默认模式）" class="headerlink" title="1️⃣ standard（默认模式）"></a>1️⃣ standard（默认模式）</h4><ul>
+<li>每次启动都会创建新的 Activity 实例。</li>
+<li>多次跳转会堆叠多个相同页面。</li>
+<li>适用于普通页面跳转。</li>
+</ul>
+<h4 id="2️⃣-singleTop"><a href="#2️⃣-singleTop" class="headerlink" title="2️⃣ singleTop"></a>2️⃣ singleTop</h4><ul>
+<li>如果目标 Activity 已在栈顶，则复用，不会创建新实例。</li>
+<li>否则仍会创建新实例。</li>
+<li>常用于通知栏点击跳转，避免重复页面。</li>
+</ul>
+<h4 id="3️⃣-singleTask"><a href="#3️⃣-singleTask" class="headerlink" title="3️⃣ singleTask"></a>3️⃣ singleTask</h4><ul>
+<li>如果任务栈中已有该 Activity，则复用，并清除其上的所有 Activity。</li>
+<li>适用于“主页”类页面，避免重复打开。</li>
+<li>可配合 Intent.FLAG_ACTIVITY_CLEAR_TOP 使用。</li>
+</ul>
+<h4 id="4️⃣-singleInstance"><a href="#4️⃣-singleInstance" class="headerlink" title="4️⃣ singleInstance"></a>4️⃣ singleInstance</h4><ul>
+<li>该 Activity 独占一个任务栈，其他 Activity 无法进入。</li>
+<li>常用于 WebView、视频播放等需要独立运行的场景。</li>
+<li>多用于跨应用跳转或插件化架构。</li>
+</ul>
+<h3 id="如何设置启动模式？"><a href="#如何设置启动模式？" class="headerlink" title="如何设置启动模式？"></a>如何设置启动模式？</h3><h4 id="Manifest-设置方式"><a href="#Manifest-设置方式" class="headerlink" title="Manifest 设置方式"></a>Manifest 设置方式</h4><p>在 <code>AndroidManifest.xml</code> 中为目标 Activity 添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">activity</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;.YourActivity&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:launchMode</span>=<span class="hljs-string">&quot;singleTask&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="Intent-设置方式（部分模式）"><a href="#Intent-设置方式（部分模式）" class="headerlink" title="Intent 设置方式（部分模式）"></a>Intent 设置方式（部分模式）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Intent</span> <span class="hljs-variable">intent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, YourActivity.class);<br><br><span class="hljs-comment">// singleTop</span><br>intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);<br><br><span class="hljs-comment">// singleTask（配合 CLEAR_TOP）</span><br>intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);<br><br><span class="hljs-comment">// singleInstance（需 Manifest 配合）</span><br>intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>singleInstance需要Manifest配合使用。它需要系统为该 Activity 创建一个独立任务栈，这个行为只能通过 Manifest 配置实现。</li>
+<li>即使你在 Intent 中设置了 FLAG_ACTIVITY_NEW_TASK，如果没有 Manifest 配合，系统也不会真正创建独立栈。</li>
+</ul>
+<h3 id="什么是Service"><a href="#什么是Service" class="headerlink" title="什么是Service"></a>什么是Service</h3><p>Service意为“服务”，相对于Activity是一个有可见界面的、为实现交互而提供的Android应用组件，Service则是一个可以在后台长期运行但又不使用用户界面的Android应用组件。它可以和其他的组件形成一定联系，通过传达信息来联系多个组件共同执行某个操作。举个最简单的例子，你此时正在用手机听歌曲，播放歌曲的进程就是一个后台服务。</p>
+<h3 id="Service的生命周期"><a href="#Service的生命周期" class="headerlink" title="Service的生命周期"></a>Service的生命周期</h3><p><img src="/2025/11/04/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Service%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" srcset="/img/loading.gif" lazyload alt="Service的生命周期"></p>
+<h4 id="startService"><a href="#startService" class="headerlink" title="startService()"></a>startService()</h4><ul>
+<li>一个组件可以通过调用 startService()方法来启动特定的服务，此时Service生命周期中的onStartCommand()方法被调用。当调用startService()方法时，其他组件需要在方法中传递一个intent参数，服务会在onStartCommand()中接收到intent并获取一些数据。</li>
+<li>比如ActivityA需要上报一些用户数据到服务器上面，就可以通过startService()来启动ServiceA，并将需要上报的数据传递给ServiceA，在ServiceA里面调用一些网络接口，把数据直接上报到服务器上面。</li>
+<li>当一个服务以这种方式启动时，它的生命周期不再受启动它的组件的影响，它可以在后台无限期地运行，如上一段的例子里，就算ActvityA挂了，ServiceA仍在后台运行，直到ServiceA自己调用stopSelf()或者其他的组件手动调用stopService(ServiceA)时ServiceA才会停止。<pre><code class=" mermaid">sequenceDiagram
+participant Client
+participant Service
+
+Client-&gt;&gt;Service: startService()
+Service-&gt;&gt;Service: onCreate()
+Service-&gt;&gt;Service: onStartCommand()
+Client--&gt;&gt;Service: 不需要保持连接
+</code></pre></li>
+<li>onCreate()：服务首次创建时调用。</li>
+<li>onStartCommand()：每次调用 startService() 都会触发，适合处理任务。</li>
+<li>stopService() 或 stopSelf()：服务终止时调用。</li>
+<li>onDestroy()：服务销毁时调用。</li>
+</ul>
+<blockquote>
+<p>⚠️ 即使启动者退出，服务仍会继续运行，直到显式停止。</p>
+</blockquote>
+<h4 id="bindService"><a href="#bindService" class="headerlink" title="bindService()"></a>bindService()</h4><ul>
+<li>从名字上可以看出这个“绑定”一个服务，要创建一个支持绑定的Service，我们必须要重写它的onBind()方法，这个方法返回一个IBinder对象，它是客户端用来和服务器进行交互的接口。如ActivityA绑定ServiceA，此时ActivityA称为客户端，ServiceA称为服务端，ActivityA有从ServiceA返回的一个IBinder对象，通过该对象，ActivityA就可以调用ServiceA里面的方法。</li>
+<li>这是一种比startService更复杂的启动方式，同时使用这种方式启动的service也能完成更多的事情，比如其他组件可向其发送请求，接受来自它的响应，甚至通过它来进行IPC（进程间通信）等等。<pre><code class=" mermaid">sequenceDiagram
+participant Client
+participant Service
+
+Client-&gt;&gt;Service: bindService()
+Service-&gt;&gt;Service: onCreate()
+Service-&gt;&gt;Service: onBind()
+Client-&gt;&gt;Service: 与服务通信
+Client-&gt;&gt;Service: unbindService()
+Service-&gt;&gt;Service: onUnbind()
+Service-&gt;&gt;Service: onDestroy()（若无其他绑定）
+</code></pre></li>
+<li>onCreate()：服务首次创建时调用。</li>
+<li>onBind()：返回一个 IBinder 对象供客户端通信。</li>
+<li>unbindService()：解除绑定。</li>
+<li>onUnbind()：最后一个客户端解绑时调用。</li>
+<li>onDestroy()：无绑定且未通过 startService 启动时销毁。</li>
+</ul>
+<p>⚠️ 服务生命周期受绑定者影响，所有客户端解绑后才会销毁。</p>
+<h3 id="startService-1"><a href="#startService-1" class="headerlink" title="startService"></a>startService</h3><ul>
+<li><p>通过startService启动后，service会一直无限期运行下去，只有外部调用了stopService()或stopSelf()方法时，该Service才会停止运行并销毁。</p>
+</li>
+<li><p>要创建一个这样的Service，你需要让该类继承Service类，然后重写以下方法：</p>
+</li>
+</ul>
+<h4 id="onCreate"><a href="#onCreate" class="headerlink" title="onCreate()"></a>onCreate()</h4><ul>
+<li>如果service没被创建过，调用startService()后会执行onCreate()回调；</li>
+<li>如果service已处于运行中，调用startService()不会执行onCreate()方法。<br>也就是说，onCreate()只会在第一次创建service时候调用，多次执行startService()不会重复调用onCreate()，此方法适合完成一些初始化工作。</li>
+</ul>
+<h4 id="onStartCommand"><a href="#onStartCommand" class="headerlink" title="onStartCommand()"></a>onStartCommand()</h4><ul>
+<li>如果多次执行了Context的startService()方法，那么Service的onStartCommand()方法也会相应的多次调用。onStartCommand()方法很重要，我们在该方法中根据传入的Intent参数进行实际的操作，比如会在此处创建一个线程用于下载数据或播放音乐等。</li>
+</ul>
+<h4 id="onBind"><a href="#onBind" class="headerlink" title="onBind()"></a>onBind()</h4><ul>
+<li>Service中的onBind()方法是抽象方法，Service类本身就是抽象类，所以onBind()方法是必须重写的，即使我们用不到。</li>
+</ul>
+<h4 id="onDestory"><a href="#onDestory" class="headerlink" title="onDestory()"></a>onDestory()</h4><ul>
+<li>在销毁的时候会执行Service该方法。</li>
+</ul>
+<p>这几个方法都是回调方法，且在主线程中执行，由android操作系统在合适的时机调用。</p>
+<h4 id="代码实例"><a href="#代码实例" class="headerlink" title="代码实例"></a>代码实例</h4><ul>
+<li>TestOneService.java<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestOneService</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Service</span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">()</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>,<span class="hljs-string">&quot;onCreate - Thread ID = &quot;</span> + Thread.currentThread().getId());<br>        <span class="hljs-built_in">super</span>.onCreate();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">onStartCommand</span><span class="hljs-params">(Intent intent, <span class="hljs-type">int</span> flags, <span class="hljs-type">int</span> startId)</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;onStartCommand - startId = &quot;</span> + startId + <span class="hljs-string">&quot;, Thread ID = &quot;</span> + Thread.currentThread().getId());<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.onStartCommand(intent, flags, startId);<br>    &#125;<br><br>    <span class="hljs-meta">@Nullable</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> IBinder <span class="hljs-title function_">onBind</span><span class="hljs-params">(Intent intent)</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;onBind - Thread ID = &quot;</span> + Thread.currentThread().getId());<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onDestroy</span><span class="hljs-params">()</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;onDestroy - Thread ID = &quot;</span> + Thread.currentThread().getId());<br>        <span class="hljs-built_in">super</span>.onDestroy();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>MainActivity.java<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AppCompatActivity</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> &#123;<br>        <span class="hljs-built_in">super</span>.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;Thread ID = &quot;</span> + Thread.currentThread().getId());<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;before StartService&quot;</span>);<br><br>        <span class="hljs-comment">//连续启动Service</span><br>        <span class="hljs-type">Intent</span> <span class="hljs-variable">intentOne</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, TestOneService.class);<br>        startService(intentOne);<br>        <span class="hljs-type">Intent</span> <span class="hljs-variable">intentTwo</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, TestOneService.class);<br>        startService(intentTwo);<br>        <span class="hljs-type">Intent</span> <span class="hljs-variable">intentThree</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, TestOneService.class);<br>        startService(intentThree);<br><br>        <span class="hljs-comment">//停止Service</span><br>        <span class="hljs-type">Intent</span> <span class="hljs-variable">intentFour</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, TestOneService.class);<br>        stopService(intentFour);<br><br>        <span class="hljs-comment">//再次启动Service</span><br>        <span class="hljs-type">Intent</span> <span class="hljs-variable">intentFive</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, TestOneService.class);<br>        startService(intentFive);<br><br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;after StartService&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>输出：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">090</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: Thread ID = <span class="hljs-number">1</span><br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">090</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: before StartService<br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">233</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: onCreate - Thread ID = <span class="hljs-number">1</span><br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">234</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: onStartCommand - startId = <span class="hljs-number">1</span>, Thread ID = <span class="hljs-number">1</span><br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">234</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: onStartCommand - startId = <span class="hljs-number">2</span>, Thread ID = <span class="hljs-number">1</span><br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">235</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: onStartCommand - startId = <span class="hljs-number">3</span>, Thread ID = <span class="hljs-number">1</span><br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">236</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: onDestroy - Thread ID = <span class="hljs-number">1</span><br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">237</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: onCreate - Thread ID = <span class="hljs-number">1</span><br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">237</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: onStartCommand - startId = <span class="hljs-number">1</span>, Thread ID = <span class="hljs-number">1</span><br><span class="hljs-attribute">02</span>-<span class="hljs-number">06</span> <span class="hljs-number">15</span>:<span class="hljs-number">19</span>:<span class="hljs-number">45</span>.<span class="hljs-number">238</span> <span class="hljs-number">8938</span>-<span class="hljs-number">8938</span>/? I/Kathy: after StartService<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>作者：Big不吃鱼<br>链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4c798c91a613">https://www.jianshu.com/p/4c798c91a613</a><br>来源：简书</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="bindService-1"><a href="#bindService-1" class="headerlink" title="bindService"></a>bindService</h3><ul>
+<li>bindService启动的服务和调用者之间是典型的client-server模式。调用者是client，service则是server端。service只有一个，但绑定到service上面的client可以有一个或很多个。这里所提到的client指的是组件，比如某个Activity。</li>
+<li>client可以通过IBinder接口获取Service实例，从而实现在client端直接调用Service中的方法以实现灵活交互，这在通过startService方法启动中是无法实现的。</li>
+<li>bindService启动服务的生命周期与其绑定的client息息相关。当client销毁时，client会自动与Service解除绑定。当然，client也可以明确调用Context的unbindService()方法与Service解除绑定。当没有任何client与Service绑定时，Service会自行销毁。</li>
+</ul>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ul>
+<li>在Service的onBind()方法中返回IBinder类型的实例。</li>
+<li>onBInd()方法返回的IBinder的实例需要能够返回Service实例本身。通常，<strong>最简单的方法就是在service中创建binder的内部类，加入类似getService()的方法返回Service</strong>，这样绑定的client就可以通过getService()方法获得Service实例了。</li>
+<li>TestTwoService.java<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestTwoService</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Service</span>&#123;<br><br>    <span class="hljs-comment">//client 可以通过Binder获取Service实例</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyBinder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Binder</span> &#123;<br>        <span class="hljs-keyword">public</span> TestTwoService <span class="hljs-title function_">getService</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> TestTwoService.<span class="hljs-built_in">this</span>;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">//通过binder实现调用者client与Service之间的通信</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">MyBinder</span> <span class="hljs-variable">binder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyBinder</span>();<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Random</span> <span class="hljs-variable">generator</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Random</span>();<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">()</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>,<span class="hljs-string">&quot;TestTwoService - onCreate - Thread = &quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-built_in">super</span>.onCreate();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">onStartCommand</span><span class="hljs-params">(Intent intent, <span class="hljs-type">int</span> flags, <span class="hljs-type">int</span> startId)</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;TestTwoService - onStartCommand - startId = &quot;</span> + startId + <span class="hljs-string">&quot;, Thread = &quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-keyword">return</span> START_NOT_STICKY;<br>    &#125;<br><br>    <span class="hljs-meta">@Nullable</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> IBinder <span class="hljs-title function_">onBind</span><span class="hljs-params">(Intent intent)</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;TestTwoService - onBind - Thread = &quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-keyword">return</span> binder;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">onUnbind</span><span class="hljs-params">(Intent intent)</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;TestTwoService - onUnbind - from = &quot;</span> + intent.getStringExtra(<span class="hljs-string">&quot;from&quot;</span>));<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onDestroy</span><span class="hljs-params">()</span> &#123;<br>        Log.i(<span class="hljs-string">&quot;Kathy&quot;</span>, <span class="hljs-string">&quot;TestTwoService - onDestroy - Thread = &quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-built_in">super</span>.onDestroy();<br>    &#125;<br><br>    <span class="hljs-comment">//getRandomNumber是Service暴露出去供client调用的公共方法</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getRandomNumber</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> generator.nextInt();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>client端要做的事情：<ul>
+<li>创建ServiceConnection类型实例，并重写onServiceConnected()方法和onServiceDisconnected()方法。</li>
+<li>当执行到onServiceConnected回调时，可通过IBinder实例得到Service实例对象，这样可实现client与Service的连接。</li>
+<li>onServiceDisconnected回调被执行时，表示client与Service断开连接，在此可以写一些断开连接后需要做的处理。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Activity、Service、intent之间的联系是什么？"><a href="#Activity、Service、intent之间的联系是什么？" class="headerlink" title="Activity、Service、intent之间的联系是什么？"></a>Activity、Service、intent之间的联系是什么？</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
+<li>Activity：用户界面组件，代表一个屏幕，用于与用户交互</li>
+<li>Service：后台组件，用于执行长时间运行的任务（如音乐播放、网络请求）</li>
+<li>Intent：消息传递机制，用于在组件之间传递数据和请求</li>
+</ul>
+<h4 id="它们之间的联系"><a href="#它们之间的联系" class="headerlink" title="它们之间的联系"></a>它们之间的联系</h4><ul>
+<li>Activity 通过 Intent 启动 Service<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Intent</span> <span class="hljs-variable">intent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, MyService.class);<br>startService(intent); <span class="hljs-comment">// 或 bindService(intent, conn, flags);</span><br></code></pre></td></tr></table></figure>
+Activity 是发起者，Intent 是载体，Service 是被启动者。</li>
+</ul>
+<p>Intent 中可以携带数据（如 URL、参数等）供 Service 使用。</p>
+<ul>
+<li>Activity 通过 Intent 启动另一个 Activity<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Intent</span> <span class="hljs-variable">intent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, SecondActivity.class);<br>startActivity(intent);<br></code></pre></td></tr></table></figure>
+同样通过 Intent 实现组件间跳转和数据传递。</li>
+<li>Service 也可以通过 Intent 启动 Activity（如通知点击）<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Intent</span> <span class="hljs-variable">intent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(<span class="hljs-built_in">this</span>, MainActivity.class);<br>intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);<br>startActivity(intent);<br></code></pre></td></tr></table></figure>
+注意：Service 启动 Activity 时必须加 FLAG_ACTIVITY_NEW_TASK。因为 Service 默认没有 Activity 的任务栈。</li>
+</ul>
+<h3 id="在Activtiy和在Service中创建一个Thread的区别？"><a href="#在Activtiy和在Service中创建一个Thread的区别？" class="headerlink" title="在Activtiy和在Service中创建一个Thread的区别？"></a>在Activtiy和在Service中创建一个Thread的区别？</h3><p>首先需要了解Service的几个特点。 </p>
+<p>（1） 默认情况下，Service其实是运行在主线程中的，如果需要执行复杂耗时的操作，必须在Service中再创建一个 Thread来执行任务。 </p>
+<p>（2） Service的优先级高于后台挂起的Activity，当然，也高于Activity所创建的Thread，因此，系统可能在内存不足的 时候优先杀死后台的Activity或者Thread，而不会轻易杀死Service组件，即使被迫杀死Service，也会在资源可用时重启 被杀死的Service 其实，Service和Thread根本就不是一个级别的东西，Service是系统的四大组件之一，Thread只是一个用来执行后台任 务的工具类，它可以在Activity中被创建，也可以在Service中被创建。因此，我们其实不应该讨论该使用Service还是 Thread，而是应该讨论在什么地方创建Thread。 </p>
+<p><strong>典型的应用中，它可以在以下三个位置被创建，不同的位置，其生命周期不一样，所以，我们应该根据该Thread的目标 生命周期来决定是在Service中创建Thread还是在Activity中创建它。</strong></p>
+<p>（1） 在Activity中被创建 这种情况下，一般在onCreate时创建，在onDestroy()中销毁，否则，Activity销毁后，Thread是会依然在后台运行着。这种情况下，Thread的生命周期即为整个Activity的生命周期。所以，在Activity中创建的Thread只适合完成一些依赖 Activity本身有关的任务，比如定时更新一下Activity的控件状态等。核心特点：该Thread的就是为这个Activity服务的，完成这个特定的Activity交代的任务，主动通知该Activity一些消息和 事件，Activity销毁后，该Thread也没有存活的意义了。</p>
+<p>（2）在Application中被创建 这种情况下，一般自定义Application类，重载onCreate方法，并在其中创建Thread，当然，也会在onTerminate()方法 中销毁Thread，否则，如果Thread没有退出的话，即使整个Application退出了，线程依然会在后台运行着。这种情况下，Thread的生命周期即为整个Application的生命周期。所以，在Application中创建的Thread，可以执行一 些整个应用级别的任务，比如定时检查一下网络连接状态等等。核心特点：该Thread的终极目标是为这个APP的各个Activity服务的，包括完成某个Activity交代的任务，主动通知某个 Activity一些消息和事件等，APP退出之后该Thread也没有存活的意义了。以上这两种情况下，Thread的生命周期都不应该超出整个应用程序的生命周期，也就是，整个APP退出之后，Thread都 应该完全退出，这样才不会出现内存泄漏或者僵尸线程。那么，如果你希望整个APP都退出之后依然能运行该Thread， 那么就应该把Thread放到Service中去创建和启动了。</p>
+<p>（3）在Service中被创建 这是保证最长生命周期的Thread的唯一方式，只要整个Service不退出，Thread就可以一直在后台执行，一般在Service 的onCreate()中创建，在onDestroy()中销毁。所以，在Service中创建的Thread，适合长期执行一些独立于APP的后台任务，比较常见的就是：在Service中保持与服 务器端的长连接。核心特点：该Thread可以为APP提供一些“服务”或者“状态查询”，但该Thread并不需要主动通知APP任何事件，甚至不 需要知道APP是谁。</p>
+<h3 id="Android进程优先级"><a href="#Android进程优先级" class="headerlink" title="Android进程优先级"></a>Android进程优先级</h3><h4 id="前台进程（Foreground-process）"><a href="#前台进程（Foreground-process）" class="headerlink" title="前台进程（Foreground process）"></a>前台进程（Foreground process）</h4><p>前台进程是用户当前做的事所必须的进程，如果满足下面各种情况中的一种，一个进程被认为是在前台：</p>
+<ul>
+<li>进程持有一个正在与用户交互的Activity。</li>
+<li>进程持有一个Service，这个Service处于这几种状态:<ul>
+<li>①Service与用户正在交互的Activity绑定。</li>
+<li>②Service是在前台运行的，即它调用了 startForeground()。</li>
+<li>③Service正在执行它的生命周期回调函数（onCreate(), onStart(), or onDestroy()）。</li>
+</ul>
+</li>
+<li>进程持有一个BroadcastReceiver，这个BroadcastReceiver正在执行它的 onReceive() 方法。</li>
+</ul>
+<p>杀死前台进程需要用户交互，因为前台进程的优先级是最高的。</p>
+<h4 id="可见进程（Visible-process）"><a href="#可见进程（Visible-process）" class="headerlink" title="可见进程（Visible process）"></a>可见进程（Visible process）</h4><p>如果一个进程不含有任何前台的组件，但仍可被用户在屏幕上所见。当满足如下任一条件时，进程被认为是可见的：</p>
+<ul>
+<li><p>进程持有一个Activity，这个Activity不在前台，但是仍然被用户可见（处于onPause()调用后又没有调用onStop()的状态，比如，前台的activity打开了一个对话框，这样activity就会在其后可见）。</p>
+</li>
+<li><p>进程持有一个Service，这个Service和一个可见的（或者前台的）Activity绑定。</p>
+</li>
+<li><p>可见的进程也被认为是很重要的，一般不会被销毁，除非是为了保证所有前台进程的运行而不得不杀死可见进程的时候。</p>
+</li>
+</ul>
+<h4 id="服务进程-（Service-process）"><a href="#服务进程-（Service-process）" class="headerlink" title="服务进程 （Service process）"></a>服务进程 （Service process）</h4><p>如果一个进程中运行着一个service，这个service是通过 startService() 开启的，并且不属于上面两种较高优先级的情况，这个进程就是一个服务进程。</p>
+<p>尽管服务进程没有和用户可以看到的东西绑定，但是它们一般在做的事情是用户关心的，比如后台播放音乐，后台下载数据等。所以系统会尽量维持它们的运行，除非系统内存不足以维持前台进程和可见进程的运行需要。</p>
+<h4 id="后台进程-（Background-process）"><a href="#后台进程-（Background-process）" class="headerlink" title="后台进程 （Background process）"></a>后台进程 （Background process）</h4><p>如果进程不属于上面三种情况，但是进程持有一个用户不可见的activity（activity的onStop()被调用，但是onDestroy()没有调用的状态），就认为进程是一个后台进程。</p>
+<p>后台进程不直接影响用户体验，系统会为了前台进程、可见进程、服务进程而任意杀死后台进程。</p>
+<p>通常会有很多个后台进程存在，它们会被保存在一个LRU (least recently used)列表中，这样就可以确保用户最近使用的activity最后被销毁，即最先销毁时间最远的activity。</p>
+<h4 id="空进程"><a href="#空进程" class="headerlink" title="空进程"></a>空进程</h4><p>如果一个进程不包含任何活跃的应用组件，则认为是空进程。 </p>
+<p>例如：一个进程当中已经没有数据在运行了，但是内存当中还为这个应用驻留了一个进程空间。<br>保存这种进程的唯一理由是为了缓存的需要，为了加快下次要启动这个进程中的组件时的启动时间。系统为了平衡进程缓存和底层内核缓存的资源，经常会杀死空进程。</p>
+<h3 id="如何保证Service不被杀死？"><a href="#如何保证Service不被杀死？" class="headerlink" title="如何保证Service不被杀死？"></a>如何保证Service不被杀死？</h3><h4 id="使用前台服务（Foreground-Service）"><a href="#使用前台服务（Foreground-Service）" class="headerlink" title="使用前台服务（Foreground Service）"></a>使用前台服务（Foreground Service）</h4><p>在onStartCommand里面调用 startForeground()方法把Service提升为前台进程级别，然后再onDestroy里面要记得调用stopForeground ()方法。</p>
+<h4 id="onStartCommand方法，返回START-STICKY"><a href="#onStartCommand方法，返回START-STICKY" class="headerlink" title="onStartCommand方法，返回START_STICKY"></a>onStartCommand方法，返回START_STICKY</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">onStartCommand</span><span class="hljs-params">(Intent intent, <span class="hljs-type">int</span> flags, <span class="hljs-type">int</span> startId)</span> &#123;<br>    <span class="hljs-keyword">return</span> START_STICKY;<br>&#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>START_STICKY</td>
+<td>被系统杀死后尝试重启服务，但不保留原 Intent</td>
+</tr>
+<tr>
+<td>START_NOT_STICKY</td>
+<td>被杀后不重启服务</td>
+</tr>
+<tr>
+<td>START_REDELIVER_INTENT</td>
+<td>被杀后重启服务并重新传入原 Intent</td>
+</tr>
+<tr>
+<td>START_STICKY_COMPATIBILITY</td>
+<td>与 START_STICKY 类似，兼容旧版本</td>
+</tr>
+</tbody></table>
+<h4 id="使用双进程守护（不推荐但常见）"><a href="#使用双进程守护（不推荐但常见）" class="headerlink" title="使用双进程守护（不推荐但常见）"></a>使用双进程守护（不推荐但常见）</h4><p>启动两个互相绑定的 Service（A 和 B），当一个被杀时另一个重启它。</p>
+<blockquote>
+<p>⚠️ Android 8.0+ 后效果有限，且可能被系统判定为“滥用”。</p>
+</blockquote>
+<h4 id="绑定组件（如-Activity-或其他-Service）"><a href="#绑定组件（如-Activity-或其他-Service）" class="headerlink" title="绑定组件（如 Activity 或其他 Service）"></a>绑定组件（如 Activity 或其他 Service）</h4><p>使用 bindService() 绑定后，Service 生命周期受绑定者影响。若绑定者存活，系统不易杀死 Service。</p>
+<h3 id="Broadcast的定义"><a href="#Broadcast的定义" class="headerlink" title="Broadcast的定义"></a>Broadcast的定义</h3><p>Broadcast Receiver是Android四大组件之一，是全局大喇叭，就像以前学校里面的大喇叭一样，有什么事情，就通过广播通知到全校师生。Android的广播机制是一种广泛运用的在应用程序之间传输信息的机制。主要有两大角色：广播接收者和广播发送者。因此，我们可以注册一个广播接收者，用来接收其他进程或者系统发出的广播；同样的，我们也可以通过广播发送者，向其他进程发送我们的广播，告诉其他进程需要做某个动作。</p>
+<h3 id="静态注册和动态注册是什么？"><a href="#静态注册和动态注册是什么？" class="headerlink" title="静态注册和动态注册是什么？"></a>静态注册和动态注册是什么？</h3><h4 id="静态注册"><a href="#静态注册" class="headerlink" title="静态注册"></a>静态注册</h4><p>在AndroidManifest.xml清单文件里直接声明的方式叫做静态注册。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">receiver</span> </span><br><span class="hljs-tag">    //<span class="hljs-attr">此广播接收者类是mXRReceiver</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;.mXRReceiver&quot;</span> &gt;</span><br>    //用于系统启动完成时，接收系统发送的广播<br>    <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.action.BOOT_COMPLETED&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">receiver</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>然后重写onReceive()函数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">mXRReceiver</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">BroadcastReceiver</span> &#123;<br><br>  <span class="hljs-comment">//接收到广播后自动调用该方法</span><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onReceive</span><span class="hljs-params">(Context context, Intent intent)</span> &#123;<br>    <span class="hljs-comment">//写入接收广播后的操作</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如上面代码，此时注册了mXRReceiver这个广播，当系统启动后，就会发送BOOT_COMPLETED的广播，符合mXRReceiver所设置的过滤条件，就会自动调用onReceive()函数，执行对应内容。</p>
+<p>注意：onReceive()函数不能执行耗时流程。</p>
+<h4 id="动态注册"><a href="#动态注册" class="headerlink" title="动态注册"></a>动态注册</h4><p>在运行时调用 registerReceiver() 注册，必须在合适的时机调用 unregisterReceiver() 取消，否则会导致内存泄漏。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//定义广播接收器</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyReceiver</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">BroadcastReceiver</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onReceive</span><span class="hljs-params">(Context context, Intent intent)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">action</span> <span class="hljs-operator">=</span> intent.getAction();<br>        <span class="hljs-keyword">if</span> (Intent.ACTION_BATTERY_CHANGED.equals(action)) &#123;<br>            <span class="hljs-comment">// 处理电量变化</span><br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//在 Activity/Service 中注册</span><br><span class="hljs-type">MyReceiver</span> <span class="hljs-variable">receiver</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyReceiver</span>();<br><span class="hljs-type">IntentFilter</span> <span class="hljs-variable">filter</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IntentFilter</span>();<br>filter.addAction(Intent.ACTION_BATTERY_CHANGED);<br>registerReceiver(receiver, filter);<br><br><span class="hljs-comment">//在合适时机取消注册</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onDestroy</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-built_in">super</span>.onDestroy();<br>    unregisterReceiver(receiver);<br>&#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>特点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>注册时机</strong></td>
+<td>在代码运行时调用 <code>registerReceiver()</code>，通常在 <code>onCreate()</code> 或 <code>onStart()</code> 中</td>
+</tr>
+<tr>
+<td><strong>取消时机</strong></td>
+<td>在 <code>onDestroy()</code> 或 <code>onStop()</code> 中调用 <code>unregisterReceiver()</code>，避免内存泄漏</td>
+</tr>
+<tr>
+<td><strong>生命周期</strong></td>
+<td>与注册它的组件（Activity&#x2F;Service）生命周期绑定</td>
+</tr>
+<tr>
+<td><strong>灵活性</strong></td>
+<td>可以根据业务需要，随时注册&#x2F;注销</td>
+</tr>
+<tr>
+<td><strong>常见用途</strong></td>
+<td>监听网络变化、电量变化、蓝牙状态、耳机插拔等只在前台需要的广播</td>
+</tr>
+</tbody></table>
+<h3 id="请介绍Android里广播的分类？"><a href="#请介绍Android里广播的分类？" class="headerlink" title="请介绍Android里广播的分类？"></a>请介绍Android里广播的分类？</h3><h4 id="普通广播"><a href="#普通广播" class="headerlink" title="普通广播"></a>普通广播</h4><ul>
+<li>异步发送，所有接收者几乎同时收到，无法截断或修改广播内容</li>
+</ul>
+<h4 id="系统广播"><a href="#系统广播" class="headerlink" title="系统广播"></a>系统广播</h4><ul>
+<li>Android系统中内置了多个系统广播:只要涉及到手机的基本操作(如开机,网络状态变化,拍照等),都会发出相应的广播,每个广播都有特定的Intent-Filter(包括具体的action)</li>
+</ul>
+<h4 id="有序广播"><a href="#有序广播" class="headerlink" title="有序广播"></a>有序广播</h4><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发送方式</td>
+<td>使用 sendOrderedBroadcast() 方法</td>
+</tr>
+<tr>
+<td>接收顺序</td>
+<td>按 IntentFilter 中设置的 priority 值从高到低，同级别随机</td>
+</tr>
+<tr>
+<td>广播传播控制</td>
+<td>接收者可以调用 abortBroadcast() 终止传播</td>
+</tr>
+<tr>
+<td>数据修改能力</td>
+<td>可以通过 setResult() 修改广播结果</td>
+</tr>
+<tr>
+<td>同步执行</td>
+<td>接收者按顺序同步执行，效率低于普通广播</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>需要优先级控制或广播结果处理的场景</td>
+</tr>
+</tbody></table>
+<h4 id="粘性广播"><a href="#粘性广播" class="headerlink" title="粘性广播"></a>粘性广播</h4><p>粘性广播是一种 特殊的广播机制，当广播被发送后，系统会将该广播的 Intent 保存在内存中。后续注册的接收者（即使在广播发送之后才注册）也能立即收到这条广播的最后一次内容。从 Android 5.0（API 21）开始已废弃，官方强烈不推荐使用（安全、性能）</p>
+<h4 id="App应用内广播"><a href="#App应用内广播" class="headerlink" title="App应用内广播"></a>App应用内广播</h4><ul>
+<li>在同一个应用程序内部使用广播机制（Broadcast）来传递消息或事件，而不会被其他应用接收。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 发送广播</span><br><span class="hljs-type">Intent</span> <span class="hljs-variable">intent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>();<br>intent.setComponent(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ComponentName</span>(context, MyReceiver.class));<br>intent.setAction(<span class="hljs-string">&quot;com.example.APP_EVENT&quot;</span>);<br>intent.putExtra(<span class="hljs-string">&quot;msg&quot;</span>, <span class="hljs-string">&quot;hello&quot;</span>);<br>context.sendBroadcast(intent);<br><br><span class="hljs-comment">// 接收广播</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyReceiver</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">BroadcastReceiver</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onReceive</span><span class="hljs-params">(Context context, Intent intent)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">msg</span> <span class="hljs-operator">=</span> intent.getStringExtra(<span class="hljs-string">&quot;msg&quot;</span>);<br>        Log.d(<span class="hljs-string">&quot;MyReceiver&quot;</span>, <span class="hljs-string">&quot;收到应用内广播: &quot;</span> + msg);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>实现：常见方式是使用显式 Intent</li>
+<li>优点：安全、解耦、简单。</li>
+<li>缺点：仍在主线程执行，性能有限；</li>
+</ul>
+<h3 id="程序A能否接收到程序B的广播"><a href="#程序A能否接收到程序B的广播" class="headerlink" title="程序A能否接收到程序B的广播?"></a>程序A能否接收到程序B的广播?</h3><p>程序A能接收到程序B的广播，前提是程序B发送的是全局广播（非 <code>LocalBroadcast</code>），并且程序A正确注册了匹配的 <code>Action</code>，同时满足 Android 版本要求（如 8.0+ 动态注册限制）、<code>android:exported=true</code> 属性配置正确，以及必要的权限声明。</p>
+<p>程序A不能接收到程序B的广播，常见原因包括：程序B使用了 <code>LocalBroadcast</code>（仅限应用内）、Action 不匹配、程序A未注册或注册方式受限（如隐式广播静态注册在新版本被限制）、权限不足，或者接收器未导出（<code>exported=false</code>）。</p>
+<h3 id="什么是内容提供者？（ContentProvider）"><a href="#什么是内容提供者？（ContentProvider）" class="headerlink" title="什么是内容提供者？（ContentProvider）"></a>什么是内容提供者？（ContentProvider）</h3><p>之前有说过可以用Intent在组件中传递数据，那么其数据的大小是否有限制呢？很明显是有限制的，Intent传递数据大小的限制大概在1M左右，超过这个限制就会静默崩溃。因此我们就可以通过ContentProvider进行进程间的数据传递，也就是ContentProvider是一种进程间的数据传递的方式。 一般来说，Android数据存储的方式有：文件，数据库，网络，SharePreferences，ContentProvider。<br><img src="/2025/11/04/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ContentProvider.png" srcset="/img/loading.gif" lazyload alt="ContentProvider"><br>上图是网上找到的一个图片，然而从图上可以明显的知道，ContentProvider更准确来说只是一个中间者的身份，真正存储数据的是数据库和文件等形式，这一点要分清楚！</p>
+<h3 id="ContentProvider用法"><a href="#ContentProvider用法" class="headerlink" title="ContentProvider用法"></a>ContentProvider用法</h3><h4 id="创建类：继承-ContentProvider，重写以下方法："><a href="#创建类：继承-ContentProvider，重写以下方法：" class="headerlink" title="创建类：继承 ContentProvider，重写以下方法："></a>创建类：继承 ContentProvider，重写以下方法：</h4><ul>
+<li>onCreate()：初始化数据库或数据源</li>
+<li>query()：查询数据</li>
+<li>insert()：插入数据</li>
+<li>update()：更新数据</li>
+<li>delete()：删除数据</li>
+<li>getType()：返回 MIME 类型<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyProvider</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ContentProvider</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 初始化数据库</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Cursor <span class="hljs-title function_">query</span><span class="hljs-params">(Uri uri, String[] projection, String selection,</span><br><span class="hljs-params">                        String[] selectionArgs, String sortOrder)</span> &#123;<br>        <span class="hljs-comment">// 查询逻辑</span><br>        <span class="hljs-keyword">return</span> cursor;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Uri <span class="hljs-title function_">insert</span><span class="hljs-params">(Uri uri, ContentValues values)</span> &#123;<br>        <span class="hljs-comment">// 插入逻辑</span><br>        <span class="hljs-keyword">return</span> newUri;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">update</span><span class="hljs-params">(Uri uri, ContentValues values, String selection, String[] selectionArgs)</span> &#123;<br>        <span class="hljs-comment">// 更新逻辑</span><br>        <span class="hljs-keyword">return</span> count;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">delete</span><span class="hljs-params">(Uri uri, String selection, String[] selectionArgs)</span> &#123;<br>        <span class="hljs-comment">// 删除逻辑</span><br>        <span class="hljs-keyword">return</span> count;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getType</span><span class="hljs-params">(Uri uri)</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;vnd.android.cursor.dir/vnd.com.example.table&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="在-AndroidManifest-xml-注册："><a href="#在-AndroidManifest-xml-注册：" class="headerlink" title="在 AndroidManifest.xml 注册："></a>在 AndroidManifest.xml 注册：</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">provider</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;.MyProvider&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:authorities</span>=<span class="hljs-string">&quot;com.example.provider&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:exported</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h4><p>外部应用访问：通过 content:&#x2F;&#x2F;com.example.provider&#x2F;… 的 URI 使用 ContentResolver 调用。</p>
+<h3 id="ContentProvider原理"><a href="#ContentProvider原理" class="headerlink" title="ContentProvider原理"></a>ContentProvider原理</h3><p>ContentProvider 之所以能实现数据共享，核心在于 Binder 跨进程通信机制。应用 A（数据提供方）通过 ContentProvider 暴露统一的 CRUD 接口，应用 B（数据使用方）通过 ContentResolver + URI 访问，系统的 AMS（ActivityManagerService） 负责 Provider 的注册和调度，从而实现跨进程的数据共享。</p>
+<h4 id="核心角色"><a href="#核心角色" class="headerlink" title="核心角色"></a>核心角色</h4><ul>
+<li>ContentProvider：数据提供方，封装底层数据（SQLite、文件、网络等），对外暴露统一接口。</li>
+<li>ContentResolver：数据使用方的入口，开发者通过它调用 query&#x2F;insert&#x2F;update&#x2F;delete。</li>
+<li>URI：统一资源标识符，用于定位具体 Provider 和数据表。</li>
+<li>AMS（ActivityManagerService）：系统服务，负责管理所有 Provider 的注册、生命周期和进程间引用。</li>
+<li>Binder：Android IPC 基石，保证跨进程调用的安全与高效。</li>
+</ul>
+<h4 id="数据访问流程（以-query-为例）"><a href="#数据访问流程（以-query-为例）" class="headerlink" title="数据访问流程（以 query() 为例）"></a>数据访问流程（以 query() 为例）</h4><p>客户端调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Cursor</span> <span class="hljs-variable">cursor</span> <span class="hljs-operator">=</span> getContentResolver().query(uri, ...);<br>ContentResolver 解析 URI，找到对应的 authority。<br></code></pre></td></tr></table></figure>
+<p>系统查找 Provider：</p>
+<ul>
+<li>ContentResolver 通过 AMS 请求获取目标 Provider 的 Binder 引用。</li>
+<li>如果 Provider 所在进程未启动，AMS 会先启动该进程并调用其 onCreate()。</li>
+</ul>
+<p>Binder 跨进程调用：</p>
+<ul>
+<li><p>客户端进程通过 Binder 将请求发送到 Provider 进程。</p>
+</li>
+<li><p>Provider 内部执行数据库&#x2F;文件操作，返回 Cursor。</p>
+</li>
+</ul>
+<p>结果返回：</p>
+<ul>
+<li>Cursor 通过 Binder 返回给调用方，调用方即可遍历数据。<blockquote>
+<p>Cursor 是数据库查询结果的接口对象，它相当于一个“结果集指针”，允许你逐行遍历查询到的数据，并通过列名或列索引获取具体字段的值。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="说说-ContentProvider、ContentResolver、ContentObserver-之间的关系？"><a href="#说说-ContentProvider、ContentResolver、ContentObserver-之间的关系？" class="headerlink" title="说说 ContentProvider、ContentResolver、ContentObserver 之间的关系？"></a>说说 ContentProvider、ContentResolver、ContentObserver 之间的关系？</h3><p>三者的关系可以概括为：ContentProvider 提供数据 → ContentResolver 访问数据 → ContentObserver 监听数据变化。它们共同构成了 Android 中跨进程数据共享与监听的完整机制。</p>
+<h4 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a>ContentProvider</h4><ul>
+<li><p>作用：对外共享数据，封装底层存储（SQLite、文件、网络等）。</p>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>通过 URI 暴露数据接口。</li>
+<li>提供标准的 CRUD 方法（query、insert、update、delete）。</li>
+<li>由系统 AMS 管理生命周期，支持跨进程访问。</li>
+</ul>
+</li>
+</ul>
+<h4 id="ContentResolver"><a href="#ContentResolver" class="headerlink" title="ContentResolver"></a>ContentResolver</h4><ul>
+<li>作用：应用访问 ContentProvider 的入口。</li>
+<li>特点：<ul>
+<li>开发者不直接操作 Provider，而是通过 ContentResolver 调用。</li>
+<li>内部会根据 URI 找到对应的 Provider，并通过 Binder IPC 调用其方法。</li>
+<li>提供与 Provider 一致的 API：query()、insert()、update()、delete()。</li>
+</ul>
+</li>
+</ul>
+<h4 id="ContentObserver"><a href="#ContentObserver" class="headerlink" title="ContentObserver"></a>ContentObserver</h4><ul>
+<li><p>作用：监听指定 URI 对应数据的变化。</p>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>通过 ContentResolver.registerContentObserver() 注册。</li>
+<li>当 Provider 数据发生变化时，系统会通知 Observer。</li>
+<li>常用于 UI 自动刷新，比如联系人列表、短信收件箱。</li>
+</ul>
+</li>
+</ul>
+<h3 id="为什么要使用通过ContentResolver类从而与ContentProvider类进行交互，而不直接访问ContentProvider类？"><a href="#为什么要使用通过ContentResolver类从而与ContentProvider类进行交互，而不直接访问ContentProvider类？" class="headerlink" title="为什么要使用通过ContentResolver类从而与ContentProvider类进行交互，而不直接访问ContentProvider类？"></a>为什么要使用通过ContentResolver类从而与ContentProvider类进行交互，而不直接访问ContentProvider类？</h3><p>因为 ContentProvider 运行在不同进程，直接访问它并不现实。Android 设计了 ContentResolver 作为中介，统一对外提供数据访问接口，屏蔽了跨进程通信（Binder IPC）的复杂性，同时增强了安全性和解耦性。</p>
+<h3 id="ContentProvider的底层是采用Android中的Binder机制，既然已经有了binder实现了进程间通信了为什么还会需要contentProvider？"><a href="#ContentProvider的底层是采用Android中的Binder机制，既然已经有了binder实现了进程间通信了为什么还会需要contentProvider？" class="headerlink" title="ContentProvider的底层是采用Android中的Binder机制，既然已经有了binder实现了进程间通信了为什么还会需要contentProvider？"></a>ContentProvider的底层是采用Android中的Binder机制，既然已经有了binder实现了进程间通信了为什么还会需要contentProvider？</h3><p>虽然 Binder 已经能实现进程间通信，但它只是一个 底层 IPC 机制，过于底层、复杂且不适合直接用于应用层的数据共享。ContentProvider 是对 Binder 的进一步封装，提供了统一的 数据访问接口（CRUD + URI）、权限管理 和 生命周期管理，让开发者能更安全、方便地在不同应用之间共享结构化数据。</p>
+<h4 id="抽象层级不同"><a href="#抽象层级不同" class="headerlink" title="抽象层级不同"></a>抽象层级不同</h4><ul>
+<li>Binder：<ul>
+<li>Android 的底层 IPC 框架，负责进程间对象代理和方法调用。</li>
+<li>使用时需要定义 AIDL 接口、手动序列化&#x2F;反序列化数据，开发成本高。</li>
+<li>更适合 系统服务（如 AMS、WMS）这种复杂的进程间调用。</li>
+</ul>
+</li>
+<li>ContentProvider：<ul>
+<li>封装了 Binder，专门面向 数据共享 场景。</li>
+<li>提供统一的 CRUD 接口（query&#x2F;insert&#x2F;update&#x2F;delete）。</li>
+<li>通过 URI 标识数据，调用方式简单直观。</li>
+<li>客户端只需用 ContentResolver，无需关心底层 IPC。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>👉 类比：Binder 像“电线”，ContentProvider 像“插座 + 接口标准”，让大家能方便、安全地用电。</p>
+</blockquote>
+<h4 id="数据访问的统一接口"><a href="#数据访问的统一接口" class="headerlink" title="数据访问的统一接口"></a>数据访问的统一接口</h4><ul>
+<li>如果直接用 Binder，每个开发者都要自定义接口，调用方式不统一。</li>
+<li>ContentProvider 规定了标准的 URI + CRUD 访问模式，所有应用都能用相同方式访问数据。</li>
+<li>系统内置的联系人、短信、媒体库等 Provider 都遵循这一模式。</li>
+</ul>
+<h4 id="安全性与权限管理"><a href="#安全性与权限管理" class="headerlink" title="安全性与权限管理"></a>安全性与权限管理</h4><ul>
+<li>Binder 本身不提供数据级别的权限控制。</li>
+<li>ContentProvider 可以在 Manifest 中配置 readPermission、writePermission、signature 等权限，保证数据安全。</li>
+<li>还可以通过 checkCallingPermission() 做二次校验。</li>
+</ul>
+<h4 id="生命周期与系统管理"><a href="#生命周期与系统管理" class="headerlink" title="生命周期与系统管理"></a>生命周期与系统管理</h4><ul>
+<li>Binder 服务需要开发者自己管理进程和生命周期。</li>
+<li>ContentProvider 的创建、销毁由 AMS 统一调度：</li>
+<li>第一次访问时自动启动 Provider 进程并调用 onCreate()。</li>
+<li>系统负责回收，开发者无需手动管理。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Android开发学习笔记</div>
+      <div>https://sdueryrg.github.io/2025/11/04/Android开发学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/02/Java%E5%90%8E%E7%AB%AF%E5%AD%A6%E4%B9%A0%E2%80%94%E6%9F%A5%E7%BC%BA%E8%A1%A5%E6%BC%8F%E7%AF%87/Java%E5%90%8E%E7%AB%AF%E5%AD%A6%E4%B9%A0%E2%80%94%E6%9F%A5%E7%BC%BA%E8%A1%A5%E6%BC%8F%E7%AF%87/" title="Java后端学习—查缺补漏篇">
+                        <span class="hidden-mobile">Java后端学习—查缺补漏篇</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

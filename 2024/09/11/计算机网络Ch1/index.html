@@ -1,0 +1,1035 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一章 计算机网络体系结构一、计算机网络的概念1.什么是计算机网络？ 计算机网络(Computer networking)是一个将众多分散的、自治的计算机系统，通过通信设备与线路连接起来，由功能完善的软件实现资源共享和信息传递的系统  计算机网络包括软件+硬件2.计算机网络、互联网、互连网计算机网络（简称网络）：由若干节点和连接这些节点的链路组成 节点可以是计算机、集线器、交换机、路由器等 链路可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络Ch1">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="第一章 计算机网络体系结构一、计算机网络的概念1.什么是计算机网络？ 计算机网络(Computer networking)是一个将众多分散的、自治的计算机系统，通过通信设备与线路连接起来，由功能完善的软件实现资源共享和信息传递的系统  计算机网络包括软件+硬件2.计算机网络、互联网、互连网计算机网络（简称网络）：由若干节点和连接这些节点的链路组成 节点可以是计算机、集线器、交换机、路由器等 链路可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%AE%B6%E7%94%A8%E8%B7%AF%E7%94%B1%E5%99%A8.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E7%BB%84%E6%88%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2%E7%9A%84%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E7%9A%84%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%8A%A5%E6%96%87%E4%BA%A4%E6%8D%A2%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%AF%B9%E6%AF%94%E5%92%8C%E6%80%BB%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%B1%80%E5%9F%9F%E7%BD%91%E5%92%8C%E5%B9%BF%E5%9F%9F%E7%BD%91.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%80%BB%E7%BA%BF%E5%9E%8B%E7%BB%93%E6%9E%84%E5%92%8C%E7%8E%AF%E5%BD%A2%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%98%9F%E5%9E%8B%E7%BB%93%E6%9E%84%E5%92%8C%E7%BD%91%E7%8A%B6%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%88%86%E7%B1%BB%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%97%B6%E5%BB%B6.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%97%B6%E5%BB%B6%E4%BE%8B%E9%A2%98.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%97%B6%E5%BB%B6%E5%B8%A6%E5%AE%BD%E7%A7%AF%E4%BE%8B%E9%A2%98.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%97%B6%E5%BB%B6%E5%B8%A6%E5%AE%BD%E7%A7%AF%E8%A7%A3%E7%AD%94.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%BE%80%E8%BF%94%E6%97%B6%E5%BB%B6.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E4%BF%A1%E9%81%93%E5%88%A9%E7%94%A8%E7%8E%87%E4%BE%8B%E9%A2%98.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E5%B0%8F%E7%BB%932.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%BF%AB%E9%80%92%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%88%86%E5%B1%82%E6%96%B9%E5%BC%8F.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84%E6%80%BB%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%932.png">
+<meta property="article:published_time" content="2024-09-11T02:07:11.000Z">
+<meta property="article:modified_time" content="2025-01-07T08:21:32.864Z">
+<meta property="article:author" content="yrg">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%AE%B6%E7%94%A8%E8%B7%AF%E7%94%B1%E5%99%A8.png">
+  
+  
+  
+  <title>计算机网络Ch1 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机网络Ch1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-11 10:07" pubdate>
+          2024年9月11日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计算机网络Ch1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第一章-计算机网络体系结构"><a href="#第一章-计算机网络体系结构" class="headerlink" title="第一章 计算机网络体系结构"></a><center>第一章 计算机网络体系结构</center></h1><h2 id="一、计算机网络的概念"><a href="#一、计算机网络的概念" class="headerlink" title="一、计算机网络的概念"></a>一、计算机网络的概念</h2><h3 id="1-什么是计算机网络？"><a href="#1-什么是计算机网络？" class="headerlink" title="1.什么是计算机网络？"></a>1.什么是计算机网络？</h3><blockquote>
+<p>计算机网络(Computer networking)是一个将众多<strong>分散的</strong>、<strong>自治的</strong>计算机系统，通过<strong>通信设备</strong>与<strong>线路</strong>连接起来，由功能完善的软件实现资源共享和信息传递的系统</p>
+</blockquote>
+<h4 id="计算机网络包括软件-硬件"><a href="#计算机网络包括软件-硬件" class="headerlink" title="计算机网络包括软件+硬件"></a>计算机网络包括软件+硬件</h4><h3 id="2-计算机网络、互联网、互连网"><a href="#2-计算机网络、互联网、互连网" class="headerlink" title="2.计算机网络、互联网、互连网"></a>2.计算机网络、互联网、互连网</h3><h4 id="计算机网络（简称网络）：由若干节点和连接这些节点的链路组成"><a href="#计算机网络（简称网络）：由若干节点和连接这些节点的链路组成" class="headerlink" title="计算机网络（简称网络）：由若干节点和连接这些节点的链路组成"></a>计算机网络（简称网络）：由若干节点和连接这些节点的链路组成</h4><ul>
+<li>节点可以是计算机、集线器、交换机、路由器等</li>
+<li>链路可以有线可以无线</li>
+</ul>
+<h4 id="通过路由器可以将不同的计算机网络连接起来，形成更大的计算机网络，成为“互连网”"><a href="#通过路由器可以将不同的计算机网络连接起来，形成更大的计算机网络，成为“互连网”" class="headerlink" title="通过路由器可以将不同的计算机网络连接起来，形成更大的计算机网络，成为“互连网”"></a>通过路由器可以将不同的计算机网络连接起来，形成更大的计算机网络，成为“互连网”</h4><blockquote>
+<p>这里的路由器≠家用路由器&#x3D;路由器+交换机+其他<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%AE%B6%E7%94%A8%E8%B7%AF%E7%94%B1%E5%99%A8.png" srcset="/img/loading.gif" lazyload alt="家用路由器"><br>路由器将多个计算机网络连接起来；交换机将多个节点连接起来，组成一个计算机网络</p>
+</blockquote>
+<h4 id="互联网：各大互联网服务提供商和国际机构组建而成，覆盖全球范围的互连网"><a href="#互联网：各大互联网服务提供商和国际机构组建而成，覆盖全球范围的互连网" class="headerlink" title="互联网：各大互联网服务提供商和国际机构组建而成，覆盖全球范围的互连网"></a>互联网：各大互联网服务提供商和国际机构组建而成，覆盖全球范围的互连网</h4><ul>
+<li>互联网必须使用TCP&#x2F;IP协议，互连网可以用任意协议</li>
+</ul>
+<h2 id="二、计算机网络的组成、功能"><a href="#二、计算机网络的组成、功能" class="headerlink" title="二、计算机网络的组成、功能"></a>二、计算机网络的组成、功能</h2><h3 id="1-从组成成分看"><a href="#1-从组成成分看" class="headerlink" title="1.从组成成分看"></a>1.从组成成分看</h3><h4 id="1-硬件："><a href="#1-硬件：" class="headerlink" title="(1)硬件："></a>(1)硬件：</h4><ul>
+<li>主机（端系统,end system）：电脑、手机、物联网设备</li>
+<li>通信设备：集线器、交换机、路由器</li>
+<li>通信链路：网线、光纤、同轴电缆</li>
+</ul>
+<h4 id="2-软件："><a href="#2-软件：" class="headerlink" title="(2)软件："></a>(2)软件：</h4><ul>
+<li>方便用户使用，实现资源共享。如：Email客户端、聊天软件、网盘软件</li>
+</ul>
+<h4 id="3-协议："><a href="#3-协议：" class="headerlink" title="(3)协议："></a>(3)协议：</h4><ul>
+<li>规定计算机网络中的通信规则</li>
+<li>由硬件、软件共同实现，如：网络适配器+软件 实现网络通信协议<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E7%BB%84%E6%88%90.png" srcset="/img/loading.gif" lazyload alt="计算机网络的组成"></li>
+</ul>
+<h3 id="2-从工作方式看"><a href="#2-从工作方式看" class="headerlink" title="2.从工作方式看"></a>2.从工作方式看</h3><h4 id="1-边缘部分："><a href="#1-边缘部分：" class="headerlink" title="(1)边缘部分："></a>(1)边缘部分：</h4><ul>
+<li>工作方式：直接为用户服务（通信、资源共享）</li>
+<li>主要由连接到互联网上的主机及其软件组成</li>
+</ul>
+<h4 id="2-核心部分："><a href="#2-核心部分：" class="headerlink" title="(2)核心部分："></a>(2)核心部分：</h4><ul>
+<li>工作方式：为边缘部分提供服务（连通性、交换服务）</li>
+<li>由大量网络和连接这些网络的路由器组成</li>
+</ul>
+<h3 id="3-从逻辑功能看"><a href="#3-从逻辑功能看" class="headerlink" title="3.从逻辑功能看"></a>3.从逻辑功能看</h3><h4 id="1-资源子网"><a href="#1-资源子网" class="headerlink" title="(1)资源子网"></a>(1)资源子网</h4><ul>
+<li>计算机网络中运行应用程序，向用户提供可共享的硬件、软件和信息资源的部分</li>
+<li>主要由连接到互联网上的主机组成</li>
+</ul>
+<h4 id="2-通信子网"><a href="#2-通信子网" class="headerlink" title="(2)通信子网"></a>(2)通信子网</h4><ul>
+<li>计算机网络中负责计算机间信息传输的部分。即把计算机和其他用户装置互连在一起的所有通信设备和介质的总称</li>
+<li>主要由通信链路+通信设备+协议构成<blockquote>
+<p>注：主机内部实现信息传输的网络适配器、底层协议属于通信子网的范畴</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="4-功能"><a href="#4-功能" class="headerlink" title="4.功能"></a>4.功能</h3><h4 id="1-数据通信※"><a href="#1-数据通信※" class="headerlink" title="(1)数据通信※"></a>(1)数据通信※</h4><ul>
+<li>实现计算机之间的数据传输，是最基本最重要的功能</li>
+</ul>
+<h4 id="2-资源共享"><a href="#2-资源共享" class="headerlink" title="(2)资源共享"></a>(2)资源共享</h4><ul>
+<li>硬件、软件、数据资源<ul>
+<li>智能音箱请求服务器处理</li>
+<li>应用商店</li>
+<li>分享视频<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB.png" srcset="/img/loading.gif" lazyload alt="资源共享"></li>
+</ul>
+</li>
+</ul>
+<h4 id="3-分布式处理"><a href="#3-分布式处理" class="headerlink" title="(3)分布式处理"></a>(3)分布式处理</h4><ul>
+<li>将某个复杂任务分配给网络中的多台计算机处理，如：大矩阵运算、MapReduce</li>
+</ul>
+<h4 id="4-提高可靠性"><a href="#4-提高可靠性" class="headerlink" title="(4)提高可靠性"></a>(4)提高可靠性</h4><ul>
+<li>网络中各台计算机互为替代机，如：某网盘服务器集群网络，数据冗余备份</li>
+</ul>
+<h4 id="5-负载均衡"><a href="#5-负载均衡" class="headerlink" title="(5)负载均衡"></a>(5)负载均衡</h4><ul>
+<li>网络中各台计算机共同分担繁重工作，如：某游戏用多台服务器均衡处理玩家的请求</li>
+</ul>
+<h4 id="6-其他"><a href="#6-其他" class="headerlink" title="(6)其他"></a>(6)其他</h4><ul>
+<li>满足社会需求、生活需求，如：远程办公、远程教育、娱乐等</li>
+</ul>
+<h2 id="三、数据交换技术"><a href="#三、数据交换技术" class="headerlink" title="三、数据交换技术"></a>三、数据交换技术</h2><h3 id="1-电路交换"><a href="#1-电路交换" class="headerlink" title="1.电路交换"></a>1.电路交换</h3><h4 id="1-过程："><a href="#1-过程：" class="headerlink" title="(1)过程："></a>(1)过程：</h4><ul>
+<li>建立连接（尝试占用通信资源）</li>
+<li>通信（一直占用通信资源）</li>
+<li>释放连接（归还通信资源）</li>
+</ul>
+<p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2%E7%9A%84%E8%BF%87%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="电路交换的过程"></p>
+<h4 id="2-优点："><a href="#2-优点：" class="headerlink" title="(2)优点："></a>(2)优点：</h4><ul>
+<li>通信前从主叫端到被叫端建立一条专用的物理通路，在通信的全部时间内，两个用户始终占用端到端的线路资源。数据直送，传输效率高。（更适合低频次、大量传输数据）</li>
+</ul>
+<h4 id="3-缺点："><a href="#3-缺点：" class="headerlink" title="(3)缺点："></a>(3)缺点：</h4><ul>
+<li>建立&#x2F;释放连接，需要额外的时间开销。（计算机往往是突发式传输，往往高频次、少量传输数据）</li>
+<li>线路被通信双方独占，利用率低。</li>
+<li>线路分配的灵活性差。（若有节点坏了，只能重新建立）</li>
+<li>交换节点不支持“差错控制”（无法发现传输过程中发生的数据错误）</li>
+</ul>
+<h3 id="2-电报网络"><a href="#2-电报网络" class="headerlink" title="2.电报网络"></a>2.电报网络</h3><h4 id="1-过程：-1"><a href="#1-过程：-1" class="headerlink" title="(1)过程："></a>(1)过程：</h4><ul>
+<li>计算机将控制信息（发送方和接收方）和用户数据（想发送的信息）组合成一个“报文”</li>
+<li>计算机将报文发送到交换机，交换机将收到的报文储存在内存中</li>
+<li>交换机根据转发表，将报文发送给下一交换机</li>
+</ul>
+<h4 id="2-优点：-1"><a href="#2-优点：-1" class="headerlink" title="(2)优点："></a>(2)优点：</h4><ul>
+<li>通信前不需要建立连接</li>
+<li>数据以“报文”为单位被交换节点间“存储转发”，通信线路可以灵活分配</li>
+<li>在通信时间内，两个用户无需独占一整条物理线路。相比于电路交换，线路利用率高</li>
+<li>交换节点支持“差错控制”（通过校验技术）</li>
+</ul>
+<h4 id="3-缺点：-1"><a href="#3-缺点：-1" class="headerlink" title="(3)缺点："></a>(3)缺点：</h4><ul>
+<li>报文不定长，不方便存储转发管理</li>
+<li>长报文的存储转发时间开销大、缓存开销大</li>
+<li>长报文容易报错，重传代价高</li>
+</ul>
+<h3 id="3-分组交换（现代计算机采用）"><a href="#3-分组交换（现代计算机采用）" class="headerlink" title="3.分组交换（现代计算机采用）"></a>3.分组交换（现代计算机采用）</h3><h4 id="1-过程：-2"><a href="#1-过程：-2" class="headerlink" title="(1)过程："></a>(1)过程：</h4><ul>
+<li>计算机将用户数据拆分分组</li>
+<li>将分组依次通过分组交换机发送（路由器，通过IP地址知道应该向哪里发送）</li>
+<li>接收者计算机将所有分组排序，去掉首部，合并成用户数据<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E7%9A%84%E8%BF%87%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="分组交换的过程"></li>
+</ul>
+<h4 id="2-优点：-2"><a href="#2-优点：-2" class="headerlink" title="(2)优点："></a>(2)优点：</h4><ul>
+<li>所有报文交换的优点</li>
+<li>相对于报文交换，分组交换：<ul>
+<li>分组定长，方便存储转发管理</li>
+<li>分组的存储转发时间开销小、缓存开销小</li>
+<li>分组不容易出错，重传代价低</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-缺点：-2"><a href="#3-缺点：-2" class="headerlink" title="(3)缺点："></a>(3)缺点：</h4><ul>
+<li>相比于报文交换，控制信息占比增加</li>
+<li>相比于电路交换，依然存在存储转发时延</li>
+<li>报文被拆分为多个分组，传输过程中可能出现失序、丢失等问题，增加处理的复杂度</li>
+</ul>
+<h3 id="4-“虚电路交换”技术（基于分组交换）"><a href="#4-“虚电路交换”技术（基于分组交换）" class="headerlink" title="4.“虚电路交换”技术（基于分组交换）"></a>4.“虚电路交换”技术（基于分组交换）</h3><h4 id="1-过程：-3"><a href="#1-过程：-3" class="headerlink" title="(1)过程："></a>(1)过程：</h4><ul>
+<li>建立连接（虚拟电路）</li>
+<li>通信（分组按序、按已建立好的既定线路发送，通信双方不独占线路）</li>
+<li>释放连接</li>
+</ul>
+<h2 id="四、三种交换技术的性能分析"><a href="#四、三种交换技术的性能分析" class="headerlink" title="四、三种交换技术的性能分析"></a>四、三种交换技术的性能分析</h2><h3 id="1-电路交换性能分析"><a href="#1-电路交换性能分析" class="headerlink" title="1.电路交换性能分析"></a>1.电路交换性能分析</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.png" srcset="/img/loading.gif" lazyload alt="电路交换性能分析"></p>
+<blockquote>
+<p>注：数据传送刚结束，A就可以开始通知B开始释放连接，途中为了避免线重合所以留了一点距离。从A开始发送到D完全接收一共耗时11ms</p>
+</blockquote>
+<h3 id="2-报文交换性能分析"><a href="#2-报文交换性能分析" class="headerlink" title="2.报文交换性能分析"></a>2.报文交换性能分析</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%8A%A5%E6%96%87%E4%BA%A4%E6%8D%A2%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.png" srcset="/img/loading.gif" lazyload alt="报文交换性能分析"></p>
+<blockquote>
+<p>从A开始发送到D完全接收一共耗时31ms</p>
+</blockquote>
+<h3 id="3-分组交换性能分析"><a href="#3-分组交换性能分析" class="headerlink" title="3.分组交换性能分析"></a>3.分组交换性能分析</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.png" srcset="/img/loading.gif" lazyload alt="分组交换性能分析"></p>
+<blockquote>
+<p>分组比报文小，所以存储转发时延更小。从A开始发送到D完全接收一共耗时17.5ms</p>
+</blockquote>
+<h3 id="4-对比和总结"><a href="#4-对比和总结" class="headerlink" title="4.对比和总结"></a>4.对比和总结</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%AF%B9%E6%AF%94%E5%92%8C%E6%80%BB%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="对比和总结"></p>
+<h2 id="五、计算机网络的分类"><a href="#五、计算机网络的分类" class="headerlink" title="五、计算机网络的分类"></a>五、计算机网络的分类</h2><h3 id="1-按分布范围分类"><a href="#1-按分布范围分类" class="headerlink" title="1.按分布范围分类"></a>1.按分布范围分类</h3><h4 id="1-广域网-WAN"><a href="#1-广域网-WAN" class="headerlink" title="(1)广域网(WAN)"></a>(1)广域网(WAN)</h4><ul>
+<li>范围：几十~几千公里</li>
+<li>跨省&#x2F;跨国&#x2F;跨洲</li>
+</ul>
+<h4 id="2-城域网-MAN"><a href="#2-城域网-MAN" class="headerlink" title="(2)城域网(MAN)"></a>(2)城域网(MAN)</h4><ul>
+<li>范围：几千米~几十千米</li>
+<li>一个或几个相邻城市</li>
+<li>通信技术：常采用<strong>以太网技术</strong>，因此常并入局域网范畴探讨</li>
+</ul>
+<h4 id="3-局域网-LAN-※"><a href="#3-局域网-LAN-※" class="headerlink" title="(3)局域网(LAN)※"></a>(3)局域网(LAN)※</h4><ul>
+<li>范围：几十米~几千米</li>
+<li>学校&#x2F;企业&#x2F;工作单位&#x2F;家庭</li>
+<li>通信技术：以太网技术</li>
+</ul>
+<h4 id="4-个域网-PAN-（考试不算）"><a href="#4-个域网-PAN-（考试不算）" class="headerlink" title="(4)个域网(PAN)（考试不算）"></a>(4)个域网(PAN)（考试不算）</h4><ul>
+<li>范围：几十米以内</li>
+<li>家庭&#x2F;个人</li>
+<li>通常是通过无线技术（蓝牙等）将个人设备连接起来的网路，因此也常称为无线个域网(WPAN)<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%B1%80%E5%9F%9F%E7%BD%91%E5%92%8C%E5%B9%BF%E5%9F%9F%E7%BD%91.png" srcset="/img/loading.gif" lazyload alt="局域网和广域网"></li>
+</ul>
+<h3 id="2-按传输技术（通信方式）分类"><a href="#2-按传输技术（通信方式）分类" class="headerlink" title="2.按传输技术（通信方式）分类"></a>2.按传输技术（通信方式）分类</h3><h4 id="1-广播式网络"><a href="#1-广播式网络" class="headerlink" title="(1)广播式网络"></a>(1)广播式网络</h4><p>当一台计算机发送数据分组时，广播范围内的所有计算机都会收到该分组，并通过检查分组的目的地址决定是否接收该分组</p>
+<h4 id="2-点对点网络"><a href="#2-点对点网络" class="headerlink" title="(2)点对点网络"></a>(2)点对点网络</h4><p>数据只会从发送方“点对点”发到接收方，精准送达</p>
+<h3 id="3-按照拓扑结构"><a href="#3-按照拓扑结构" class="headerlink" title="3.按照拓扑结构"></a>3.按照拓扑结构</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%80%BB%E7%BA%BF%E5%9E%8B%E7%BB%93%E6%9E%84%E5%92%8C%E7%8E%AF%E5%BD%A2%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="总线型结构和环形结构"><br>总线争用：当A给C传输数据时，总线上会充斥着A给C的数据，此时其他节点想要发送数据会导致数据错乱问题<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%98%9F%E5%9E%8B%E7%BB%93%E6%9E%84%E5%92%8C%E7%BD%91%E7%8A%B6%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="星型结构和网状结构"></p>
+<h3 id="4-按使用者分类"><a href="#4-按使用者分类" class="headerlink" title="4.按使用者分类"></a>4.按使用者分类</h3><h4 id="1-公用网："><a href="#1-公用网：" class="headerlink" title="(1)公用网："></a>(1)公用网：</h4><p>向公众开放的网络。如：办宽带、交话费即可使用的互联网</p>
+<h4 id="2-专用网："><a href="#2-专用网：" class="headerlink" title="(2)专用网："></a>(2)专用网：</h4><p>仅供某个组织内部使用的网络。如：政府、军队、电力、银行的内部网络</p>
+<h3 id="5-按传输介质分类"><a href="#5-按传输介质分类" class="headerlink" title="5.按传输介质分类"></a>5.按传输介质分类</h3><h4 id="1-有线网络"><a href="#1-有线网络" class="headerlink" title="(1)有线网络"></a>(1)有线网络</h4><h4 id="2-无线网络"><a href="#2-无线网络" class="headerlink" title="(2)无线网络"></a>(2)无线网络</h4><h3 id="6-小结"><a href="#6-小结" class="headerlink" title="6.小结"></a>6.小结</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%88%86%E7%B1%BB%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="计算机网络分类小结"></p>
+<h2 id="六、计算机网络的性能指标"><a href="#六、计算机网络的性能指标" class="headerlink" title="六、计算机网络的性能指标"></a>六、计算机网络的性能指标</h2><h3 id="1-速率"><a href="#1-速率" class="headerlink" title="1.速率"></a>1.速率</h3><h4 id="1-信道（Channel）："><a href="#1-信道（Channel）：" class="headerlink" title="(1)信道（Channel）："></a>(1)信道（Channel）：</h4><p>表示向某一方小传送信息的通道（信道≠通信线路）一条通信线路在逻辑上往往对应一条发送信道和一条接收信道</p>
+<h4 id="2-速率（Speed）："><a href="#2-速率（Speed）：" class="headerlink" title="(2)速率（Speed）："></a>(2)速率（Speed）：</h4><ul>
+<li>指连接到网络上的节点在信道上传输数据的速率。也称数据率或比特率、<strong>数据传输速率</strong></li>
+<li>单位：bit&#x2F;s，或b&#x2F;s，或bps</li>
+<li>注：1B&#x3D;8b</li>
+<li>计算机网络中， $ 1M&#x3D;{10^3}k $</li>
+</ul>
+<h3 id="2-带宽（bandwidth）："><a href="#2-带宽（bandwidth）：" class="headerlink" title="2.带宽（bandwidth）："></a>2.带宽（bandwidth）：</h3><ul>
+<li>某信道所能传送的<strong>最高数据率</strong></li>
+<li>节点间通信实际所能达到的最高速率，由带宽、节点性能共同限制</li>
+</ul>
+<h3 id="3-吞吐量（Throughput）："><a href="#3-吞吐量（Throughput）：" class="headerlink" title="3.吞吐量（Throughput）："></a>3.吞吐量（Throughput）：</h3><ul>
+<li>指单位时间内通过某个网络（或信道、接口）的实际数据量。</li>
+<li>吞吐量受带宽限制、受复杂的网络负载情况影响。</li>
+<li>需要把发送和接收的速率加在一起</li>
+</ul>
+<h3 id="4-时延（Delay）："><a href="#4-时延（Delay）：" class="headerlink" title="4.时延（Delay）："></a>4.时延（Delay）：</h3><ul>
+<li>指数据（一个报文或分组，甚至比特）从网络（或链路）的一端传送到另一端所需的时间。有时也称为延迟或迟延。</li>
+<li>总时延&#x3D;发送时延 + 传播时延 + 处理时延 + 排队时延</li>
+</ul>
+<blockquote>
+<p>考试中只考虑发送时延和传播时延，因为后两个不容易计算。<br>数据发送过程中，每经过一个信道，就会产生一个发送时延+传播时延；每经过一个路由器，就会产生一个处理时延+排队时延。<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%97%B6%E5%BB%B6.png" srcset="/img/loading.gif" lazyload alt="时延"></p>
+</blockquote>
+<ul>
+<li>例题：<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%97%B6%E5%BB%B6%E4%BE%8B%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="时延例题"></li>
+</ul>
+<h3 id="5-时延带宽积"><a href="#5-时延带宽积" class="headerlink" title="5.时延带宽积"></a>5.时延带宽积</h3><ul>
+<li>时延带宽积 &#x3D; 传播时延 * 带宽</li>
+<li>含义：一条链路中，已从发送端发出但尚未到达接收端的最大比特数</li>
+<li>例题：<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%97%B6%E5%BB%B6%E5%B8%A6%E5%AE%BD%E7%A7%AF%E4%BE%8B%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="时延带宽积例题"><br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%97%B6%E5%BB%B6%E5%B8%A6%E5%AE%BD%E7%A7%AF%E8%A7%A3%E7%AD%94.png" srcset="/img/loading.gif" lazyload alt="时延带宽积解答"></li>
+</ul>
+<h3 id="6-往返时延RRT（Round-Trip-Time）："><a href="#6-往返时延RRT（Round-Trip-Time）：" class="headerlink" title="6.往返时延RRT（Round-Trip Time）："></a>6.往返时延RRT（Round-Trip Time）：</h3><ul>
+<li>表示从<strong>发送方发送※※完※※数据</strong>，到发送方收到<strong>来自接收方的确认</strong>总共经历的时间</li>
+<li>图示：（无路由器）<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%BE%80%E8%BF%94%E6%97%B6%E5%BB%B6.png" srcset="/img/loading.gif" lazyload alt="往返时延"></li>
+</ul>
+<h3 id="7-信道利用率"><a href="#7-信道利用率" class="headerlink" title="7.信道利用率"></a>7.信道利用率</h3><ul>
+<li>某个信道有百分之多少的时间是有数据通过的。</li>
+<li>$ {信道利用率 &#x3D; \frac{有数据通过的时间}{有数据通过的时间+没有数据通过的时间}} $</li>
+<li>太低会浪费资源，太高容易导致网络拥塞</li>
+<li>例题：<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E4%BF%A1%E9%81%93%E5%88%A9%E7%94%A8%E7%8E%87%E4%BE%8B%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="信道利用率例题"></li>
+</ul>
+<h3 id="8-总结"><a href="#8-总结" class="headerlink" title="8.总结"></a>8.总结</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="性能指标小结"><br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E5%B0%8F%E7%BB%932.png" srcset="/img/loading.gif" lazyload alt="性能指标小结2"></p>
+<h2 id="七、计算机网络的分层结构"><a href="#七、计算机网络的分层结构" class="headerlink" title="七、计算机网络的分层结构"></a>七、计算机网络的分层结构</h2><h3 id="1-引入————快递网络"><a href="#1-引入————快递网络" class="headerlink" title="1.引入————快递网络"></a>1.引入————快递网络</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%BF%AB%E9%80%92%E7%BD%91%E7%BB%9C.png" srcset="/img/loading.gif" lazyload alt="快递网络"></p>
+<h3 id="2-计算机网络的分层方式"><a href="#2-计算机网络的分层方式" class="headerlink" title="2.计算机网络的分层方式"></a>2.计算机网络的分层方式</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%88%86%E5%B1%82%E6%96%B9%E5%BC%8F.png" srcset="/img/loading.gif" lazyload alt="计算机网络的分层方式"></p>
+<h3 id="3-网络的体系结构（Network-Architecture）"><a href="#3-网络的体系结构（Network-Architecture）" class="headerlink" title="3.网络的体系结构（Network Architecture）"></a>3.网络的体系结构（Network Architecture）</h3><ul>
+<li>是计算机网络的各层及其协议的集合，就是这个计算机网络及其构建所应完成的精确定义（不涉及实现）</li>
+<li>实现（implementation）是遵循这种体系结构的前提下，用何种硬件或软件完成这些功能的问题</li>
+<li>体系结构是抽象的，而实现则是具体的</li>
+</ul>
+<h3 id="4-实体"><a href="#4-实体" class="headerlink" title="4.实体"></a>4.实体</h3><ul>
+<li>在计算机网路的分层结构中，第n层中的活动元素（软件+硬件）通常称为第n层实体。不同机器上的同一层称为对等层，同一层的实体称为对等实体</li>
+</ul>
+<h3 id="5-协议："><a href="#5-协议：" class="headerlink" title="5.协议："></a>5.协议：</h3><ul>
+<li>即网络协议，是控制对等实体之间进行通信的规则的集合，是水平的</li>
+<li>三要素：<ul>
+<li>语法：数据与控制信息的格式。例如，PCI（首部）占几个字节、每个字节什么含义；协议的数据部分最多有多少字节</li>
+<li>语义：即需要发出何种控制信息、完成何种动作及做出何种应答。例如，协议中需要明确规定：发送方发送数据后，接收方是否需“应答”，以及应答的种类有哪些（如传输成功、传输失败）</li>
+<li>同步（或<strong>时序</strong>）：执行各种操作的条件、时序关系等，即事件实现顺序的详细说明。例如，发送方发完数据后，接收方需要立即应答。如果发送方在10秒内未收到“传输成功”应答，则发送方会再次发送数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-服务"><a href="#6-服务" class="headerlink" title="6.服务"></a>6.服务</h3><ul>
+<li>下层为紧邻的上层提供的功能调用，是垂直的</li>
+</ul>
+<h3 id="7-数据的传输过程"><a href="#7-数据的传输过程" class="headerlink" title="7.数据的传输过程"></a>7.数据的传输过程</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="数据的传输过程"></p>
+<h4 id="协议数据单元（PDU）：对等层次之间传送的数据单位。第n层的PDU记为n-PDU"><a href="#协议数据单元（PDU）：对等层次之间传送的数据单位。第n层的PDU记为n-PDU" class="headerlink" title="协议数据单元（PDU）：对等层次之间传送的数据单位。第n层的PDU记为n-PDU"></a>协议数据单元（PDU）：对等层次之间传送的数据单位。第n层的PDU记为n-PDU</h4><h4 id="服务数据单元（SDU）：为完成上一层实体所要求的功能而传送的数据。第n层的SDU记为n-SDU"><a href="#服务数据单元（SDU）：为完成上一层实体所要求的功能而传送的数据。第n层的SDU记为n-SDU" class="headerlink" title="服务数据单元（SDU）：为完成上一层实体所要求的功能而传送的数据。第n层的SDU记为n-SDU"></a>服务数据单元（SDU）：为完成上一层实体所要求的功能而传送的数据。第n层的SDU记为n-SDU</h4><h4 id="协议控制信息（PCI）：控制协议操作的信息。第n层的PCI记为n-PCI"><a href="#协议控制信息（PCI）：控制协议操作的信息。第n层的PCI记为n-PCI" class="headerlink" title="协议控制信息（PCI）：控制协议操作的信息。第n层的PCI记为n-PCI"></a>协议控制信息（PCI）：控制协议操作的信息。第n层的PCI记为n-PCI</h4><ul>
+<li>三者的关系：n-SDU+n-PCI&#x3D;n-PDU&#x3D;(n-1)-SDU</li>
+</ul>
+<h3 id="8-总结-1"><a href="#8-总结-1" class="headerlink" title="8.总结"></a>8.总结</h3><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84%E6%80%BB%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="分层结构总结"></p>
+<h2 id="八、OSI参考模型-TCP-IP模型"><a href="#八、OSI参考模型-TCP-IP模型" class="headerlink" title="八、OSI参考模型&amp;TCP&#x2F;IP模型"></a>八、OSI参考模型&amp;TCP&#x2F;IP模型</h2><h3 id="1-OSI参考模型（口诀：物联网输会示用）"><a href="#1-OSI参考模型（口诀：物联网输会示用）" class="headerlink" title="1.OSI参考模型（口诀：物联网输会示用）"></a>1.OSI参考模型（口诀：物联网输会示用）</h3><h4 id="1-物理层：实现相邻节点之间比特的传输"><a href="#1-物理层：实现相邻节点之间比特的传输" class="headerlink" title="(1)物理层：实现相邻节点之间比特的传输"></a>(1)物理层：实现相邻节点之间比特的传输</h4><ul>
+<li>需定义电路接口参数（形状、尺寸、引脚数等）</li>
+<li>需定义传输信号的含义、电气特征（如：5V表示1，1V表示0；每比特电信号持续时间0.1ms）</li>
+</ul>
+<h4 id="2-数据链路层：确保相邻节点之间的链路逻辑上无差错（帧）"><a href="#2-数据链路层：确保相邻节点之间的链路逻辑上无差错（帧）" class="headerlink" title="(2)数据链路层：确保相邻节点之间的链路逻辑上无差错（帧）"></a>(2)数据链路层：确保相邻节点之间的链路逻辑上无差错（帧）</h4><ul>
+<li><strong>差错控制</strong>：检错+纠错；或检错+丢弃+重传</li>
+<li>流量控制：协调两个结点的速率</li>
+</ul>
+<h4 id="3-网络层：把“分组”从源节点转发到目的节点"><a href="#3-网络层：把“分组”从源节点转发到目的节点" class="headerlink" title="(3)网络层：把“分组”从源节点转发到目的节点"></a>(3)网络层：把“分组”从源节点转发到目的节点</h4><ul>
+<li><strong>路由选择</strong>：构造并维护路由表，决定分组到达目的节点的最佳路径</li>
+<li><strong>分组转发</strong>：将“分组”从合适的端口转发出去</li>
+<li>拥塞控制：发现网络拥塞，并采取措施缓解拥塞</li>
+<li>网际互连：实现异构网络互连</li>
+<li>其他功能：差错控制、流量控制、连接的建立与释放、可靠传输管理</li>
+</ul>
+<h4 id="4-传输层：实现端到端的通信"><a href="#4-传输层：实现端到端的通信" class="headerlink" title="(4)传输层：实现端到端的通信"></a>(4)传输层：实现端到端的通信</h4><ul>
+<li>复用和分用：发送端几个高层实体复用一条低层的连接，在接收端再进行分用</li>
+<li>其他功能（以“报文”段为单位）：差错控制、流量控制、连接建立与释放、可靠传输管理</li>
+</ul>
+<h4 id="5-会话层：管理进程间会话"><a href="#5-会话层：管理进程间会话" class="headerlink" title="(5)会话层：管理进程间会话"></a>(5)会话层：管理进程间会话</h4><ul>
+<li>主要功能：会话管理（采用检查点机制，当通信失效时从检查点继续恢复通信）</li>
+</ul>
+<h4 id="6-表示层：解决不同主机上信息表示不一致的问题"><a href="#6-表示层：解决不同主机上信息表示不一致的问题" class="headerlink" title="(6)表示层：解决不同主机上信息表示不一致的问题"></a>(6)表示层：解决不同主机上信息表示不一致的问题</h4><ul>
+<li>主要功能：数据格式转换（如编码转换、压缩&#x2F;解压、加密&#x2F;解密）</li>
+</ul>
+<h4 id="7-应用层：实现特定的网络应用"><a href="#7-应用层：实现特定的网络应用" class="headerlink" title="(7)应用层：实现特定的网络应用"></a>(7)应用层：实现特定的网络应用</h4><h4 id="8-总结-2"><a href="#8-总结-2" class="headerlink" title="(8)总结"></a>(8)总结</h4><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="OSI参考模型总结"><br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%932.png" srcset="/img/loading.gif" lazyload alt="OSI参考模型总结2"></p>
+<h3 id="2-TCP-IP模型（接网使用）"><a href="#2-TCP-IP模型（接网使用）" class="headerlink" title="2.TCP&#x2F;IP模型（接网使用）"></a>2.TCP&#x2F;IP模型（接网使用）</h3><h4 id="1-网络接口层"><a href="#1-网络接口层" class="headerlink" title="(1)网络接口层"></a>(1)网络接口层</h4><ul>
+<li>任务：实现相邻结点间的数据传输（为网络层传输分组）。但具体怎么传输不做规定</li>
+<li>使TCP&#x2F;IP网络体系结构有更强的灵活性、适应性</li>
+</ul>
+<h4 id="2-网络层"><a href="#2-网络层" class="headerlink" title="(2)网络层"></a>(2)网络层</h4><h4 id="3-传输层"><a href="#3-传输层" class="headerlink" title="(3)传输层"></a>(3)传输层</h4><ul>
+<li>功能：复用和分用、差错控制、流量控制、连接建立与释放、可靠传输管理</li>
+</ul>
+<h4 id="4-应用层"><a href="#4-应用层" class="headerlink" title="(4)应用层"></a>(4)应用层</h4><ul>
+<li>理念：如果某些应用需要数据格式转换和会话管理，那就交给应用层实现。因此砍掉了会话层和表示层</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="category-chain-item">计算机网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="print-no-link">#计算机网络</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机网络Ch1</div>
+      <div>https://sdueryrg.github.io/2024/09/11/计算机网络Ch1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年9月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/24/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BACh2/" title="人工智能导论Ch2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">人工智能导论Ch2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/" title="计算机网络Ch2">
+                        <span class="hidden-mobile">计算机网络Ch2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第四章 自顶向下语法分析方法一、三种集合定义1.首符集设$G&#x3D;(V_N ，V_T，P，S)$是上下文无关文法，$α$是$G$的任一符号串，则有： $FIRST(α)&#x3D; ${$ a|α\overset*{\Rightarrow}aβ,a∈V_T,α、β∈V^*$} 特别地，若$α\overset{*}{\Rightarrow} \varepsilon$，则$\varepsilon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理Ch4">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="第四章 自顶向下语法分析方法一、三种集合定义1.首符集设$G&#x3D;(V_N ，V_T，P，S)$是上下文无关文法，$α$是$G$的任一符号串，则有： $FIRST(α)&#x3D; ${$ a|α\overset*{\Rightarrow}aβ,a∈V_T,α、β∈V^*$} 特别地，若$α\overset{*}{\Rightarrow} \varepsilon$，则$\varepsilon">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E4%BE%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E4%BE%8B%E7%BB%AD.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E4%BE%8B%E5%AD%90.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E4%BE%8B%E5%AD%90%E7%BB%AD.png">
+<meta property="article:published_time" content="2024-10-11T03:14:54.000Z">
+<meta property="article:modified_time" content="2024-12-26T10:15:40.556Z">
+<meta property="article:author" content="yrg">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E4%BE%8B.png">
+  
+  
+  
+  <title>编译原理Ch4 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="编译原理Ch4"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-11 11:14" pubdate>
+          2024年10月11日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          903 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">编译原理Ch4</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第四章-自顶向下语法分析方法"><a href="#第四章-自顶向下语法分析方法" class="headerlink" title="第四章 自顶向下语法分析方法"></a><center>第四章 自顶向下语法分析方法</center></h1><h2 id="一、三种集合定义"><a href="#一、三种集合定义" class="headerlink" title="一、三种集合定义"></a>一、三种集合定义</h2><h3 id="1-首符集"><a href="#1-首符集" class="headerlink" title="1.首符集"></a>1.首符集</h3><p>设$G&#x3D;(V_N ，V_T，P，S)$是上下文无关文法，$α$是$G$的任一符号串，则有：</p>
+<p>$FIRST(α)&#x3D; ${$ a|α\overset*{\Rightarrow}aβ,a∈V_T,α、β∈V^*$}</p>
+<p>特别地，若$α\overset{*}{\Rightarrow} \varepsilon$，则$\varepsilon∈FIRST(α)$<br><strong>即： FIRST(α)是从α出发推导出的所有符号串首终结符或可能的ε构成的集合。</strong></p>
+<h3 id="2-后继符集"><a href="#2-后继符集" class="headerlink" title="2.后继符集"></a>2.后继符集</h3><p>设$G&#x3D;(V_N ，V_T，P，S)$是上下文无关文法，$A∈V_N$的后继符集合为：  </p>
+<p>$FOLLOW(A)&#x3D;${$a|S \overset*{\Rightarrow} μAβ且a∈V_T ,a∈ FIRST(β),μ∈{V_T}^*,β∈V^*$}</p>
+<p>或者<br>$FOLLOW(A)&#x3D;${$a | S  \overset*{\Rightarrow}  …Aa… ,a∈V_T$}<br>特别地，若$S  \overset{*}{\Rightarrow}  …A$,则#$∈FOLLOW(A)$</p>
+<h3 id="3-选择集"><a href="#3-选择集" class="headerlink" title="3.选择集"></a>3.选择集</h3><p>对于给出上下文无关文法的产生式$A→α,A∈V_N,α∈V^*$，则<br>$$SELECT(A→α)&#x3D; \begin{cases} FIRST(α), &amp; \text {否则} \\ FIRST(α)∪FOLLOW(A), &amp; α\overset{*}{\Rightarrow} \varepsilon\end{cases}$$</p>
+<h2 id="二、三种集合的构造算法"><a href="#二、三种集合的构造算法" class="headerlink" title="二、三种集合的构造算法"></a>二、三种集合的构造算法</h2><h3 id="1-求FIRST-X-的算法"><a href="#1-求FIRST-X-的算法" class="headerlink" title="1.求FIRST(X)的算法"></a>1.求FIRST(X)的算法</h3><p>对每一文法符号$X∈(V_N∪V_T)$，求$FIRST(X)$</p>
+<h4 id="1-若-X∈V-T-，则令-FIRST-X-X"><a href="#1-若-X∈V-T-，则令-FIRST-X-X" class="headerlink" title="(1)若$X∈V_T$，则令$FIRST(X)&#x3D;${$X$}"></a>(1)若$X∈V_T$，则令$FIRST(X)&#x3D;${$X$}</h4><h4 id="2-若-X∈V-N-，且有产生式X→a…（-a∈V-T-）（右部终结符打头），则令-a∈FIRST-X"><a href="#2-若-X∈V-N-，且有产生式X→a…（-a∈V-T-）（右部终结符打头），则令-a∈FIRST-X" class="headerlink" title="(2)若$X∈V_N$，且有产生式X→a…（$a∈V_T$）（右部终结符打头），则令$a∈FIRST(X)$"></a>(2)若$X∈V_N$，且有产生式X→a…（$a∈V_T$）（右部终结符打头），则令$a∈FIRST(X)$</h4><h4 id="3-若-X∈V-N-，有-X→-varepsilon-，则令-varepsilon∈FIRST-X"><a href="#3-若-X∈V-N-，有-X→-varepsilon-，则令-varepsilon∈FIRST-X" class="headerlink" title="(3)若$X∈V_N$，有$X→\varepsilon$，则令$\varepsilon∈FIRST(X)$"></a>(3)若$X∈V_N$，有$X→\varepsilon$，则令$\varepsilon∈FIRST(X)$</h4><h4 id="4-若-X∈V-N，y-1-y-2-…-y-i∈V-N-，且有产生式-X→-y-1-y-2…-y-n-，当-y-1-y-2-…-y-i-1-都-overset-Rightarrow-varepsilon-，（其中1≤i≤n）-则-FIRST-y-1-ε-，-FIRST-y-2-ε-，…，-FIRST-y-i-1-ε-，-FIRST-y-i-都加到-FIRST-X-中"><a href="#4-若-X∈V-N，y-1-y-2-…-y-i∈V-N-，且有产生式-X→-y-1-y-2…-y-n-，当-y-1-y-2-…-y-i-1-都-overset-Rightarrow-varepsilon-，（其中1≤i≤n）-则-FIRST-y-1-ε-，-FIRST-y-2-ε-，…，-FIRST-y-i-1-ε-，-FIRST-y-i-都加到-FIRST-X-中" class="headerlink" title="(4)若$X∈V_N，y_1,y_2,…,y_i∈V_N$，且有产生式$X→ y_1 y_2…..y_n$，当$y_1, y_2,…,y_{i-1}都\overset{*}{\Rightarrow} \varepsilon$，（其中1≤i≤n）,则$FIRST(y_1)-ε$，$FIRST(y_2)-ε$，…，$FIRST(y_{i-1})-ε$，$FIRST(y_i)$都加到$FIRST(X)$中"></a>(4)若$X∈V_N，y_1,y_2,…,y_i∈V_N$，且有产生式$X→ y_1 y_2…..y_n$，当$y_1, y_2,…,y_{i-1}都\overset{*}{\Rightarrow} \varepsilon$，（其中1≤i≤n）,则$FIRST(y_1)-ε$，$FIRST(y_2)-ε$，…，$FIRST(y_{i-1})-ε$，$FIRST(y_i)$都加到$FIRST(X)$中</h4><h4 id="5-当-4-中所有-y-i-overset-Rightarrow-varepsilon-space-i-1-2-3-…-n-则-FIRST-X-FIRST-y-1-∪FIRST-y-2-∪…∪FIRST-y-n-∪-ε"><a href="#5-当-4-中所有-y-i-overset-Rightarrow-varepsilon-space-i-1-2-3-…-n-则-FIRST-X-FIRST-y-1-∪FIRST-y-2-∪…∪FIRST-y-n-∪-ε" class="headerlink" title="(5)当(4)中所有$y_i\overset{*}{\Rightarrow} \varepsilon \space i&#x3D;(1,2,3,…,n)$则$FIRST(X)&#x3D;FIRST(y_1)∪FIRST(y_2)∪…∪FIRST(y_n)∪ {ε}$"></a>(5)当(4)中所有$y_i\overset{*}{\Rightarrow} \varepsilon \space i&#x3D;(1,2,3,…,n)$则$FIRST(X)&#x3D;FIRST(y_1)∪FIRST(y_2)∪…∪FIRST(y_n)∪ {ε}$</h4><h4 id="6-反复使用上述-2-～-4-步直到每个符号的FIRST集合不再增加为止。"><a href="#6-反复使用上述-2-～-4-步直到每个符号的FIRST集合不再增加为止。" class="headerlink" title="(6)反复使用上述(2)～(4) 步直到每个符号的FIRST集合不再增加为止。"></a>(6)反复使用上述(2)～(4) 步直到每个符号的FIRST集合不再增加为止。</h4><h3 id="2-求FOLLOW-A-的算法-A∈V-N"><a href="#2-求FOLLOW-A-的算法-A∈V-N" class="headerlink" title="2.求FOLLOW(A)的算法$(A∈V_N)$"></a>2.求FOLLOW(A)的算法$(A∈V_N)$</h3><h4 id="1-“落-下S”-对文法开始符号S，令-∈FOLLOW-S"><a href="#1-“落-下S”-对文法开始符号S，令-∈FOLLOW-S" class="headerlink" title="(1)“落#下S” 对文法开始符号S，令#$∈FOLLOW(S)$"></a>(1)“落#下S” 对文法开始符号S，令#$∈FOLLOW(S)$</h4><h4 id="2-“右部FOLLOW”-若-B→αAβ-是一个产生式，则令-FIRST-β-ε-属于-FOLLOW-A"><a href="#2-“右部FOLLOW”-若-B→αAβ-是一个产生式，则令-FIRST-β-ε-属于-FOLLOW-A" class="headerlink" title="(2)“右部FOLLOW” 若$B→αAβ$是一个产生式，则令$FIRST(β)-${$ε$}属于$FOLLOW(A)$"></a>(2)“右部FOLLOW” 若$B→αAβ$是一个产生式，则令$FIRST(β)-${$ε$}属于$FOLLOW(A)$</h4><h4 id="3-“守门员福利”-若-B→αA-是一个产生式，或-B→αAβ-是一个产生式且有-ε∈FIRST-β-，则令-FOLLOW-B-是-FOLLOW-A-的子集。即把-FOLLOW-B-的所有元素加入到-FOLLOW-A-中。"><a href="#3-“守门员福利”-若-B→αA-是一个产生式，或-B→αAβ-是一个产生式且有-ε∈FIRST-β-，则令-FOLLOW-B-是-FOLLOW-A-的子集。即把-FOLLOW-B-的所有元素加入到-FOLLOW-A-中。" class="headerlink" title="(3)“守门员福利” 若$B→αA$是一个产生式，或$B→αAβ$是一个产生式且有$ε∈FIRST(β)$，则令$FOLLOW(B)$是$FOLLOW(A)$的子集。即把$FOLLOW(B)$的所有元素加入到$FOLLOW(A)$中。"></a>(3)“守门员福利” 若$B→αA$是一个产生式，或$B→αAβ$是一个产生式且有$ε∈FIRST(β)$，则令$FOLLOW(B)$是$FOLLOW(A)$的子集。即把$FOLLOW(B)$的所有元素加入到$FOLLOW(A)$中。</h4><h4 id="4-反复使用-2-直到每个非终结符的FOLLOW集合不再增加为止。"><a href="#4-反复使用-2-直到每个非终结符的FOLLOW集合不再增加为止。" class="headerlink" title="(4)反复使用(2)直到每个非终结符的FOLLOW集合不再增加为止。"></a>(4)反复使用(2)直到每个非终结符的FOLLOW集合不再增加为止。</h4><h3 id="3-求SELECT-A→α-的算法（使用SELECT定义）"><a href="#3-求SELECT-A→α-的算法（使用SELECT定义）" class="headerlink" title="3.求SELECT(A→α)的算法（使用SELECT定义）"></a>3.求SELECT(A→α)的算法（使用SELECT定义）</h3><h4 id="1-求-FIRST-α"><a href="#1-求-FIRST-α" class="headerlink" title="(1)求$FIRST(α)$"></a>(1)求$FIRST(α)$</h4><h4 id="2-若-ε∉FIRST-α-则令-SELECT-A→α-FIRST-α-，否则求-FOLLOW-A-并令-SELECT-A→α-FIRST-α-∪-FOLLOW-A"><a href="#2-若-ε∉FIRST-α-则令-SELECT-A→α-FIRST-α-，否则求-FOLLOW-A-并令-SELECT-A→α-FIRST-α-∪-FOLLOW-A" class="headerlink" title="(2)若$ε∉FIRST(α)$,则令$SELECT(A→α)&#x3D;FIRST(α)$，否则求$FOLLOW(A)$,并令$SELECT(A→α)&#x3D;FIRST(α) ∪ FOLLOW(A)$"></a>(2)若$ε∉FIRST(α)$,则令$SELECT(A→α)&#x3D;FIRST(α)$，否则求$FOLLOW(A)$,并令$SELECT(A→α)&#x3D;FIRST(α) ∪ FOLLOW(A)$</h4><h2 id="三、LL-1-分析法"><a href="#三、LL-1-分析法" class="headerlink" title="三、LL(1)分析法"></a>三、LL(1)分析法</h2><h3 id="1-定义："><a href="#1-定义：" class="headerlink" title="1.定义："></a>1.定义：</h3><ul>
+<li>一个上下文无关文法是LL(1)文法的充分必要条件是每个非终结符A的两个不同产生式，$A→α ,A→β$；满足$SELECT(A →α ) ∩ SELECT(A →β)&#x3D; Ф$。其中α、β不能同时 $\overset{*} {\Rightarrow} \varepsilon$。</li>
+</ul>
+<h2 id="二、文法的等价交换"><a href="#二、文法的等价交换" class="headerlink" title="二、文法的等价交换"></a>二、文法的等价交换</h2><h3 id="1-提取公共左因子"><a href="#1-提取公共左因子" class="headerlink" title="1.提取公共左因子"></a>1.提取公共左因子</h3><p>若文法中含有形如：$Α→αβ|αγ$的产生式，这导致了对相同的产生式右部的FIRST集相交。<br>即有$SELECT(A→ αβ)SELECT(A→ αγ)≠φ$。<br>不满足$LL(1)$文法的充要条件。等价交换为：<br>$A→ αA’$和 $A’→ β| γ$</p>
+<h3 id="2-消除左递归"><a href="#2-消除左递归" class="headerlink" title="2.消除左递归"></a>2.消除左递归</h3><p>当一个文法含有下列形式的产生式之一时：</p>
+<ul>
+<li>$A→Aβ,A∈V_N,β∈V^*$</li>
+<li>$A→Bβ,B→A α,A,B∈V_N,α,β∈V^*$<br>则称该文法是左递归的。<br>含有左递归的文法不能采取自顶向下分析法。</li>
+</ul>
+<h4 id="方法：把左递归改写为右递归："><a href="#方法：把左递归改写为右递归：" class="headerlink" title="方法：把左递归改写为右递归："></a>方法：把左递归改写为右递归：</h4><h2 id="三、递归下降分析程序构造"><a href="#三、递归下降分析程序构造" class="headerlink" title="三、递归下降分析程序构造"></a>三、递归下降分析程序构造</h2><h3 id="1-每个非终结符对应一个过程（函数、方法）"><a href="#1-每个非终结符对应一个过程（函数、方法）" class="headerlink" title="1.每个非终结符对应一个过程（函数、方法）"></a>1.每个非终结符对应一个过程（函数、方法）</h3><h3 id="2-根据产生式生成每一个过程的内容"><a href="#2-根据产生式生成每一个过程的内容" class="headerlink" title="2.根据产生式生成每一个过程的内容"></a>2.根据产生式生成每一个过程的内容</h3><h3 id="3-例子"><a href="#3-例子" class="headerlink" title="3.例子"></a>3.例子</h3><p><img src="/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="递归下降例"><br><img src="/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E4%BE%8B%E7%BB%AD.png" srcset="/img/loading.gif" lazyload alt="递归下降例续"></p>
+<h2 id="四、预测分析程序"><a href="#四、预测分析程序" class="headerlink" title="四、预测分析程序"></a>四、预测分析程序</h2><h3 id="1-验证是否为LL-1-文法"><a href="#1-验证是否为LL-1-文法" class="headerlink" title="1.验证是否为LL(1)文法"></a>1.验证是否为LL(1)文法</h3><h3 id="2-构造预测分析表"><a href="#2-构造预测分析表" class="headerlink" title="2.构造预测分析表"></a>2.构造预测分析表</h3><ul>
+<li>构造方法：若$SELECT(A→B)&#x3D;C$，则矩阵$M[A,C]&#x3D;B$</li>
+</ul>
+<h3 id="3-分析"><a href="#3-分析" class="headerlink" title="3.分析"></a>3.分析</h3><p><img src="/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="预测分析流程"></p>
+<h3 id="4-分析例子"><a href="#4-分析例子" class="headerlink" title="4.分析例子"></a>4.分析例子</h3><p><img src="/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E4%BE%8B%E5%AD%90.png" srcset="/img/loading.gif" lazyload alt="预测分析例子"><br><img src="/2024/10/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch4/%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E4%BE%8B%E5%AD%90%E7%BB%AD.png" srcset="/img/loading.gif" lazyload alt="预测分析例子续"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="category-chain-item">编译原理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="print-no-link">#编译原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>编译原理Ch4</div>
+      <div>https://sdueryrg.github.io/2024/10/11/编译原理Ch4/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/19/NoSql%E5%AE%9E%E9%AA%8C/" title="NoSql实验">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">NoSql实验</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/24/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BACh2/" title="人工智能导论Ch2">
+                        <span class="hidden-mobile">人工智能导论Ch2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

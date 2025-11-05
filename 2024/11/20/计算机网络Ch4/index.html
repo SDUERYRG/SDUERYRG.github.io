@@ -1,0 +1,970 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第四章 网络层一、网络层功能1.网络层所处的地位 2.网络层的功能 二、IPV41.IP数据报（IP分组）(1)格式  首部包括固定部分（20B）和可变部分（0~40B） 版本用于指明是IPV4还是IPV6 首部长度以4B为单位，例如0101表示首部有5*4B字节 总长度用来指明总长度，包括首部+数据部分 标识：由源主机生成，一般是自增的，当数据报被分片时，通过标识+源地址判断分片从属于一个IP数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络Ch4">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="第四章 网络层一、网络层功能1.网络层所处的地位 2.网络层的功能 二、IPV41.IP数据报（IP分组）(1)格式  首部包括固定部分（20B）和可变部分（0~40B） 版本用于指明是IPV4还是IPV6 首部长度以4B为单位，例如0101表示首部有5*4B字节 总长度用来指明总长度，包括首部+数据部分 标识：由源主机生成，一般是自增的，当数据报被分片时，通过标识+源地址判断分片从属于一个IP数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%89%80%E5%A4%84%E7%9A%84%E5%9C%B0%E4%BD%8D.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BD%91%E7%BB%9C%E5%B1%82%E5%8A%9F%E8%83%BD.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F1.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F2.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F3.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%88%86%E7%89%87%E9%97%AE%E9%A2%98.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E6%9C%80%E5%88%9D%E7%9A%84IP%E5%9C%B0%E5%9D%80%E5%88%86%E7%B1%BB%E6%96%B9%E6%A1%88.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%89%B9%E6%AE%8A%E7%94%A8%E9%80%94%E7%9A%84IP%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BB%83%E4%B9%A01.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E4%B8%BB%E6%9C%BA%E5%8F%91%E9%80%81IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E8%B7%AF%E7%94%B1%E5%99%A8%E8%BD%AC%E5%8F%91%E4%B8%80%E4%B8%AAIP%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%AE%B0%E6%B3%95.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%8F%98%E9%95%BF%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%8F%98%E9%95%BF%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86%E4%B9%A0%E9%A2%98.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/CIDR%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E6%9C%80%E9%95%BF%E5%89%8D%E7%BC%80%E5%8C%B9%E9%85%8D%E5%8E%9F%E5%88%99.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%AB%AF%E5%8F%A3%E5%8F%B7.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BC%93%E8%A7%A3IP%E5%9C%B0%E5%9D%80%E4%B8%8D%E5%A4%9F%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/NAT%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E4%BB%A5%E5%A4%AA%E7%BD%91MAC%E5%B8%A7IP.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E4%BB%A5%E5%A4%AA%E7%BD%91MAC%E5%B8%A7ARP.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/ARP%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%8A%A5%E6%96%87%E5%9C%A8%E5%8D%8F%E8%AE%AE%E6%A0%88%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/DHCP%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/DHCP%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IPV6%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IPV6%E8%AF%A6%E7%BB%86%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IPV6%E5%9F%BA%E6%9C%AC%E5%9C%B0%E5%9D%80%E7%B1%BB%E5%9E%8B.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IPV4%E5%90%91IPV6%E8%BF%87%E6%B8%A1.png">
+<meta property="article:published_time" content="2024-11-20T03:20:14.000Z">
+<meta property="article:modified_time" content="2025-01-07T08:21:30.323Z">
+<meta property="article:author" content="yrg">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%89%80%E5%A4%84%E7%9A%84%E5%9C%B0%E4%BD%8D.png">
+  
+  
+  
+  <title>计算机网络Ch4 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机网络Ch4"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-20 11:20" pubdate>
+          2024年11月20日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计算机网络Ch4</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第四章-网络层"><a href="#第四章-网络层" class="headerlink" title="第四章 网络层"></a><center>第四章 网络层</center></h1><h2 id="一、网络层功能"><a href="#一、网络层功能" class="headerlink" title="一、网络层功能"></a>一、网络层功能</h2><h3 id="1-网络层所处的地位"><a href="#1-网络层所处的地位" class="headerlink" title="1.网络层所处的地位"></a>1.网络层所处的地位</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%89%80%E5%A4%84%E7%9A%84%E5%9C%B0%E4%BD%8D.png" srcset="/img/loading.gif" lazyload alt="网络层所处的地位"></p>
+<h3 id="2-网络层的功能"><a href="#2-网络层的功能" class="headerlink" title="2.网络层的功能"></a>2.网络层的功能</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BD%91%E7%BB%9C%E5%B1%82%E5%8A%9F%E8%83%BD.png" srcset="/img/loading.gif" lazyload alt="网络层功能"></p>
+<h2 id="二、IPV4"><a href="#二、IPV4" class="headerlink" title="二、IPV4"></a>二、IPV4</h2><h3 id="1-IP数据报（IP分组）"><a href="#1-IP数据报（IP分组）" class="headerlink" title="1.IP数据报（IP分组）"></a>1.IP数据报（IP分组）</h3><h4 id="1-格式"><a href="#1-格式" class="headerlink" title="(1)格式"></a>(1)格式</h4><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F1.png" srcset="/img/loading.gif" lazyload alt="IP数据报格式1"></p>
+<ul>
+<li>首部包括固定部分（20B）和可变部分（0~40B）</li>
+<li>版本用于指明是IPV4还是IPV6</li>
+<li>首部长度以4B为单位，例如0101表示首部有5*4B字节</li>
+<li>总长度用来指明总长度，包括首部+数据部分<br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F2.png" srcset="/img/loading.gif" lazyload alt="IP数据报格式2"></li>
+<li>标识：由源主机生成，一般是自增的，当数据报被分片时，通过标识+源地址判断分片从属于一个IP数据报</li>
+<li>标志：<ul>
+<li>最低位MF（more fragment）：为1表示后面还有其他分片</li>
+<li>中间位DF（don’t fragment）：为1表示不允许分片<ul>
+<li>路由器会把不允许分片且超过MTU的数据报直接丢弃，并给源主机发送一个ICMP报文，通知发生异常</li>
+</ul>
+</li>
+<li>最高位不用管</li>
+</ul>
+</li>
+<li>片偏移：表示数据部分在“被分片前”的位置，以8B为单位<br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F3.png" srcset="/img/loading.gif" lazyload alt="IP数据报格式3"></li>
+<li>生存时间：数据报在网络中可通过的路由器数的最大值，记作TTL，每转发一次，TTL减一，当TTL减到零时，路由器直接将IP数据报丢弃，并给源主机返回一个ICMP报文，用于通知发生异常</li>
+<li>协议：指明当前在为哪个协议服务，让IP数据报向上递交时知道去处</li>
+<li>首部校验和：只校验首部，网络层不管数据部分的矫错</li>
+</ul>
+<h4 id="2-IP数据报的分片问题"><a href="#2-IP数据报的分片问题" class="headerlink" title="(2)IP数据报的分片问题"></a>(2)IP数据报的分片问题</h4><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%88%86%E7%89%87%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="IP数据报分片问题"></p>
+<ul>
+<li>MTU：最大传送单元，一个链路层数据帧能承载的最大数据量</li>
+<li>三个分片标识部分相同，表示从属于同一个IP数据报</li>
+<li>片偏移*8B就是数据部分分片前的位置</li>
+<li>注意：<ul>
+<li>IP数据报的“分片”可能在源主机、或任何一个路由器中发生</li>
+<li>只有目的主机才会对分片进行“重组”</li>
+<li>各分片有可能乱序到达目的主机</li>
+<li>由于首部的“片偏移”字段时以8B为单位，因此，除了最后一个分片外，其他每个分片的数据部分必须是8B的整数倍</li>
+</ul>
+</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="IP数据报小结"></p>
+<h2 id="三、IP地址"><a href="#三、IP地址" class="headerlink" title="三、IP地址"></a>三、IP地址</h2><h3 id="1-最初的IP地址分类方案"><a href="#1-最初的IP地址分类方案" class="headerlink" title="1.最初的IP地址分类方案"></a>1.最初的IP地址分类方案</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E6%9C%80%E5%88%9D%E7%9A%84IP%E5%9C%B0%E5%9D%80%E5%88%86%E7%B1%BB%E6%96%B9%E6%A1%88.png" srcset="/img/loading.gif" lazyload alt="最初的IP地址分类方案"></p>
+<ul>
+<li>在那个年代，要求每台主机、每个路由器接口被分配的IP地址都是全球唯一的</li>
+<li>路由器和路由器连接的接口可以不分配IP地址，但路由器和其他结点连接的接口必须分配IP地址</li>
+<li>从属于同一个网络的所有主机、路由器接口的IP地址“网络号”相同</li>
+</ul>
+<h3 id="2-一些特殊用途的IP地址"><a href="#2-一些特殊用途的IP地址" class="headerlink" title="2.一些特殊用途的IP地址"></a>2.一些特殊用途的IP地址</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%89%B9%E6%AE%8A%E7%94%A8%E9%80%94%E7%9A%84IP%E5%9C%B0%E5%9D%80.png" srcset="/img/loading.gif" lazyload alt="特殊用途的IP地址"></p>
+<h2 id="四、子网划分与子网掩码"><a href="#四、子网划分与子网掩码" class="headerlink" title="四、子网划分与子网掩码"></a>四、子网划分与子网掩码</h2><h3 id="1-子网划分原理"><a href="#1-子网划分原理" class="headerlink" title="1.子网划分原理"></a>1.子网划分原理</h3><ul>
+<li>将主机号n位中的前k位单独拿出来作为子网号，剩余n-k位作为主机号，那么就可以分为2^k个子网，每个子网包含的IP地址块大小相等</li>
+<li>子网划分前，IP地址为两级结构&lt;网络号，主机号&gt;</li>
+<li>子网划分后，IP地址为三级结构&lt;网络号，子网号，主机号&gt;</li>
+<li>注：主机号不能全零或全一</li>
+</ul>
+<h3 id="2-子网掩码作用"><a href="#2-子网掩码作用" class="headerlink" title="2.子网掩码作用"></a>2.子网掩码作用</h3><ul>
+<li>用子网掩码与IP地址逐位相与，可以提取出&lt;网络号，子网号&gt;（称为“网络前缀”）</li>
+<li>网络前缀相同的IP地址归属于同一网络（子网）</li>
+<li>如果一个网络进行了子网划分，那么网络中的每台主机、每个路由器接口都需要配置IP地址、默认网关、子网掩码</li>
+<li>如果一台路由器支持子网划分，则其转发表中需包含&lt;目的网络号，子网掩码，转发接口&gt;</li>
+</ul>
+<h4 id="1-默认子网掩码"><a href="#1-默认子网掩码" class="headerlink" title="(1)默认子网掩码"></a>(1)默认子网掩码</h4><ul>
+<li>如果一个传统网络（A&#x2F;B&#x2F;C）内部没有进行子网划分，则在转发表项给它设置一个默认子网掩码<ul>
+<li>A：255.0.0.0</li>
+<li>B：255.255.0.0</li>
+<li>C：255.255.255.0<br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BB%83%E4%B9%A01.png" srcset="/img/loading.gif" lazyload alt="练习1"></li>
+</ul>
+</li>
+<li>源地址与子网掩码相与得166.1.0.0，目的地址与子网掩码相与得166.1.128.0，二者不相等，说明在不同子网</li>
+<li>H1将IP数据报封装成MAC帧，MAC地址写的是B3接口</li>
+<li>路由器的网络层将目的地址与转发表中的子网掩码相与，得到的结果与网络号比较，发现应从B2接口转发出去，MAC地址为H3</li>
+</ul>
+<h4 id="2-默认路由"><a href="#2-默认路由" class="headerlink" title="(2)默认路由"></a>(2)默认路由</h4><ul>
+<li>&lt;目的网络号全0，子网掩码全0&gt;</li>
+<li>在路由转发表中，如果所有表项都不匹配，则从“默认路由转发出去”</li>
+</ul>
+<h4 id="3-主机发送IP数据报的过程"><a href="#3-主机发送IP数据报的过程" class="headerlink" title="(3)主机发送IP数据报的过程"></a>(3)主机发送IP数据报的过程</h4><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E4%B8%BB%E6%9C%BA%E5%8F%91%E9%80%81IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E8%BF%87%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="主机发送IP数据报的过程"></p>
+<h4 id="4-路由器转发一个IP数据报的过程"><a href="#4-路由器转发一个IP数据报的过程" class="headerlink" title="(4)路由器转发一个IP数据报的过程"></a>(4)路由器转发一个IP数据报的过程</h4><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E8%B7%AF%E7%94%B1%E5%99%A8%E8%BD%AC%E5%8F%91%E4%B8%80%E4%B8%AAIP%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E8%BF%87%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="路由器转发一个IP数据报的过程"></p>
+<h4 id="5-子网掩码的另一种记法"><a href="#5-子网掩码的另一种记法" class="headerlink" title="(5)子网掩码的另一种记法"></a>(5)子网掩码的另一种记法</h4><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%AE%B0%E6%B3%95.png" srcset="/img/loading.gif" lazyload alt="子网掩码的另一种记法"></p>
+<h2 id="五、无分类编址CIDR"><a href="#五、无分类编址CIDR" class="headerlink" title="五、无分类编址CIDR"></a>五、无分类编址CIDR</h2><h3 id="1-为什么提出"><a href="#1-为什么提出" class="headerlink" title="1.为什么提出"></a>1.为什么提出</h3><ul>
+<li>某单位有2000台主机需要联网，就不得不申请一个B类地址，但B类地址包含65536个地址，造成IP地址的浪费</li>
+</ul>
+<h3 id="2-无分类编址CIDR"><a href="#2-无分类编址CIDR" class="headerlink" title="2.无分类编址CIDR"></a>2.无分类编址CIDR</h3><ul>
+<li>网络前缀可变长</li>
+<li>例：2000台主机，可以分配一个21bit网络前缀的CIDR地址块，2^11&#x3D;2048</li>
+<li>CIDR记法：128.14.32.0&#x2F;21<ul>
+<li>21表示网络前缀位数</li>
+<li>掩码：21个1+11个0</li>
+</ul>
+</li>
+<li>当单位获得CIDR地址块后，可以把它划分为多个子网</li>
+</ul>
+<h3 id="3-定长子网划分"><a href="#3-定长子网划分" class="headerlink" title="3.定长子网划分"></a>3.定长子网划分</h3><ul>
+<li>在一个CIDR地址块中，把主机号前kbit抠出来作为定长子网号，这样就能划分出2^k个子网（每个子网包含的IP地址块大小相等）</li>
+<li>也会导致IP地址利用率低，浪费IP地址</li>
+</ul>
+<h3 id="4-变长子网划分"><a href="#4-变长子网划分" class="headerlink" title="4.变长子网划分"></a>4.变长子网划分</h3><ul>
+<li>在一个CIDR地址块中，划分子网时，子网号长度不固定（每个子网包含的IP地址块大小不同）<br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%8F%98%E9%95%BF%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86.png" srcset="/img/loading.gif" lazyload alt="变长子网划分"><br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%8F%98%E9%95%BF%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86%E4%B9%A0%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="变长子网划分习题"></li>
+</ul>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/CIDR%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="CIDR小结"></p>
+<h2 id="六、路由聚合"><a href="#六、路由聚合" class="headerlink" title="六、路由聚合"></a>六、路由聚合</h2><h3 id="1-过程"><a href="#1-过程" class="headerlink" title="1.过程"></a>1.过程</h3><ul>
+<li>对于一个路由转发表，如果几条路由表项的<strong>转发接口</strong>相同，部分<strong>网络前缀</strong>也相同，那么可以将这几条路由表项聚合为一条。这种地址的聚合称为路由聚合，也称<strong>构成超网</strong>。</li>
+<li>表更小，查询更快</li>
+<li>可能会引入额外的无效地址</li>
+<li>一个目的地址可能与多个表项匹配，最长前缀匹配原则<br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E6%9C%80%E9%95%BF%E5%89%8D%E7%BC%80%E5%8C%B9%E9%85%8D%E5%8E%9F%E5%88%99.png" srcset="/img/loading.gif" lazyload alt="最长前缀匹配原则"></li>
+</ul>
+<h2 id="七、NAT网络地址转换"><a href="#七、NAT网络地址转换" class="headerlink" title="七、NAT网络地址转换"></a>七、NAT网络地址转换</h2><h3 id="1-传输层的端口号"><a href="#1-传输层的端口号" class="headerlink" title="1.传输层的端口号"></a>1.传输层的端口号</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%AB%AF%E5%8F%A3%E5%8F%B7.png" srcset="/img/loading.gif" lazyload alt="端口号"></p>
+<h3 id="2-缓解IP地址不够用的问题"><a href="#2-缓解IP地址不够用的问题" class="headerlink" title="2.缓解IP地址不够用的问题"></a>2.缓解IP地址不够用的问题</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E7%BC%93%E8%A7%A3IP%E5%9C%B0%E5%9D%80%E4%B8%8D%E5%A4%9F%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="缓解IP地址不够用的问题"></p>
+<ul>
+<li>在一个局域网中，每一台主机共享同一个全球IP地址（公网IP）</li>
+<li>NAT路由器将&lt;公网IP，端口号&gt;映射为&lt;内网IP，端口号&gt;</li>
+<li>局域网内，内网IP不重复，但局域网之间，内网IP可以重复</li>
+</ul>
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/NAT%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="NAT小结"></p>
+<h2 id="八、ARP协议"><a href="#八、ARP协议" class="headerlink" title="八、ARP协议"></a>八、ARP协议</h2><h3 id="1-各种协议之间的关系"><a href="#1-各种协议之间的关系" class="headerlink" title="1.各种协议之间的关系"></a>1.各种协议之间的关系</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png" srcset="/img/loading.gif" lazyload alt="各种协议之间的关系"></p>
+<ul>
+<li>回顾：以太网MAC帧<br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E4%BB%A5%E5%A4%AA%E7%BD%91MAC%E5%B8%A7IP.png" srcset="/img/loading.gif" lazyload alt="以太网MAC帧IP"><br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E4%BB%A5%E5%A4%AA%E7%BD%91MAC%E5%B8%A7ARP.png" srcset="/img/loading.gif" lazyload alt="以太网MAC帧ARP"></li>
+</ul>
+<h3 id="2-作用"><a href="#2-作用" class="headerlink" title="2.作用"></a>2.作用</h3><ul>
+<li>在一个局域网内部，可以通过ARP协议查询到一个IP地址对应的MAC地址</li>
+</ul>
+<h3 id="3-过程"><a href="#3-过程" class="headerlink" title="3.过程"></a>3.过程</h3><ul>
+<li>ARP请求分组<ul>
+<li>内容<ul>
+<li>我的IP地址是xxx，MAC地址是xxx</li>
+<li>我想找的IP地址是xxx</li>
+</ul>
+</li>
+<li>将ARP请求分组封装成MAC帧，源地址是我的MAC地址，目的地址全1</li>
+<li>是广播帧</li>
+</ul>
+</li>
+<li>ARP响应分组<ul>
+<li>内容<ul>
+<li>我的IP地址是xxx，我的MAC地址是xxx</li>
+</ul>
+</li>
+<li>将ARP响应分组封装成MAC帧，源地址是我的MAC地址，目的地址是请求方的MAC地址</li>
+</ul>
+</li>
+</ul>
+<h3 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/ARP%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="ARP小结"></p>
+<h2 id="九、DHCP协议（属于应用层）"><a href="#九、DHCP协议（属于应用层）" class="headerlink" title="九、DHCP协议（属于应用层）"></a>九、DHCP协议（属于应用层）</h2><h3 id="1-各种协议之间的服务关系"><a href="#1-各种协议之间的服务关系" class="headerlink" title="1.各种协议之间的服务关系"></a>1.各种协议之间的服务关系</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%85%B3%E7%B3%BB.png" srcset="/img/loading.gif" lazyload alt="各种协议之间的服务关系"></p>
+<ul>
+<li>IP报文在协议栈中的位置<br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IP%E6%8A%A5%E6%96%87%E5%9C%A8%E5%8D%8F%E8%AE%AE%E6%A0%88%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE.png" srcset="/img/loading.gif" lazyload alt="IP报文在协议栈中的位置"></li>
+</ul>
+<h3 id="2-DHCP协议工作过程"><a href="#2-DHCP协议工作过程" class="headerlink" title="2.DHCP协议工作过程"></a>2.DHCP协议工作过程</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/DHCP%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="DHCP工作过程"></p>
+<blockquote>
+<p>一台新接入网络的主机，只有自己的MAC地址，没有自己的IP地址、默认网关、子网掩码</p>
+</blockquote>
+<ul>
+<li>主机向DHCP服务器发送一个DHCP发现报文，由主机上的DHCP客户端进程发送<ul>
+<li>DHCP是应用层-&gt;传输层（UDP数据报）</li>
+<li>本质是两个进程的通信</li>
+<li>传输层-&gt;网络层（IP数据报），源地址填全0（本网络的本主机），目的IP地址全1</li>
+<li>网络层-&gt;数据链路层（MAC帧），源MAC是自己的MAC地址，目的MAC全1</li>
+</ul>
+</li>
+<li>DHCP服务器从IP地址池中找到一个没有被分配的IP地址分配给主机<ul>
+<li>需要指明租用期是多少，如果到时间，可以续租</li>
+<li>需要指明子网掩码和默认网关</li>
+<li>网络层源地址依旧是全1，因为对方依旧还没有IP地址</li>
+<li>链路层目的MAC写成主机的MAC</li>
+</ul>
+</li>
+<li>主机向DHCP服务器发送请求报文<ul>
+<li>报文中需指出自己的MAC地址和接受的IP地址</li>
+<li>网络层IP数据报中，源地址依旧是全0，<strong>目的IP地址全1※</strong><ul>
+<li>全1原因：一个内网可能有多个DHCP服务器，每个服务器都会给主机一个提供报文，因此主机需要告诉所有DHCP服务器最终接受的是哪个IP地址</li>
+</ul>
+</li>
+<li>链路层目的IP依旧全1</li>
+</ul>
+</li>
+<li>DHCP服务器向主机发送DHCP确认报文<ul>
+<li>与提供报文类似</li>
+</ul>
+</li>
+</ul>
+<h3 id="小结-4"><a href="#小结-4" class="headerlink" title="小结"></a>小结</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/DHCP%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="DHCP小结"></p>
+<h2 id="十、IPV6"><a href="#十、IPV6" class="headerlink" title="十、IPV6"></a>十、IPV6</h2><h3 id="1-IPV6数据报格式"><a href="#1-IPV6数据报格式" class="headerlink" title="1.IPV6数据报格式"></a>1.IPV6数据报格式</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IPV6%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F.png" srcset="/img/loading.gif" lazyload alt="IPV6数据报格式"><br><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IPV6%E8%AF%A6%E7%BB%86%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F.png" srcset="/img/loading.gif" lazyload alt="IPV6详细数据报格式"></p>
+<h3 id="2-IPV6和IPV4区别"><a href="#2-IPV6和IPV4区别" class="headerlink" title="2.IPV6和IPV4区别"></a>2.IPV6和IPV4区别</h3><ul>
+<li>IPV6有128位，IPV4有32位</li>
+<li>IPV6将校验和字段移除，以减少每跳的处理时间</li>
+<li>IPV6将可选字段移出首部，变为扩展首部，称为灵活的首部格式，路由器通常不对扩展首部进行检查，大大提高了路由器的处理效率</li>
+<li>IPV6支持即插即用（自动配置），不需要DHCP协议</li>
+<li>IPV6首部长度必须是8B的整数倍，IPV4首部是4B的整数倍</li>
+<li>IPV6只能在主机处分片，IPV4可以在路由器和主机处分片</li>
+<li>ICMPv6：附加报文类型“分组过大”</li>
+<li>IPV6支持资源的预分配，支持实时视像等要求，保证一定的带宽和时延的应用</li>
+<li>IPV6取消了协议字段，改成下一个首部字段</li>
+<li>IPV6取消了总长度字段，改用有效载荷长度字段</li>
+<li>IPV6取消了服务类型字段</li>
+</ul>
+<h3 id="3-IPV6地址表示形式"><a href="#3-IPV6地址表示形式" class="headerlink" title="3.IPV6地址表示形式"></a>3.IPV6地址表示形式</h3><ul>
+<li>冒号十六进制记法</li>
+<li>压缩形式</li>
+</ul>
+<h3 id="4-IPV6基本地址类型"><a href="#4-IPV6基本地址类型" class="headerlink" title="4.IPV6基本地址类型"></a>4.IPV6基本地址类型</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IPV6%E5%9F%BA%E6%9C%AC%E5%9C%B0%E5%9D%80%E7%B1%BB%E5%9E%8B.png" srcset="/img/loading.gif" lazyload alt="IPV6基本地址类型"></p>
+<h3 id="5-IPV4向IPV6过渡"><a href="#5-IPV4向IPV6过渡" class="headerlink" title="5.IPV4向IPV6过渡"></a>5.IPV4向IPV6过渡</h3><p><img src="/2024/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh4/IPV4%E5%90%91IPV6%E8%BF%87%E6%B8%A1.png" srcset="/img/loading.gif" lazyload alt="IPV4向IPV6过渡"></p>
+<h2 id="十一、路由算法和路由协议"><a href="#十一、路由算法和路由协议" class="headerlink" title="十一、路由算法和路由协议"></a>十一、路由算法和路由协议</h2>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="category-chain-item">计算机网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="print-no-link">#计算机网络</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机网络Ch4</div>
+      <div>https://sdueryrg.github.io/2024/11/20/计算机网络Ch4/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年11月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/11/22/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch7/" title="编译原理Ch7">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">编译原理Ch7</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch6/" title="编译原理Ch6">
+                        <span class="hidden-mobile">编译原理Ch6</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

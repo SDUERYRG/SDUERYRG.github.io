@@ -1,0 +1,906 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第二章 物理层一、通信基础基本概念1.信源、信宿、信号、信道(1)信源：信号的来源（即数据的发送方）(2)信宿：信号的“归宿”（即数据的接收方）(3)数据：即信息的实体（如：文字、声音、图像），在计算机内部数据通常是二进制(4)信道：信号的通道 注：一条物理线路通常包含两条信道，即发送信道、接收信道  (5)信号：数据的载体 数字信号：信号值是离散的 模拟信号：信号值是连续的  2.码元、速率、波">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络Ch2">
+<meta property="og:url" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="第二章 物理层一、通信基础基本概念1.信源、信宿、信号、信道(1)信源：信号的来源（即数据的发送方）(2)信宿：信号的“归宿”（即数据的接收方）(3)数据：即信息的实体（如：文字、声音、图像），在计算机内部数据通常是二进制(4)信道：信号的通道 注：一条物理线路通常包含两条信道，即发送信道、接收信道  (5)信号：数据的载体 数字信号：信号值是离散的 模拟信号：信号值是连续的  2.码元、速率、波">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%94%A8%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7%E8%AE%BE%E8%AE%A14%E8%BF%9B%E5%88%B6%E7%A0%81%E5%85%83.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%94%A8%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E8%AE%BE%E8%AE%A14%E8%BF%9B%E5%88%B6%E7%A0%81%E5%85%83.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E4%B8%80%E8%8A%82%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E4%B8%A4%E4%B8%AA%E5%AE%9A%E7%90%86%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E4%BA%8C%E8%8A%82%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%BC%96%E7%A0%81%E6%96%B9%E6%B3%95.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%90%84%E7%A7%8D%E7%BC%96%E7%A0%81%E7%9A%84%E7%89%B9%E7%82%B9.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E8%B0%83%E5%88%B6%E6%96%B9%E6%B3%95.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E6%AD%A3%E4%BA%A4%E5%B9%85%E5%BA%A6%E8%B0%83%E5%88%B6.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E4%B8%89%E8%8A%82%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%8F%8C%E7%BB%9E%E7%BA%BF.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%90%8C%E8%BD%B4%E7%94%B5%E7%BC%86.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%85%89%E7%BA%A4.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E5%9B%9B%E8%8A%82%E5%B0%8F%E7%BB%93.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/5-4-3%E5%8E%9F%E5%88%99.png">
+<meta property="og:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E4%BA%94%E8%8A%82%E5%B0%8F%E7%BB%93.png">
+<meta property="article:published_time" content="2024-09-11T02:07:11.000Z">
+<meta property="article:modified_time" content="2025-01-07T08:21:32.096Z">
+<meta property="article:author" content="yrg">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%94%A8%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7%E8%AE%BE%E8%AE%A14%E8%BF%9B%E5%88%B6%E7%A0%81%E5%85%83.png">
+  
+  
+  
+  <title>计算机网络Ch2 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机网络Ch2"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-11 10:07" pubdate>
+          2024年9月11日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计算机网络Ch2</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第二章-物理层"><a href="#第二章-物理层" class="headerlink" title="第二章 物理层"></a><center>第二章 物理层</center></h1><h2 id="一、通信基础基本概念"><a href="#一、通信基础基本概念" class="headerlink" title="一、通信基础基本概念"></a>一、通信基础基本概念</h2><h3 id="1-信源、信宿、信号、信道"><a href="#1-信源、信宿、信号、信道" class="headerlink" title="1.信源、信宿、信号、信道"></a>1.信源、信宿、信号、信道</h3><h4 id="1-信源：信号的来源（即数据的发送方）"><a href="#1-信源：信号的来源（即数据的发送方）" class="headerlink" title="(1)信源：信号的来源（即数据的发送方）"></a>(1)信源：信号的来源（即数据的发送方）</h4><h4 id="2-信宿：信号的“归宿”（即数据的接收方）"><a href="#2-信宿：信号的“归宿”（即数据的接收方）" class="headerlink" title="(2)信宿：信号的“归宿”（即数据的接收方）"></a>(2)信宿：信号的“归宿”（即数据的接收方）</h4><h4 id="3-数据：即信息的实体（如：文字、声音、图像），在计算机内部数据通常是二进制"><a href="#3-数据：即信息的实体（如：文字、声音、图像），在计算机内部数据通常是二进制" class="headerlink" title="(3)数据：即信息的实体（如：文字、声音、图像），在计算机内部数据通常是二进制"></a>(3)数据：即信息的实体（如：文字、声音、图像），在计算机内部数据通常是二进制</h4><h4 id="4-信道：信号的通道"><a href="#4-信道：信号的通道" class="headerlink" title="(4)信道：信号的通道"></a>(4)信道：信号的通道</h4><ul>
+<li>注：一条物理线路通常包含两条信道，即发送信道、接收信道</li>
+</ul>
+<h4 id="5-信号：数据的载体"><a href="#5-信号：数据的载体" class="headerlink" title="(5)信号：数据的载体"></a>(5)信号：数据的载体</h4><ul>
+<li>数字信号：信号值是离散的</li>
+<li>模拟信号：信号值是连续的</li>
+</ul>
+<h3 id="2-码元、速率、波特"><a href="#2-码元、速率、波特" class="headerlink" title="2.码元、速率、波特"></a>2.码元、速率、波特</h3><h4 id="1-码元：每个信号是一个“码元”，信号周期称为码元宽度"><a href="#1-码元：每个信号是一个“码元”，信号周期称为码元宽度" class="headerlink" title="(1)码元：每个信号是一个“码元”，信号周期称为码元宽度"></a>(1)码元：每个信号是一个“码元”，信号周期称为码元宽度</h4><ul>
+<li>如果一个码元（即一个信号）可能有4种状态，那么可以称其为4进制码元（一个码元携带2bit的数据）</li>
+<li>类似地，如果一个码元（即一个信号）可能有8种状态，那么可以称其为8进制码元（一个码元携带3bit数据）</li>
+<li>如果出现K种可能的信号，则一个码元可携带 $ log_2K $ bit的数据<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%94%A8%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7%E8%AE%BE%E8%AE%A14%E8%BF%9B%E5%88%B6%E7%A0%81%E5%85%83.png" srcset="/img/loading.gif" lazyload alt="用模拟信号设计4进制码元"><br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%94%A8%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E8%AE%BE%E8%AE%A14%E8%BF%9B%E5%88%B6%E7%A0%81%E5%85%83.png" srcset="/img/loading.gif" lazyload alt="用数字信号设计4进制码元"></li>
+</ul>
+<h4 id="2-速率"><a href="#2-速率" class="headerlink" title="(2)速率"></a>(2)速率</h4><ul>
+<li><h5 id="波特率"><a href="#波特率" class="headerlink" title="波特率"></a>波特率</h5><ul>
+<li>每秒传输几个码元</li>
+<li>单位：码元&#x2F;秒，或波特（Baud）</li>
+</ul>
+</li>
+<li><h5 id="比特率"><a href="#比特率" class="headerlink" title="比特率"></a>比特率</h5><ul>
+<li>每秒传输几个比特</li>
+<li>单位bit&#x2F;s，或b&#x2F;s，bps</li>
+</ul>
+</li>
+<li>若一个码元携带n比特的信息量，则波特率M Baud对应的比特率为Mn b&#x2F;s</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E4%B8%80%E8%8A%82%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="第一节小结"></p>
+<h2 id="二、信道的极限容量"><a href="#二、信道的极限容量" class="headerlink" title="二、信道的极限容量"></a>二、信道的极限容量</h2><h3 id="1-带宽"><a href="#1-带宽" class="headerlink" title="1.带宽"></a>1.带宽</h3><h4 id="1-计算机网络中："><a href="#1-计算机网络中：" class="headerlink" title="(1)计算机网络中："></a>(1)计算机网络中：</h4><ul>
+<li>表示某信道所能通过的“最高数据率”。</li>
+<li>单位：bps</li>
+</ul>
+<h4 id="2-通信原理中："><a href="#2-通信原理中：" class="headerlink" title="(2)通信原理中："></a>(2)通信原理中：</h4><ul>
+<li>表示某信道允许通过的信号频带范围。</li>
+<li>单位：Hz</li>
+</ul>
+<h3 id="2-噪声"><a href="#2-噪声" class="headerlink" title="2.噪声"></a>2.噪声</h3><ul>
+<li>对信道产生干扰，影响信道的数据传输速率。</li>
+</ul>
+<h3 id="3-奈奎斯特定理"><a href="#3-奈奎斯特定理" class="headerlink" title="3.奈奎斯特定理"></a>3.奈奎斯特定理</h3><ul>
+<li>对于一个<strong>理想低通信道</strong>（没有噪声、带宽有限的信道）<strong>极限波特率</strong>&#x3D;2W（单位：波特，即码元&#x2F;秒）</li>
+<li>W是信道的频率带宽（单位：Hz）</li>
+<li>极限比特率&#x3D;$2Wlog_2K \space b&#x2F;s$</li>
+</ul>
+<h3 id="4-香农定理"><a href="#4-香农定理" class="headerlink" title="4.香农定理"></a>4.香农定理</h3><ul>
+<li>对于一个有噪声、带宽有限的信道，极限比特率&#x3D;$Wlog_2(1+S&#x2F;N)$，单位b&#x2F;s</li>
+<li>S&#x2F;N：信噪比，无单位，信号的功率&#x2F;噪声的功率，信号功率往往比噪声功率大得多</li>
+<li>为方便记录信噪比，信噪比$&#x3D;10lgS&#x2F;N$，单位：分贝（db）<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E4%B8%A4%E4%B8%AA%E5%AE%9A%E7%90%86%E5%AF%B9%E6%AF%94.png" srcset="/img/loading.gif" lazyload alt="两个定理对比"></li>
+</ul>
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E4%BA%8C%E8%8A%82%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="第二节小结"></p>
+<h2 id="三、编码和调制"><a href="#三、编码和调制" class="headerlink" title="三、编码和调制"></a>三、编码和调制</h2><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h3><h4 id="1-编码和解码"><a href="#1-编码和解码" class="headerlink" title="(1)编码和解码"></a>(1)编码和解码</h4><ul>
+<li>编码：将二进制数据编码为数字信号</li>
+<li>解码：将数字信号解码为二进制数据</li>
+</ul>
+<h4 id="2-调制和解调"><a href="#2-调制和解调" class="headerlink" title="(2)调制和解调"></a>(2)调制和解调</h4><ul>
+<li>二进制数据调制为模拟信号</li>
+<li>模拟信号调制为二进制数据</li>
+</ul>
+<h4 id="3-变换器：将二进制数据转换为信号"><a href="#3-变换器：将二进制数据转换为信号" class="headerlink" title="(3)变换器：将二进制数据转换为信号"></a>(3)变换器：将二进制数据转换为信号</h4><h4 id="4-反变换器：将信号转换为二进制数据"><a href="#4-反变换器：将信号转换为二进制数据" class="headerlink" title="(4)反变换器：将信号转换为二进制数据"></a>(4)反变换器：将信号转换为二进制数据</h4><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93%E7%A4%BA%E6%84%8F%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="信号传输示意图"></p>
+<h3 id="2-常用的编码方法"><a href="#2-常用的编码方法" class="headerlink" title="2.常用的编码方法"></a>2.常用的编码方法</h3><h4 id="1-编码方法"><a href="#1-编码方法" class="headerlink" title="(1)编码方法"></a>(1)编码方法</h4><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%BC%96%E7%A0%81%E6%96%B9%E6%B3%95.png" srcset="/img/loading.gif" lazyload alt="编码方法"></p>
+<h4 id="2-编码方法的特点"><a href="#2-编码方法的特点" class="headerlink" title="(2)编码方法的特点"></a>(2)编码方法的特点</h4><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%90%84%E7%A7%8D%E7%BC%96%E7%A0%81%E7%9A%84%E7%89%B9%E7%82%B9.png" srcset="/img/loading.gif" lazyload alt="各种编码的特点"></p>
+<h3 id="3-常见的调制方法"><a href="#3-常见的调制方法" class="headerlink" title="3.常见的调制方法"></a>3.常见的调制方法</h3><h4 id="1-调幅"><a href="#1-调幅" class="headerlink" title="(1)调幅"></a>(1)调幅</h4><ul>
+<li>使信号幅度变化</li>
+</ul>
+<h4 id="2-调频"><a href="#2-调频" class="headerlink" title="(2)调频"></a>(2)调频</h4><ul>
+<li>使信号频率变化</li>
+</ul>
+<h4 id="3-调相"><a href="#3-调相" class="headerlink" title="(3)调相"></a>(3)调相</h4><ul>
+<li>使信号相位变化</li>
+</ul>
+<h4 id="4-正交幅度调制"><a href="#4-正交幅度调制" class="headerlink" title="(4)正交幅度调制"></a>(4)正交幅度调制</h4><ul>
+<li>既调频，又调相<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E8%B0%83%E5%88%B6%E6%96%B9%E6%B3%95.png" srcset="/img/loading.gif" lazyload alt="调制方法"><br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E6%AD%A3%E4%BA%A4%E5%B9%85%E5%BA%A6%E8%B0%83%E5%88%B6.png" srcset="/img/loading.gif" lazyload alt="正交幅度调制"></li>
+</ul>
+<h2 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h2><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E4%B8%89%E8%8A%82%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="第三节小结"></p>
+<h2 id="四、传输介质"><a href="#四、传输介质" class="headerlink" title="四、传输介质"></a>四、传输介质</h2><h3 id="1-导向型传输介质"><a href="#1-导向型传输介质" class="headerlink" title="1.导向型传输介质"></a>1.导向型传输介质</h3><h4 id="1-双绞线"><a href="#1-双绞线" class="headerlink" title="(1)双绞线"></a>(1)双绞线</h4><ul>
+<li>主要构成：两根导线相互绞合而成<ul>
+<li>有屏蔽层：屏蔽双绞线（STP）</li>
+<li>没有屏蔽层：非屏蔽双绞线（UTP）</li>
+</ul>
+</li>
+<li>抗干扰能力：较好。<strong>绞合、屏蔽层</strong> 可以提升抗电磁干扰的能力</li>
+<li>代表应用：近些年的局域网线、早期电话线<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%8F%8C%E7%BB%9E%E7%BA%BF.png" srcset="/img/loading.gif" lazyload alt="双绞线"></li>
+</ul>
+<h4 id="2-同轴电缆"><a href="#2-同轴电缆" class="headerlink" title="(2)同轴电缆"></a>(2)同轴电缆</h4><ul>
+<li>主要构成：内导体（用于传输信号）+外导体屏蔽层（用于抗电磁干扰）<ul>
+<li>内导体越粗，电阻越低，传输过程中信号衰减越少，传输距离越长</li>
+</ul>
+</li>
+<li>抗干扰能力：好。屏蔽层带来良好的抗干扰性</li>
+<li>代表应用：早期局域网、早期有线电视<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%90%8C%E8%BD%B4%E7%94%B5%E7%BC%86.png" srcset="/img/loading.gif" lazyload alt="同轴电缆"></li>
+</ul>
+<h4 id="3-光纤"><a href="#3-光纤" class="headerlink" title="(3)光纤"></a>(3)光纤</h4><ul>
+<li>主要构成：纤芯（高折射率）+包层（低折射率）<ul>
+<li>利用光的全反射特性，在纤芯内传输光脉冲信号</li>
+</ul>
+</li>
+<li>分类：<ul>
+<li>单模光纤：只有一条光线在一根光纤中传输，适合长距离传输，信号传输损耗小</li>
+<li>多模光纤：多条光线在一根光纤中传输，适合近距离传输，远距离传输光信号容易失真</li>
+</ul>
+</li>
+<li>抗干扰能力：非常好。光信号对电磁干扰不敏感</li>
+<li>其他优点：信号传输损耗小，长距离传输时中继器少；很细很省布线空间<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%85%89%E7%BA%A4.png" srcset="/img/loading.gif" lazyload alt="光纤"></li>
+</ul>
+<h4 id="4-以太网对有线传输介质的命名规则"><a href="#4-以太网对有线传输介质的命名规则" class="headerlink" title="(4)以太网对有线传输介质的命名规则"></a>(4)以太网对有线传输介质的命名规则</h4><ul>
+<li>速度+Base+介质信息<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.png" srcset="/img/loading.gif" lazyload alt="命名规则"></li>
+</ul>
+<h3 id="2-非导向型传播介质"><a href="#2-非导向型传播介质" class="headerlink" title="2.非导向型传播介质"></a>2.非导向型传播介质</h3><h4 id="1-无线电波"><a href="#1-无线电波" class="headerlink" title="(1)无线电波"></a>(1)无线电波</h4><ul>
+<li>特点：穿透能力强、传输距离长、信号指向性弱</li>
+<li>如：手机信号、WIFI</li>
+</ul>
+<h4 id="2-微波通信"><a href="#2-微波通信" class="headerlink" title="(2)微波通信"></a>(2)微波通信</h4><ul>
+<li>特点：频率带宽高、信号指向性强、保密性差（容易被窃听）</li>
+<li>如：卫星通信（卫星作为信号中继器，传播时延较大）</li>
+</ul>
+<h4 id="3-其他：红外线通信、激光通信等————信号指向性强"><a href="#3-其他：红外线通信、激光通信等————信号指向性强" class="headerlink" title="(3)其他：红外线通信、激光通信等————信号指向性强"></a>(3)其他：红外线通信、激光通信等————信号指向性强</h4><h3 id="3-物理层接口的特性"><a href="#3-物理层接口的特性" class="headerlink" title="3.物理层接口的特性"></a>3.物理层接口的特性</h3><h4 id="1-机械特性"><a href="#1-机械特性" class="headerlink" title="(1)机械特性"></a>(1)机械特性</h4><ul>
+<li>指明接口所用接线器的形状和尺寸、引脚数目和排列、固定和锁定装置等</li>
+</ul>
+<h4 id="2-电气特性"><a href="#2-电气特性" class="headerlink" title="(2)电气特性"></a>(2)电气特性</h4><ul>
+<li>指明在接口电缆的各条线上出现的电压的范围、传输速率、距离限制等</li>
+</ul>
+<h4 id="3-功能特性"><a href="#3-功能特性" class="headerlink" title="(3)功能特性"></a>(3)功能特性</h4><ul>
+<li>指明某条线上出现的某一电平的电压的意义</li>
+</ul>
+<h4 id="4-过程特性"><a href="#4-过程特性" class="headerlink" title="(4)过程特性"></a>(4)过程特性</h4><ul>
+<li>指明对于不同功能的各种可能事件的出现顺序</li>
+</ul>
+<h2 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h2><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E5%9B%9B%E8%8A%82%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="第四节小结"></p>
+<h2 id="五、物理层设备"><a href="#五、物理层设备" class="headerlink" title="五、物理层设备"></a>五、物理层设备</h2><h3 id="1-中继器"><a href="#1-中继器" class="headerlink" title="1.中继器"></a>1.中继器</h3><ul>
+<li>中继器只有两个端口，通过一个端口接收信号，将失真信号整形再生，并转发至零一端口（信号再生会产生一段时间）</li>
+<li>仅支持半双工通信（两端连接的结点不可同时发送数据，会导致“冲突”）</li>
+<li>中继器两个端口对应两个“网段”</li>
+</ul>
+<h3 id="2-集线器"><a href="#2-集线器" class="headerlink" title="2.集线器"></a>2.集线器</h3><ul>
+<li>本质上是多端口中继器。集线器将其中一个端口接收到的信号整形再生后，转发到所有其他端口</li>
+<li>各端口连接的结点不可同时发送数据，会导致冲突</li>
+<li>集线器的N个端口对应N个“网段”，各网段属于同一个“冲突域”<blockquote>
+<p>冲突域：如果两台主机同时发送数据会导致“冲突”，则这两台主机处于同一个“冲突域”，处于同一个冲突域的主机在发送数据前需要进行“信道争用”</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-中继器、集线器的一些特性"><a href="#3-中继器、集线器的一些特性" class="headerlink" title="3.中继器、集线器的一些特性"></a>3.中继器、集线器的一些特性</h3><h4 id="1-集线器、中继器不能“无限串联”————如10Base5的5-4-3原则"><a href="#1-集线器、中继器不能“无限串联”————如10Base5的5-4-3原则" class="headerlink" title="(1)集线器、中继器不能“无限串联”————如10Base5的5-4-3原则"></a>(1)集线器、中继器不能“无限串联”————如10Base5的5-4-3原则</h4><ul>
+<li>5-4-3原则：使用集线器（或中继器）连接10Base5网段时，最多只能串联5个网段，使用4台集线器（或中继器），只有3个网段可以挂接计算机。<br><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/5-4-3%E5%8E%9F%E5%88%99.png" srcset="/img/loading.gif" lazyload alt="5-4-3原则"></li>
+<li>集线器连接的网络，物理上是星形拓扑，逻辑上是总线型拓扑</li>
+<li>集线器连接的网段“共享带宽”</li>
+</ul>
+<h2 id="小结-4"><a href="#小结-4" class="headerlink" title="小结"></a>小结</h2><p><img src="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh2/%E7%AC%AC%E4%BA%94%E8%8A%82%E5%B0%8F%E7%BB%93.png" srcset="/img/loading.gif" lazyload alt="第五节小结"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="category-chain-item">计算机网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="print-no-link">#计算机网络</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机网络Ch2</div>
+      <div>https://sdueryrg.github.io/2024/09/11/计算机网络Ch2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年9月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/11/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9CCh1/" title="计算机网络Ch1">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机网络Ch1</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86Ch3/" title="编译原理Ch3">
+                        <span class="hidden-mobile">编译原理Ch3</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
