@@ -1,0 +1,1058 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yrg">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="填空 ls、cp等命令文件一般位于哪个目录？  👉 &#x2F;bin   在Linux系统中，第一个启动的进程是：____ 、其编号为：____ 。  👉 init，编号为 1   给出文件的三种类型的名称  👉 普通文件、目录文件、设备文件   当前用户是stu，当前目录在&#x2F;home&#x2F;stu&#x2F;mydir&#x2F;，则执行cd ..&#x2F;..命令后当前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux期末总结">
+<meta property="og:url" content="https://sdueryrg.github.io/2025/12/21/Linux%E6%9C%9F%E6%9C%AB%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="yrg的博客">
+<meta property="og:description" content="填空 ls、cp等命令文件一般位于哪个目录？  👉 &#x2F;bin   在Linux系统中，第一个启动的进程是：____ 、其编号为：____ 。  👉 init，编号为 1   给出文件的三种类型的名称  👉 普通文件、目录文件、设备文件   当前用户是stu，当前目录在&#x2F;home&#x2F;stu&#x2F;mydir&#x2F;，则执行cd ..&#x2F;..命令后当前">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sdueryrg.github.io/2025/12/21/Linux%E6%9C%9F%E6%9C%AB%E6%80%BB%E7%BB%93/OS%E4%B8%8E%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%85%B3%E7%B3%BB.png">
+<meta property="article:published_time" content="2025-12-21T11:27:51.000Z">
+<meta property="article:modified_time" content="2025-12-21T13:28:32.704Z">
+<meta property="article:author" content="yrg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sdueryrg.github.io/2025/12/21/Linux%E6%9C%9F%E6%9C%AB%E6%80%BB%E7%BB%93/OS%E4%B8%8E%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%85%B3%E7%B3%BB.png">
+  
+  
+  
+  <title>Linux期末总结 - yrg的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sdueryrg.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>姚仁广的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux期末总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-21 19:27" pubdate>
+          2025年12月21日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Linux期末总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="填空"><a href="#填空" class="headerlink" title="填空"></a>填空</h2><ul>
+<li>ls、cp等命令文件一般位于哪个目录？ <ul>
+<li>👉 &#x2F;bin</li>
+</ul>
+</li>
+<li>在Linux系统中，第一个启动的进程是：____ 、其编号为：____ 。 <ul>
+<li>👉 init，编号为 1</li>
+</ul>
+</li>
+<li>给出文件的三种类型的名称 <ul>
+<li>👉 普通文件、目录文件、设备文件</li>
+</ul>
+</li>
+<li>当前用户是stu，当前目录在&#x2F;home&#x2F;stu&#x2F;mydir&#x2F;，则执行cd ..&#x2F;..命令后当前目录是 ____，再执行cd命令后当前目录是 ____。 <ul>
+<li>👉 执行 cd ..&#x2F;.. 后目录是 &#x2F;home&#x2F; 👉 再执行 cd 后目录是 &#x2F;home&#x2F;stu&#x2F;</li>
+</ul>
+</li>
+<li>________命令可以显示环境变量？ <ul>
+<li>👉 env</li>
+</ul>
+</li>
+<li>________用户具有系统的最大权限。 <ul>
+<li>👉 root</li>
+</ul>
+</li>
+<li>Linux原作者是 ：________。 <ul>
+<li>👉 Linus Torvalds</li>
+</ul>
+</li>
+</ul>
+<h2 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h2><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs stata">1、我们实验使用的<span class="hljs-keyword">shell</span>是哪个？<br>A. bsh    → 早期的 Bourne <span class="hljs-keyword">Shell</span>，现代系统很少使用<br>B. ksh    → Korn <span class="hljs-keyword">Shell</span>，功能强大但不是默认<br>C. csh    → C <span class="hljs-keyword">Shell</span>，语法类似C语言，但也不是默认<br><span class="hljs-keyword">D</span>. bash   → Bourne Again <span class="hljs-keyword">Shell</span>，是 Linux 默认和最常用的 <span class="hljs-keyword">shell</span><br>答案：<span class="hljs-keyword">D</span>、bash<br><br>2、可以分页显示文件内容的命令是？<br>A. <span class="hljs-keyword">pwd</span>    → 显示当前工作目录，不显示文件内容<br>B. <span class="hljs-keyword">cat</span>    → 显示文件内容，但不能分页<br>C. <span class="hljs-keyword">more</span>   → 分页显示文件内容，适合查看长文件<br><span class="hljs-keyword">D</span>. page   → 不是标准命令<br>答案：C、<span class="hljs-keyword">more</span><br><br>3、bash中默认已有的变量一般不包括？<br>A. find   → 这是一个命令，不是环境变量<br>B. <span class="hljs-keyword">PWD</span>    → 当前工作目录的环境变量<br>C. HOME   → 用户主目录的环境变量<br><span class="hljs-keyword">D</span>. USER   → 当前用户名的环境变量<br>答案：A、find<br><br>4、从标准输入读入值并赋予一个变量的命令是？<br>A. <span class="hljs-keyword">out</span>    → 不存在的命令<br>B. scan   → 不是标准 <span class="hljs-keyword">shell</span> 命令<br>C. <span class="hljs-keyword">read</span>   → 从标准输入读取数据并赋值给变量<br><span class="hljs-keyword">D</span>. <span class="hljs-keyword">in</span>     → 不存在的命令<br>答案：C、<span class="hljs-keyword">read</span><br><br>5、下列哪个命令可将文本文件 f.txt 拷贝为 f.bak？<br>A. cp f.txt | f.bak   → 错误，管道符不能这样用<br>B. <span class="hljs-keyword">cat</span> f.txt &gt; f.bak  → 正确，将 f.txt 内容重定向到 f.bak<br>C. cp f.txt &gt; f.bak   → 错误，cp 不与重定向符结合<br><span class="hljs-keyword">D</span>. <span class="hljs-keyword">ls</span> f.txt f.bak     → 只是列出文件，不会拷贝<br>答案：B、<span class="hljs-keyword">cat</span> f.txt &gt; f.bak<br></code></pre></td></tr></table></figure>
+<h2 id="简答题"><a href="#简答题" class="headerlink" title="简答题"></a>简答题</h2><p>1、解释 read 命令的功能，举例说明其用法</p>
+<ul>
+<li>功能：<code>read</code> 命令用于从标准输入（键盘或管道）读取一行数据，并赋值给变量。</li>
+<li>基本语法：<code>read 变量名</code></li>
+<li>示例：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;请输入你的名字：&quot;</span><br><span class="hljs-built_in">read</span> name<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;你好，<span class="hljs-variable">$name</span>&quot;</span><br></code></pre></td></tr></table></figure>
+执行后，用户输入的内容会赋值给变量 name，再通过 echo 输出。</li>
+</ul>
+<p>2、如果当前目录下只有一个文件 abc123，解释 echo abc* 和 echo xyz&#x3D;abc* 命令的输出</p>
+<ul>
+<li><p>echo abc*</p>
+<ul>
+<li>Shell 会进行通配符展开（* 表示匹配任意字符）。</li>
+<li>当前目录只有文件 <code>abc123</code>，所以 <code>abc*</code> 展开为 <code>abc123</code>。</li>
+<li>输出结果：abc123</li>
+</ul>
+</li>
+<li><p>echo xyz&#x3D;abc*</p>
+<ul>
+<li>同样，<code>abc*</code> 会展开为 <code>abc123</code>。</li>
+<li>所以命令输出：xyz&#x3D;abc123</li>
+</ul>
+</li>
+</ul>
+<p>假设当前目录下有三个文件：abc1、abc2、abc3</p>
+<ol>
+<li>echo abc*</li>
+</ol>
+<ul>
+<li>Shell 会对通配符 * 进行展开。</li>
+<li><code>abc*</code> 会匹配所有以 “abc” 开头的文件。</li>
+<li>因此展开结果是：abc1 abc2 abc3</li>
+<li>输出结果：abc1 abc2 abc3</li>
+</ul>
+<ol start="2">
+<li>echo xyz&#x3D;abc*</li>
+</ol>
+<ul>
+<li>同样，<code>abc*</code> 会展开为 abc1 abc2 abc3。</li>
+<li>所以命令输出：xyz&#x3D;abc1 abc2 abc3</li>
+</ul>
+<p>3、画图示意操作系统、硬件和应用软件关系<br><img src="/2025/12/21/Linux%E6%9C%9F%E6%9C%AB%E6%80%BB%E7%BB%93/OS%E4%B8%8E%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%85%B3%E7%B3%BB.png" srcset="/img/loading.gif" lazyload alt="OS与软硬件关系"></p>
+<h2 id="按要求写命令"><a href="#按要求写命令" class="headerlink" title="按要求写命令"></a>按要求写命令</h2><p>1、显示当前目录下文件名以abc开头同时以123结尾的文件</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">ls</span> <span class="hljs-keyword">abc</span>*<span class="hljs-number">123</span><br></code></pre></td></tr></table></figure>
+<p>2、把文本文件file1复制为file2，然后在file2尾部增加一行内容为“END”</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> file1 file2<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;END&quot;</span> &gt;&gt; file2<br></code></pre></td></tr></table></figure>
+<p>3、设置权限，自己的文件file1，只允许自己完全访问和使用，自己之外的人仅有读权限</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">chmod</span> <span class="hljs-number">744</span> file1<br></code></pre></td></tr></table></figure>
+<p>解释：7 &#x3D; rwx（自己可读写执行），4 &#x3D; r（其他用户只读）</p>
+<p>4、假设myprog.sh是你所写的一个脚本程序，写出命令在后台执行它</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">./myprog.sh <span class="hljs-meta">&amp;</span><br></code></pre></td></tr></table></figure>
+<p>5、用命令或命令组合列出当前目录下的所有目录文件（不列出其他文件）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -d */<br></code></pre></td></tr></table></figure>
+<p>6、在上一级目录的子目录src中建立一个空文件，文件名叫my_logfile</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">touch</span> ../src/my_logfile<br></code></pre></td></tr></table></figure>
+<p>7、在当前路径下建立 &#x2F;letters&#x2F;mail 的符号链接 m-soft</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ln</span> -s /letters/mail m-soft<br></code></pre></td></tr></table></figure>
+<p>8、在屏幕上显示字符串 $abc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;\$abc&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="解释命令含义"><a href="#解释命令含义" class="headerlink" title="解释命令含义"></a>解释命令含义</h2><p>1、解释这行命令的含义。如果输入123，会显示什么？如果输入1234显示什么？ </p>
+<blockquote>
+<p>read abc ; test $abc -lt 999 &amp;&amp; res&#x3D;’too small’ || res&#x3D;ok ; echo $res</p>
+</blockquote>
+<ul>
+<li>read abc<ul>
+<li>从标准输入读取一行内容，赋值给变量 abc。</li>
+</ul>
+</li>
+<li>test $abc -lt 999<ul>
+<li>判断变量 abc 的值是否 小于 999。</li>
+<li>-lt 表示 “less than”。</li>
+</ul>
+</li>
+<li>&amp;&amp; res&#x3D;’too small’<ul>
+<li>如果上一步条件成立（即 $abc &lt; 999），则执行 res&#x3D;’too small’。</li>
+</ul>
+</li>
+<li>|| res&#x3D;ok<ul>
+<li>如果条件不成立（即 $abc &gt;&#x3D; 999），则执行 res&#x3D;ok。</li>
+</ul>
+</li>
+<li>echo $res<ul>
+<li>输出变量 res 的值。</li>
+</ul>
+</li>
+</ul>
+<p>2、<code>grep &#39;789&#39; lppasswd | wc -l</code></p>
+<ul>
+<li><code>grep &#39;789&#39; lppasswd</code>：在文件 lppasswd 中查找包含字符串 789 的行。</li>
+<li><code>| wc -l</code>：统计匹配到的行数。</li>
+<li>输出结果：文件中包含 789 的行数。</li>
+</ul>
+<p>3、<code>ls –l | grep ‘^d’</code></p>
+<ul>
+<li><code>ls -l</code>：列出当前目录下文件的详细信息。</li>
+<li><code>grep &#39;^d&#39;</code>：筛选以 d 开头的行（在 ls -l 输出中，d 表示目录）。</li>
+<li>输出结果：当前目录下的所有目录信息。</li>
+</ul>
+<p>4、<code>ls -d ?[!y]*[e-f]</code></p>
+<ul>
+<li><code>ls -d</code>：列出匹配的文件名，而不是展开目录内容。</li>
+<li>?：匹配任意单个字符。</li>
+<li><code>[!y]</code>：匹配除 y 外的任意字符。</li>
+<li>*：匹配任意长度的字符串。</li>
+<li><code>[e-f]</code>：文件名以 e 到 f 结尾。</li>
+<li>输出结果：当前目录下符合该模式的文件或目录名。<br>5、<code>echo $HOME</code></li>
+<li>$HOME：环境变量，表示用户的主目录路径。</li>
+<li>echo $HOME：输出主目录路径，例如 &#x2F;home&#x2F;stu。</li>
+<li>输出结果：显示当前用户的主目录。</li>
+</ul>
+<p>6、<code>cat file1 file2 &gt; cat.out 2&gt; cat.err</code></p>
+<ul>
+<li>cat file1 file2：将文件 file1 和 file2 的内容连接输出。</li>
+<li>&gt; cat.out：将标准输出重定向到文件 cat.out。</li>
+<li>2&gt; cat.err：将标准错误输出重定向到文件 cat.err。</li>
+<li>输出结果：<ul>
+<li>正常内容写入 cat.out。</li>
+<li>错误信息写入 cat.err。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Shell-脚本"><a href="#Shell-脚本" class="headerlink" title="Shell 脚本"></a>Shell 脚本</h2><h3 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h3><ul>
+<li>只包含字母、数字和下划线： 变量名可以包含字母（大小写敏感）、数字和下划线 _，不能包含其他特殊字符。不能以数字开头。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">定义输出变量</span><br>your_name=&quot;qinjx&quot;<br>echo $your_name<br>echo $&#123;your_name&#125;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用变量</span><br>for skill in Ada Coffe Action Java; do<br>    echo &quot;I am good at $&#123;skill&#125;Script&quot;<br>done<br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改变量，不用$</span><br>your_name=&quot;tom&quot;<br>echo $your_name<br>your_name=&quot;alibaba&quot;<br>echo $your_name<br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除变量</span><br>unset variable_name<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="字符串变量"><a href="#字符串变量" class="headerlink" title="字符串变量"></a>字符串变量</h3><h4 id="单引号"><a href="#单引号" class="headerlink" title="单引号"></a>单引号</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">str=&#x27;this is a string&#x27;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；</li>
+<li>单引号字符串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用。</li>
+</ul>
+<h4 id="双引号"><a href="#双引号" class="headerlink" title="双引号"></a>双引号</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">your_name=&quot;runoob&quot;<br>str=&quot;Hello, I know you are \&quot;$your_name\&quot;! \n&quot;<br>echo -e $str<br></code></pre></td></tr></table></figure>
+<ul>
+<li>输出：<code>Hello, I know you are &quot;runoob&quot;! </code></li>
+<li>双引号里可以有变量</li>
+<li>双引号里可以出现转义字符</li>
+</ul>
+<h4 id="拼接字符串"><a href="#拼接字符串" class="headerlink" title="拼接字符串"></a>拼接字符串</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">your_name=&quot;runoob&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用双引号拼接</span><br>greeting=&quot;hello, &quot;$your_name&quot; !&quot;<br>greeting_1=&quot;hello, $&#123;your_name&#125; !&quot;<br>echo $greeting  $greeting_1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用单引号拼接</span><br>greeting_2=&#x27;hello, &#x27;$your_name&#x27; !&#x27;<br>greeting_3=&#x27;hello, $&#123;your_name&#125; !&#x27;<br>echo $greeting_2  $greeting_3<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">输出：</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">hello, runoob ! hello, runoob !</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">hello, runoob ! hello, <span class="hljs-variable">$&#123;your_name&#125;</span> !</span><br></code></pre></td></tr></table></figure>
+<h4 id="获取字符串长度"><a href="#获取字符串长度" class="headerlink" title="获取字符串长度"></a>获取字符串长度</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">string=&quot;abcd&quot;<br>echo $&#123;#string&#125;   # 输出 4<br><br>string=&quot;abcd&quot;<br>echo $&#123;#string[0]&#125;   # 输出 4<br></code></pre></td></tr></table></figure>
+<h4 id="提取子字符串"><a href="#提取子字符串" class="headerlink" title="提取子字符串"></a>提取子字符串</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">string=&quot;runoob is a great site&quot;<br>echo $&#123;string:1:4&#125; # 输出 unoo<br></code></pre></td></tr></table></figure>
+<h4 id="查找子字符串"><a href="#查找子字符串" class="headerlink" title="查找子字符串"></a>查找子字符串</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">string=&quot;runoob is a great site&quot;<br>echo `expr index &quot;$string&quot; io`  # 输出 4<br></code></pre></td></tr></table></figure>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">定义数组</span><br>数组名=(值1 值2 ... 值n)<br><span class="hljs-meta prompt_"># </span><span class="language-bash">读取数组</span><br>valuen=$&#123;array_name[n]&#125;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用@获取全部元素</span><br>echo $&#123;array_name[@]&#125;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取数组的长度</span><br>length=$&#123;#array_name[@]&#125;<br>length=$&#123;#array_name[*]&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="Shell-传递参数"><a href="#Shell-传递参数" class="headerlink" title="Shell 传递参数"></a>Shell 传递参数</h3><ul>
+<li><code>$0</code>：文件名</li>
+<li><code>$n</code>：第n个参数<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;Shell 传递参数实例！&quot;;<br>echo &quot;执行的文件名：$0&quot;;<br>echo &quot;第一个参数为：$1&quot;;<br>echo &quot;第二个参数为：$2&quot;;<br>echo &quot;第三个参数为：$3&quot;;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">输出</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">chmod</span> +x test.sh</span> <br><span class="hljs-meta prompt_">$ </span><span class="language-bash">./test.sh 1 2 3</span><br>Shell 传递参数实例！<br>执行的文件名：./test.sh<br>第一个参数为：1<br>第二个参数为：2<br>第三个参数为：3<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数处理</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$#</td>
+<td>传递到脚本的参数个数</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>以一个单字符串显示所有向脚本传递的参数。如”$*“用「”」括起来的情况、以”$1 $2 … $n”的形式输出所有参数。</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>脚本运行的当前进程ID号</td>
+</tr>
+<tr>
+<td>$!</td>
+<td>后台运行的最后一个进程的ID号</td>
+</tr>
+<tr>
+<td>$@</td>
+<td>与$*相同，但是使用时加引号，并在引号中返回每个参数。如”$@”用「”」括起来的情况、以”$1” “$2” … “$n” 的形式输出所有参数。</td>
+</tr>
+<tr>
+<td>$-</td>
+<td>显示Shell使用的当前选项，与set命令功能相同。</td>
+</tr>
+<tr>
+<td>$?</td>
+<td>显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误。</td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;Shell 传递参数实例！&quot;;<br>echo &quot;第一个参数为：$1&quot;;<br><br>echo &quot;参数个数为：$#&quot;;<br>echo &quot;传递的参数作为一个字符串显示：$*&quot;;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">结果</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">chmod</span> +x test.sh</span> <br><span class="hljs-meta prompt_">$ </span><span class="language-bash">./test.sh 1 2 3</span><br>Shell 传递参数实例！<br>第一个参数为：1<br>参数个数为：3<br>传递的参数作为一个字符串显示：1 2 3<br></code></pre></td></tr></table></figure></li>
+<li>$* 与 $@ 区别：<ul>
+<li>相同点：都是引用所有参数。</li>
+<li>不同点：只有在双引号中体现出来。假设在脚本运行时写了三个参数 1、2、3，则 “ * “ 等价于 “1 2 3”（传递了一个参数），而 “@” 等价于 “1” “2” “3”（传递了三个参数）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Shell-基本运算符"><a href="#Shell-基本运算符" class="headerlink" title="Shell 基本运算符"></a>Shell 基本运算符</h3><h4 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h4><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法</td>
+<td>`expr $a + $b` 结果为 30。</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法</td>
+<td>`expr $a - $b` 结果为 -10。</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法</td>
+<td>`expr $a \* $b` 结果为  200。</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>除法</td>
+<td>`expr $b &#x2F; $a` 结果为 2。</td>
+</tr>
+<tr>
+<td>%</td>
+<td>取余</td>
+<td>`expr $b % $a` 结果为 0。</td>
+</tr>
+<tr>
+<td>&#x3D;</td>
+<td>赋值</td>
+<td>a&#x3D;$b 把变量 b 的值赋给 a。</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;</td>
+<td>相等。用于比较两个数字，相同则返回 true。</td>
+<td>[ $a &#x3D;&#x3D; $b ] 返回 false。</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>不相等。用于比较两个数字，不相同则返回 true。</td>
+<td>[ $a !&#x3D; $b ] 返回 true。</td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell">a=10<br>b=20<br>val=`expr $a + $b`<br>echo &quot;a + b : $val&quot;<br>val=`expr $a - $b`<br>echo &quot;a - b : $val&quot;<br>val=`expr $a \\* $b`<br>echo &quot;a * b : $val&quot;<br>val=`expr $b / $a`<br>echo &quot;b / a : $val&quot;<br>val=`expr $b % $a`<br>echo &quot;b % a : $val&quot;<br>if [ $a == $b ]<br>then<br>   echo &quot;a 等于 b&quot;<br>fi<br>if [ $a != $b ]<br>then<br>   echo &quot;a 不等于 b&quot;<br>fi<br><span class="hljs-meta prompt_"># </span><span class="language-bash">输出</span><br>a + b : 30<br>a - b : -10<br>a * b : 200<br>b / a : 2<br>b % a : 0<br>a 不等于 b<br></code></pre></td></tr></table></figure>
+<ul>
+<li>乘号(*)前边必须加反斜杠(\)才能实现乘法运算；</li>
+</ul>
+<h4 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h4><ul>
+<li>假定变量 a 为 10，变量 b 为 20：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-eq</td>
+<td>检测两个数是否相等，相等返回 true。</td>
+<td>[ $a -eq $b ] 返回 false。</td>
+</tr>
+<tr>
+<td>-ne</td>
+<td>检测两个数是否不相等，不相等返回 true。</td>
+<td>[ $a -ne $b ] 返回 true。</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td>检测左边的数是否大于右边的，如果是，则返回 true。</td>
+<td>[ $a -gt $b ] 返回 false。</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td>检测左边的数是否小于右边的，如果是，则返回 true。</td>
+<td>[ $a -lt $b ] 返回 true。</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td>检测左边的数是否大于等于右边的，如果是，则返回 true。</td>
+<td>[ $a -ge $b ] 返回 false。</td>
+</tr>
+<tr>
+<td>-le</td>
+<td>检测左边的数是否小于等于右边的，如果是，则返回 true。</td>
+<td>[ $a -le $b ] 返回 true。</td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br>a=10<br>b=20<br>if [ $a -eq $b ]<br>then<br>   echo &quot;$a -eq $b : a 等于 b&quot;<br>else<br>   echo &quot;$a -eq $b: a 不等于 b&quot;<br>fi<br>if [ $a -ne $b ]<br>then<br>   echo &quot;$a -ne $b: a 不等于 b&quot;<br>else<br>   echo &quot;$a -ne $b : a 等于 b&quot;<br>fi<br>if [ $a -gt $b ]<br>then<br>   echo &quot;$a -gt $b: a 大于 b&quot;<br>else<br>   echo &quot;$a -gt $b: a 不大于 b&quot;<br>fi<br>if [ $a -lt $b ]<br>then<br>   echo &quot;$a -lt $b: a 小于 b&quot;<br>else<br>   echo &quot;$a -lt $b: a 不小于 b&quot;<br>fi<br>if [ $a -ge $b ]<br>then<br>   echo &quot;$a -ge $b: a 大于或等于 b&quot;<br>else<br>   echo &quot;$a -ge $b: a 小于 b&quot;<br>fi<br>if [ $a -le $b ]<br>then<br>   echo &quot;$a -le $b: a 小于或等于 b&quot;<br>else<br>   echo &quot;$a -le $b: a 大于 b&quot;<br>fi<br><span class="hljs-meta prompt_"># </span><span class="language-bash">结果</span><br>10 -eq 20: a 不等于 b<br>10 -ne 20: a 不等于 b<br>10 -gt 20: a 不大于 b<br>10 -lt 20: a 小于 b<br>10 -ge 20: a 小于 b<br>10 -le 20: a 小于或等于 b<br></code></pre></td></tr></table></figure>
+<h4 id="布尔运算符"><a href="#布尔运算符" class="headerlink" title="布尔运算符"></a>布尔运算符</h4><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>!</td>
+<td>非运算，表达式为 true 则返回 false，否则返回 true。</td>
+<td>[ ! false ] 返回 true。</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>或运算，有一个表达式为 true 则返回 true。</td>
+<td>[ $a -lt 20 -o $b -gt 100 ] 返回 true。</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>与运算，两个表达式都为 true 才返回 true。</td>
+<td>[ $a -lt 20 -a $b -gt 100 ] 返回 false。</td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs shell">a=10<br>b=20<br><br>if [ $a != $b ]<br>then<br>   echo &quot;$a != $b : a 不等于 b&quot;<br>else<br>   echo &quot;$a == $b: a 等于 b&quot;<br>fi<br>if [ $a -lt 100 -a $b -gt 15 ]<br>then<br>   echo &quot;$a 小于 100 且 $b 大于 15 : 返回 true&quot;<br>else<br>   echo &quot;$a 小于 100 且 $b 大于 15 : 返回 false&quot;<br>fi<br>if [ $a -lt 100 -o $b -gt 100 ]<br>then<br>   echo &quot;$a 小于 100 或 $b 大于 100 : 返回 true&quot;<br>else<br>   echo &quot;$a 小于 100 或 $b 大于 100 : 返回 false&quot;<br>fi<br>if [ $a -lt 5 -o $b -gt 100 ]<br>then<br>   echo &quot;$a 小于 5 或 $b 大于 100 : 返回 true&quot;<br>else<br>   echo &quot;$a 小于 5 或 $b 大于 100 : 返回 false&quot;<br>fi<br><span class="hljs-meta prompt_">#</span><span class="language-bash">执行脚本，输出结果如下所示：</span><br>10 != 20 : a 不等于 b<br>10 小于 100 且 20 大于 15 : 返回 true<br>10 小于 100 或 20 大于 100 : 返回 true<br>10 小于 5 或 20 大于 100 : 返回 false<br></code></pre></td></tr></table></figure>
+<h4 id="文件测试运算符"><a href="#文件测试运算符" class="headerlink" title="文件测试运算符"></a>文件测试运算符</h4><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d file</td>
+<td>检测文件是否是目录，如果是，则返回 true。</td>
+<td>[ -d $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。</td>
+<td>[ -f $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>检测文件是否可读，如果是，则返回 true。</td>
+<td>[ -r $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>检测文件是否可写，如果是，则返回 true。</td>
+<td>[ -w $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>检测文件是否可执行，如果是，则返回 true。</td>
+<td>[ -x $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>检测文件是否为空（文件大小是否大于0），不为空返回 true。</td>
+<td>[ -s $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-e file</td>
+<td>检测文件（包括目录）是否存在，如果是，则返回 true。</td>
+<td>[ -e $file ] 返回 true。</td>
+</tr>
+</tbody></table>
+<ul>
+<li>变量 file 表示文件 &#x2F;var&#x2F;www&#x2F;runoob&#x2F;test.sh，它的大小为 100 字节，具有 rwx 权限。下面的代码，将检测该文件的各种属性：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br>file=&quot;/var/www/runoob/test.sh&quot;<br>if [ -r $file ]<br>then<br>   echo &quot;文件可读&quot;<br>else<br>   echo &quot;文件不可读&quot;<br>fi<br>if [ -w $file ]<br>then<br>   echo &quot;文件可写&quot;<br>else<br>   echo &quot;文件不可写&quot;<br>fi<br>if [ -x $file ]<br>then<br>   echo &quot;文件可执行&quot;<br>else<br>   echo &quot;文件不可执行&quot;<br>fi<br>if [ -f $file ]<br>then<br>   echo &quot;文件为普通文件&quot;<br>else<br>   echo &quot;文件为特殊文件&quot;<br>fi<br>if [ -d $file ]<br>then<br>   echo &quot;文件是个目录&quot;<br>else<br>   echo &quot;文件不是个目录&quot;<br>fi<br>if [ -s $file ]<br>then<br>   echo &quot;文件不为空&quot;<br>else<br>   echo &quot;文件为空&quot;<br>fi<br>if [ -e $file ]<br>then<br>   echo &quot;文件存在&quot;<br>else<br>   echo &quot;文件不存在&quot;<br>fi<br><span class="hljs-meta prompt_"># </span><span class="language-bash">输出</span><br>文件可读<br>文件可写<br>文件可执行<br>文件为普通文件<br>文件不是个目录<br>文件不为空<br>文件存在<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="自增和自减操作符"><a href="#自增和自减操作符" class="headerlink" title="自增和自减操作符"></a>自增和自减操作符</h4><ul>
+<li>使用let：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">初始化变量</span><br>num=5<br><span class="hljs-meta prompt_"># </span><span class="language-bash">自增</span><br>let num++<br><span class="hljs-meta prompt_"># </span><span class="language-bash">自减</span><br>let num--<br>echo $num<br></code></pre></td></tr></table></figure></li>
+<li>使用expr：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">初始化变量</span><br>num=5<br><span class="hljs-meta prompt_"># </span><span class="language-bash">自增</span><br>num=$(expr $num + 1)<br><span class="hljs-meta prompt_"># </span><span class="language-bash">自减</span><br>num=$(expr $num - 1)<br>echo $num<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="if"><a href="#if" class="headerlink" title="if"></a>if</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> condition1<br><span class="hljs-keyword">then</span><br>    command1<br><span class="hljs-keyword">elif</span> condition2 <br><span class="hljs-keyword">then</span> <br>    command2<br><span class="hljs-keyword">else</span><br>    commandN<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">for var in item1 item2 <span class="hljs-string">...</span> itemN<br>do<br>    <span class="hljs-keyword">command</span>1<br>    <span class="hljs-keyword">command</span>2<br>    <span class="hljs-string">...</span><br>    <span class="hljs-keyword">command</span>N<br>done<br></code></pre></td></tr></table></figure>
+<h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">while</span> condition<br><span class="hljs-keyword">do</span><br>    <span class="hljs-built_in">command</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="无参函数"><a href="#无参函数" class="headerlink" title="无参函数"></a>无参函数</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">demoFun()&#123;<br>    echo &quot;这是我的第一个 shell 函数!&quot;<br>&#125;<br>echo &quot;-----函数开始执行-----&quot;<br>demoFun<br>echo &quot;-----函数执行完毕-----&quot;<br></code></pre></td></tr></table></figure>
+<h4 id="含参函数"><a href="#含参函数" class="headerlink" title="含参函数"></a>含参函数</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">funWithParam()&#123;<br>    echo &quot;第一个参数为 $1 !&quot;<br>    echo &quot;第二个参数为 $2 !&quot;<br>    echo &quot;第十个参数为 $10 !&quot;<br>    echo &quot;第十个参数为 $&#123;10&#125; !&quot;<br>    echo &quot;第十一个参数为 $&#123;11&#125; !&quot;<br>    echo &quot;参数总数有 $# 个!&quot;<br>    echo &quot;作为一个字符串输出所有参数 $* !&quot;<br>&#125;<br>funWithParam 1 2 3 4 5 6 7 8 9 34 73<br></code></pre></td></tr></table></figure>
+<h4 id="返回值函数"><a href="#返回值函数" class="headerlink" title="返回值函数"></a>返回值函数</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">author:菜鸟教程</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">url:www.runoob.com</span><br><br>funWithReturn()&#123;<br>    echo &quot;这个函数会对输入的两个数字进行相加运算...&quot;<br>    echo &quot;输入第一个数字: &quot;<br>    read aNum<br>    echo &quot;输入第二个数字: &quot;<br>    read anotherNum<br>    echo &quot;两个数字分别为 $aNum 和 $anotherNum !&quot;<br>    return $(($aNum+$anotherNum))<br>&#125;<br>funWithReturn<br>echo &quot;输入的两个数字之和为 $? !&quot; # 返回值使用$?获取<br></code></pre></td></tr></table></figure>
+<h3 id="Shell脚本例子"><a href="#Shell脚本例子" class="headerlink" title="Shell脚本例子"></a>Shell脚本例子</h3><h4 id="输出文件行数"><a href="#输出文件行数" class="headerlink" title="输出文件行数"></a>输出文件行数</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">if [ $# -ne 1 ] ; then # $#指当前参数数目<br>    echo &quot;[Usage: $0 &lt;file name&gt;]&quot; # $0指当前文件名<br>    exit 1 # 1表示出现错误<br>fi<br><br>lineCount=0<br>while read line<br>do<br>    lineCount=$((lineCount+1))<br>done &lt; $1 # &lt;表示输出重定向，将参数的内容传给while循环<br><br>echo &quot;file $1 $lineCount lines&quot;<br>exit 0 # 0表示正常退出<br></code></pre></td></tr></table></figure>
+<h4 id="查看对应目录文件个数"><a href="#查看对应目录文件个数" class="headerlink" title="查看对应目录文件个数"></a>查看对应目录文件个数</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /var/log<br>sum=0<br>for i in `ls -r *`<br>do<br>    if [ -f $i ]; then<br>        sum=$((sum+1))<br>        echo &quot;文件名: $i&quot;<br>    fi<br>done<br>echo &quot;总文件数量为:$sum&quot;<br>exit 0<br></code></pre></td></tr></table></figure>
+<h4 id="删除当前目录大小为0的普通文件"><a href="#删除当前目录大小为0的普通文件" class="headerlink" title="删除当前目录大小为0的普通文件"></a>删除当前目录大小为0的普通文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">rmFileCount=0<br>for filename in `ls -r *`<br>do<br>    if [ ! -s $filename -a -f $filename ] # -s $filename：判断文件是否非空。! -s $filename：表示文件为空（大小为 0）。-f $filename：判断是否为普通文件。-a：逻辑与。<br>    then<br>        rm -f $filename 2&gt;/dev/null # 强制删除不提示，错误信息重定向到/dev/null，表示不保存错误信息<br>        rmFileCount=$((rmFileCount+1))<br>    fi<br>done<br>echo &quot;$rmFileCount file deleted&quot;<br>exit 0<br></code></pre></td></tr></table></figure>
+<h4 id="判断是否是闰年"><a href="#判断是否是闰年" class="headerlink" title="判断是否是闰年"></a>判断是否是闰年</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">read -p &quot;请输入一个年份:&quot; year<br><br>if [ &quot;$year&quot; = &quot;&quot; ]; then<br>    echo &quot;没有输入年份&quot;<br>    exit -1<br>fi<br><br>if [ $[year % 4] -eq 0 ] &amp;&amp; [ $[year % 100] -ne 0 ]; then<br>    echo &quot;$year年是闰年&quot;<br>elif [ $[year % 400] -eq 0 ]; then<br>    echo &quot;$year年是闰年&quot;<br>else<br>    echo &quot;$year年不是闰年&quot;<br>fi<br></code></pre></td></tr></table></figure>
+<h4 id="判断是否是素数"><a href="#判断是否是素数" class="headerlink" title="判断是否是素数"></a>判断是否是素数</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">提示用户输入一个数</span><br>read -p &quot;请输入一个整数: &quot; num<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">如果输入为空或不是正整数，退出</span><br>if [ -z &quot;$num&quot; ] || ! [[ &quot;$num&quot; =~ ^[0-9]+$ ]]; then<br>    echo &quot;请输入一个正整数&quot;<br>    exit 1<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">特殊情况：1 不是素数</span><br>if [ &quot;$num&quot; -le 1 ]; then<br>    echo &quot;$num 不是素数&quot;<br>    exit 0<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">判断是否为素数</span><br>is_prime=1   # 假设是素数<br>for ((i=2; i*i&lt;=num; i++))<br>do<br>    if [ $((num % i)) -eq 0 ]; then<br>        is_prime=0<br>        break<br>    fi<br>done<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">输出结果</span><br>if [ $is_prime -eq 1 ]; then<br>    echo &quot;$num 是素数&quot;<br>else<br>    echo &quot;$num 不是素数&quot;<br>fi<br><br>exit 0<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux期末总结</div>
+      <div>https://sdueryrg.github.io/2025/12/21/Linux期末总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yrg</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - yrg">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/12/11/%E4%B8%BB%E7%AE%A1%E9%9D%A2%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86/%E4%B8%BB%E7%AE%A1%E9%9D%A2%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86/" title="主管面面经整理">
+                        <span class="hidden-mobile">主管面面经整理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9Ppdlu2us0WGqUfcIfWDrqWH-gzGzoHsz","appKey":"keWPwFcwx4yGF2QANdg94FGC","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
